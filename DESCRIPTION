@@ -21,6 +21,7 @@ Imports:
     knitr (>= 1.21),
     kableExtra (>= 1.0.1),
     rmarkdown (>= 2.11.3)
+Remotes: bartplat/MLASZraporty
 Suggests:
     MLASZdane (>= 0.4.1),
     testthat,

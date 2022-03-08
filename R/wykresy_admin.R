@@ -8,6 +8,7 @@
 #' braku tytułu
 #' @export
 #' @return
+#' @importFrom tibble is_tibble
 #' @importFrom ggplot2 ggplot geom_bar scale_fill_brewer scale_y_continuous
 #' labs geom_text coord_flip theme guides ylab xlab
 #' @importFrom dplyr .data
@@ -48,6 +49,7 @@ wykres_poziomy_1_ad1 = function(x, tytul) {
 #' braku tytułu
 #' @export
 #' @return
+#' @importFrom tibble is_tibble
 #' @importFrom ggplot2 ggplot geom_area scale_fill_brewer theme guides ylab xlab
 #' labs
 #' @importFrom dplyr .data
@@ -82,6 +84,7 @@ wave_chart_2_ad1 = function(x, tytul) {
 #' braku tytułu
 #' @export
 #' @return
+#' @importFrom tibble is_tibble
 #' @importFrom ggplot2 ggplot geom_bar scale_fill_brewer scale_y_continuous
 #' labs geom_text coord_flip theme guides ylab xlab
 #' @importFrom dplyr .data
@@ -116,6 +119,7 @@ wykres_poziomy_3_ad1 = function(x, tytul) {
 #' braku tytułu
 #' @export
 #' @return
+#' @importFrom tibble is_tibble
 #' @importFrom ggplot2 ggplot geom_errorbar geom_boxplot theme xlab
 #' @importFrom dplyr .data
 boxplot_proc_4_ad1 = function(x, tytul) {
@@ -151,6 +155,7 @@ boxplot_proc_4_ad1 = function(x, tytul) {
 #' braku tytułu
 #' @export
 #' @return
+#' @importFrom tibble is_tibble
 #' @importFrom ggplot2 ggplot geom_errorbar geom_boxplot theme xlab
 #' @importFrom dplyr .data
 boxplot_zl_4_ad1 = function(x, tytul) {
@@ -185,6 +190,7 @@ boxplot_zl_4_ad1 = function(x, tytul) {
 #' braku tytułu
 #' @export
 #' @return
+#' @importFrom tibble is_tibble
 #' @importFrom ggplot2 ggplot geom_bar scale_y_continuous labs geom_text ylab
 #' xlab theme
 #' @importFrom dplyr .data
@@ -221,6 +227,7 @@ wyk_pion_skum_5_ad1 = function(x, tytul) {
 #' @param tytul_x tytuł osi x
 #' @export
 #' @return
+#' @importFrom tibble is_tibble
 #' @importFrom ggplot2 ggplot geom_bar scale_y_continuous labs geom_text ylab
 #' xlab theme
 #' @importFrom dplyr .data

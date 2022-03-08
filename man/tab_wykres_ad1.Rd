@@ -30,17 +30,5 @@ ramka danych w formacie tibble
 Na potrzeby raportu funkcja tworzy z 3 list zawierających
 wskaźniki na różnych poziomach agregacji: szkoła, województwo i cały kraj,
 ramkę danych, która następnie jest używana jako wsad do funkcji rysujących
-wyresy:
-\itemize{
- \item{\code{wykres_poziomy_1_ad1()},}
- \item{\code{},}
- \item{\code{},}
- \item{\code{},}
- \item{\code{},}
- \item{\code{},}
- \item{\code{},}
- \item{\code{},}
- \item{\code{},}
- \item{\code{}}
-}
+wyresy.
 }
