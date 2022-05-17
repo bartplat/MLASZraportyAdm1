@@ -71,8 +71,6 @@ if (params$plikZObiektami != "") {# to działa przy ręcznym prototypowaniu
 
 woj = woj %>%
   filter(ID_SZK %in% szk$ID_SZK)
-# kraj = kraj %>% 
-#   filter(TYP_SZK %in% szk$TYP_SZK)
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -98,17 +96,17 @@ tab_num = function() {
 
 ## Idea monitoringu
 
-Monitoring karier absolwentów to nowe zadanie powierzone ministrowi właściwemu do spraw oświaty na podstawie [Ustawy Prawo oświatowe](http://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20210000619/O/D20210619.pdf). Analogiczne rozwiązania funkcjonują od kilku lat w szkolnictwie wyższym. Realizacja tego zadania ma wesprzeć prowadzenie polityk oświatowych zarówno na szczeblu krajowym jak i wojewódzkim oraz powiatowym. Wiarygodne i dostarczane cyklicznie statystyki opisujące przebieg karier edukacyjno-zawodowych absolwentów szkół ponadpodstawowych w Polsce mają pomóc w dostosowywaniu kierunków i treści kształcenia do wymogów rynku pracy. Wiedza ta może być użyteczna dla szkół, instytucji rynku pracy i pracodawców, a także pomóc uczniom w wyborze zawodu i kierunku kształcenia.
+Monitoring karier absolwentów to nowe zadanie powierzone ministrowi właściwemu do spraw oświaty i wychowania na podstawie [Ustawy "Prawo oświatowe"](http://isap.sejm.gov.pl/isap.nsf/download.xsp/WDU20210000619/O/D20210619.pdf). Analogiczne rozwiązania funkcjonują od kilku lat w szkolnictwie wyższym. Monitoring jest prowadzony w celu zapewnienia informacji na temat przebiegu karier absolwentów na potrzeby prowadzenia polityki oświatowej państwa na poziomie krajowym, regionalnym i lokalnym. Wiarygodne i dostarczane cyklicznie statystyki opisujące przebieg karier edukacyjno-zawodowych absolwentów szkół ponadpodstawowych w Polsce mają pomóc w dostosowywaniu kierunków i treści kształcenia do wymogów rynku pracy. Wiedza ta może być użyteczna dla szkół, instytucji rynku pracy i pracodawców, a także pomóc uczniom w wyborze zawodu i kierunku kształcenia.
 
-Należy pamiętać, że oprócz kształcenia w szkole ponadpodstawowej i umiejętności nabytych w czasie praktycznej nauki zawodu u pracodawców, na sytuację edukacyjną i zawodową absolwentów wpływa wiele innych uwarunkowań. Do takich uwarunkowań należą wiedza i umiejętności zdobyte przed rozpoczęciem nauki w szkole oraz sytuacja na lokalnym rynku pracy. Dlatego informacji o losach absolwentów nie można, bez uwzględnienia dodatkowego kontekstu, traktować jako miary efektywności poszczególnych szkół.
+Należy pamiętać, że oprócz kształcenia w szkole ponadpodstawowej i umiejętności nabytych w czasie praktycznej nauki zawodu u pracodawcy, na sytuację edukacyjną i zawodową absolwentów wpływa wiele innych uwarunkowań. Do takich uwarunkowań należą wiedza i umiejętności zdobyte przed rozpoczęciem nauki w szkole oraz sytuacja na lokalnym rynku pracy. Dlatego informacji o losach absolwentów nie można, bez uwzględnienia dodatkowego kontekstu, traktować jako miary efektywności poszczególnych szkół.
 
-## Źródła i sposób przetwarzania danych
+## Źródła i przetwarzanie danych
 
-Raporty przygotowywane na podstawie danych pozyskiwanych corocznie przez Centrum Informatyczne Edukacji z publicznych rejestrów. Monitoring opiera się na danych dotyczących nauki w szkołach ponadpodstawowych (dane pochodzące z Centrum Informatycznego Edukacji) oraz na studiach (dane Ośrodka Przetwarzania Informacji nadzorowanego przez ministra właściwego ds. szkolnictwa wyższego i nauki), uzyskiwania dyplomów i świadectw (dane Okręgowych Komisji Egzaminacyjnych) oraz aktywności na rynku pracy (dane Zakładu Ubezpieczeń Społecznych).
+Raporty przygotowywane na podstawie danych pozyskiwanych corocznie przez Centrum Informatyczne Edukacji z publicznych rejestrów. Monitoring opiera się na danych dotyczących nauki w szkołach ponadpodstawowych (dane Informatycznego Centrum Edukacji i Nauki) oraz na studiach (dane Ośrodka Przetwarzania Informacji nadzorowanego przez ministra właściwego ds. szkolnictwa wyższego i nauki), uzyskiwania dyplomów i świadectw (dane Okręgowych Komisji Egzaminacyjnych) oraz aktywności na rynku pracy (dane Zakładu Ubezpieczeń Społecznych).
 
 Dzięki wykorzystaniu danych rejestrowych monitoring obejmuje niemal całą populację absolwentów.
 
-Pozyskane dane są przetwarzane, łączone i anonimizowane przez Centrum Informatyczne Edukacji.
+Pozyskane dane są przetwarzane, łączone i anonimizowane przez Informatyczne Centrum Edukacji i Nauki.
 
 Analizy i sporządzane automatycznie raporty są projektowane i przygotowywane przez Instytut Badań Edukacyjnych. 
 
@@ -129,54 +127,87 @@ odmiany = list(
 )
 
 cat(
-  "Ten raport dotyczy ",
+  ifelse(szk$l_abs[[1]] >= progLiczebnosci,
+         paste0("Ten raport dotyczy "),
+         paste0("Monitoring objął ")),
   szk$l_abs[[1]],
   odmiany$abs,
   " (w tym ",
   szk$l_kobiet[[1]],
   odmiany$kob,
-  "), którzy ukończyli Państwa szkołę w roku szkolnym 2019/2020^[Na podstawie informacji pozyskanych z Centrum Informatycznego Edukacji według stanu na 15 marca 2021 roku.]. Liczebność grup, dla których prezentowane są wyniki, zależy od dostępności informacji o Państwa absolwentach należących do tej grupy w poszczególnych rejestrach.\n\n* Ośrodek Przetwarzania Informacji przekazał dane dotyczące ",
+  "), którzy ukończyli Państwa szkołę w roku szkolnym 2019/2020^[Na podstawie informacji pozyskanych z Informatycznego Centrum Edukacji i Nauki według stanu na 15 marca 2021 roku.]. Liczebność grup, dla których prezentowane są wyniki, zależy od dostępności informacji o Państwa absolwentach należących do danej grupy w poszczególnych rejestrach.\n\n* Ośrodek Przetwarzania Informacji przekazał dane dotyczące ",
   szk$l_abs_zrodla[[1]]$n_opi,
   odmiany$abs_opi,
-  " Państwa szkoły, którzy rozpoczęli naukę na uczelniach wyższych do końca grudnia 2020 roku (według stanu na 31 grudnia 2020 roku).\n* W zasobach Okręgowych Komisji Egzaminacyjnych znalazły się dane dotyczące ",
+  " Państwa szkoły, którzy rozpoczęli naukę na uczelniach wyższych do końca grudnia 2020 roku (według stanu na 31 grudnia 2020 roku).\n\n* W zasobach Okręgowych Komisji Egzaminacyjnych znalazły się dane dotyczące ",
   szk$l_abs_zrodla[[1]]$n_oke,
   odmiany$abs_oke,
-  " (według stanu na 31 marca 2021 roku). Informacje dotyczące rezultatów egzaminów przeprowadzonych w sesjach poprawkowych zostaną zaktualizowane w kolejnych raportach dotyczących tej grupy.\n* Dane pozyskane z Zakładu Ubezpieczeń Społecznych obejmują okres 1 stycznia 2020 roku do 10 maja 2021 roku. Informują o aktywności zawodowej ",
+  " (według stanu na 31 marca 2021 roku). Informacje dotyczące rezultatów egzaminów przeprowadzonych w sesjach poprawkowych zostaną zaktualizowane w kolejnych raportach dotyczących tej grupy.\n\n* Dane pozyskane z Zakładu Ubezpieczeń Społecznych obejmują okres od 1 stycznia 2020 roku do 10 maja 2021 roku. Informują o, rejestrowanej przez ZUS, aktywności zawodowej ",
   szk$l_abs_zrodla[[1]]$n_zus,
   odmiany$abs_zus,
-  " Państwa szkoły. Warto zwrócić uwagę, że dane te nie zawierają informacji o wykonywaniu pracy przez rolników, przez uczniów i studentów w wieku poniżej 26 lat pracujących na podstawie umów cywilno-prawnych, przez osoby pracujące za granicą lub wykonujące pracę nierejestrowaną. Dlatego liczba absolwentów Państwa szkoły w przypadku których pozyskano informacje z ZUS może być niższa od liczby absolwentów objętych monitoringiem na podstawie danych z Centrum Informatycznego Edukacji.\n\n",
+  " Państwa szkoły.\n\n",
   sep = ""
 )
 ```
 
-W raporcie opisujemy sytuację absolwentów Państwa szkoły z rocznika 2019/2020 w roku, w którym ukończyli szkołę.
+## Sposób prezentowania sytuacji absolwentów
 
-## Sposób prezentowania wyników
-
-Przypisanie absolwentowi określonego statusu (np. “uczy się” lub “pracuje”) w danym miesiącu oznacza, że przynajmniej przez jeden dzień w tym miesiącu dany absolwent posiadał taki status. 
+`r ifelse(szk$l_abs[[1]] >= progLiczebnosci, paste0("W raporcie opisujemy sytuację absolwentów Państwa szkoły z rocznika 2019/2020 w 2020 roku. "), "")`Przypisanie absolwentowi określonego statusu (np. “uczy się” lub “pracuje”) w danym miesiącu oznacza, że przynajmniej przez jeden dzień w tym miesiącu dany absolwent posiadał taki status. 
 
 Wyniki monitoringu prezentujemy w różnych ujęciach:
 
 * Wartości danego wskaźnika w kolejnych miesiącach rozpatrywanego okresu pozwalają śledzić jak zmieniała się sytuacja edukacyjna i zawodowa absolwentów. W przypadku wskaźników odnoszących się do sytuacji edukacyjnej i zawodowej jest to okres od stycznia do grudnia 2020 roku.
-• W niektórych przypadkach prezentujemy wartość wskaźnika w jednym, wybranym miesiącu. Jest to wrzesień 2020 roku (w przypadku wskaźnika informującego o kontynuowaniu nauki u pracodawcy, u którego absolwent odbywał praktyczną naukę zawodu jako pracownik młodociany) lub grudzień 2020 roku (co pozwala na uwzględnienie m.in. kontynuowania nauki na studiach).
+
+* W niektórych przypadkach prezentujemy wartość wskaźnika w jednym, wybranym miesiącu. Jest to wrzesień 2020 roku (w przypadku wskaźnika informującego o kontynuowaniu nauki u pracodawcy, u którego absolwent odbywał praktyczną naukę zawodu jako pracownik młodociany) lub grudzień 2020 roku (co pozwala na uwzględnienie m.in. kontynuowania przez część absolwentów szkół ponadpodstawowych nauki na studiach).
+
 * Niektóre wskaźniki są zdefiniowane jako średnia wartość w danym okresie (odsetek przepracowanych miesięcy, średni przychód uzyskiwany z pracy) lub liczba miesięcy, w ciągu których absolwent miał określony status (praca, bezrobocie lub bierność edukacyjna i zawodowa). Takie wskaźniki obliczyliśmy dla okresu od września do grudnia 2020 roku. Wrzesień jest pierwszym miesiącem, w którym absolwenci formalnie nie byli już uczniami Państwa szkoły a grudzień ostatnim, dla którego w momencie sporządzania tego raportu mamy komplet danych.
 
-Niektóre wyniki dotyczące absolwentów Państwa szkoły zostały zestawione z wynikami dotyczącymi absolwentów pozostałych branżowych szkół I stopnia z województwa^[Absolwenci Państwa szkoły są wykluczani z tej grupy porównawczej, ponieważ w niektórych przypadkach ich sytuacja mogłaby w dużym stopniu rzutować na wyniki dotyczące tej grupy.] `r szk$formy[[1]]$woj_dop` oraz z całego kraju.
+Niektóre wyniki dotyczące absolwentów `r ifelse(szk$l_abs[[1]] >= progLiczebnosci, paste0("Państwa szkoły"), paste0("poszczególnych szkół"))` zostały zestawione z wynikami dotyczącymi absolwentów pozostałych branżowych szkół I stopnia z województwa^[Absolwenci Państwa szkoły są wykluczani z tej grupy porównawczej, ponieważ w niektórych przypadkach ich sytuacja mogłaby w dużym stopniu rzutować na wyniki dotyczące tej grupy.] `r szk$formy[[1]]$woj_dop` oraz z całego kraju.
 
-Ze względu na potrzebę zachowania anonimowości absolwentów, dane dla grup liczących poniżej 10 osób nie są prezentowane.
+Ze względu na potrzebę zachowania anonimowości absolwentów, dane dla grup liczących poniżej 10 osób nie są prezentowane. W celu zachowania czytelności, na wykresach nie są umieszczane wartości etykiet poniżej 5%.
 
 `r ifelse(typDokumentu %in% "pdf", "\\newpage", "")`
 
 # 2. Ścieżki edukacyjno-zawodowe
 
-## Kontynuowanie nauki w szkołach ponadpodstawowych oraz wykonywanie pracy
+## Kontynuowanie nauki oraz wykonywanie pracy
+
+Wskaźnik prezentowany w tym rozdziale opisuje 6 statusów absolwentów opisujących ich sytuację edukacyjno-zawodową w różnych momentach w czasie. Poniższa tabela przybliża konstrukcję poszczególnych statusów.
+
+```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE}
+data.frame(
+  `Kategoria` = "Znaczenie kategorii",
+  `1. Nauka i poza rejestrem ZUS` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju) ani nie figurują w rejestrze ZUS z żadnego tytułu. Natomiast nie wiadomo, czy pracują korzystając z ubezpieczenia w innym systemie (np. KRUS), ani czy pracują na podstawie umowy o dzieło lub bez umowy (“na czarno”).",
+  `2. Nauka, brak pracy na podstawie umowy o pracę i brak samozatrudnienia` = "W takiej sytuacji są osoby, o których wiadomo, że odbywają edukację formalną w Polsce a zarazem figurują w rejestrze ZUS z tytułu innego, niż aktualne wykonywanie pracy (analogicznie jak w przypadku kategorii 6).",
+  `3. Nauka i praca na podstawie umowy o pracę lub samozatrudnienie` = "W takiej sytuacji są osoby, o których wiadomo, że odbywają edukację formalną w Polsce a zarazem figurują w rejestrze ZUS z tytułu aktualnego wykonywania pracy etatowej, prowadzenia indywidualnej działalności gospodarczej albo - ale tylko, jeżeli mają więcej niż 26 lat - umowy zlecenia. Nie jest natomiast uwzględniana praca bez umowy (“na czarno”), praca związana z korzystaniem z ubezpieczenia w innym systemie (np. KRUS), praca na podstawie umowy o dzieło ani - w przypadku osób, które mają nie więcej niż 26 lat - praca na podstawie umowy zlecenia.",
+  `4. Brak nauki i praca` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju)  a zarazem figurują w rejestrze ZUS z tytułu aktualnego wykonywania pracy etatowej, umowy zlecenia lub prowadzenia indywidualnej działalności gospodarczej. Nie jest natomiast uwzględniana praca bez umowy (“na czarno”), praca związana z korzystaniem z ubezpieczenia w innym systemie (np. KRUS), ani praca na podstawie umowy o dzieło.",
+  `5. Brak nauki i poza rejestrem ZUS` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju) ani nie figurują w rejestrze ZUS z żadnego tytułu. Natomiast nie wiadomo, czy pracują korzystając z ubezpieczenia w innym systemie (np. KRUS), ani czy pracują na podstawie umowy o dzieło lub bez umowy (“na czarno”).",
+  `6. Brak nauki i brak pracy` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju) a zarazem figurują w rejestrze ZUS z tytułu innego, niż aktualne wykonywanie pracy etatowej, umowy zlecenia lub prowadzenie indywidualnej działalności gospodarczej (“innym tytułem” może być w szczególności status osoby bezrobotnej, przebywanie na urlopie macierzyńskim lub wychowawczym lub zgłoszenie do ubezpieczenia jako członek rodziny osoby ubezpieczonej). Natomiast nie jest wykluczone, że pracują bez umowy (“na czarno”) albo (jeżeli nie są zarejestrowane jako bezrobotne) na podstawie umowy o dzieło.",
+  check.names = FALSE) %>% 
+  pivot_longer(everything()) %>% 
+  rename(`Kategoria` = name,
+         `Znaczenie kategorii` = value) %>% 
+  filter(!row_number() %in% 1) %>% 
+  kable(format = "latex",
+        booktabs = TRUE,
+        escape = FALSE,
+        longtable = TRUE,
+        align = "ll") %>% 
+  kable_styling(position = wyrownanieTabWykr,
+                latex_options = c("hold_position", "repeat_header"),
+                repeat_header_text = "(ciąg dalszy tabeli)") %>% 
+  column_spec(1, width = "4cm") %>%
+  column_spec(2, width = "12cm")
+```
+
+\hfill\break
+\hfill\break
 
 ```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE}
 if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
   cat(
     "Spośród absolwentów Państwa szkoły z rocznika 2019/2020 w grudniu 2020 roku ",
     round(szk$S3_0_12[[1]]$stat1 * 100),
-    "% łączyło edukację w kolejnej szkole ponadpodstawowej z zatrudnieniem na podstawie umowy o pracę lub z wykonywaniem własnej działalności gospodarczej (samozatrudnieniem)^[W przypadku uczniów i studentów do 26. roku życia nie są dostępne dane dotyczące ewentualnego wykonywania pracy na podstawie umów cywilnoprawnych.].\nOdsetek takich osób wśród absolwentów Państwa szkoły był ",
+    "% łączyło edukację w kolejnej szkole ponadpodstawowej z zatrudnieniem na podstawie umowy o pracę lub z wykonywaniem własnej działalności gospodarczej (samozatrudnieniem)^[W przypadku osób powyżej 26. roku życia uwzględniane jest ponadto wykonywanie pracy na podstawie umowy zlecenia.].\nOdsetek takich osób wśród absolwentów Państwa szkoły był ",
     case_when(
       round(szk$S3_0_12[[1]]$stat1 * 100) < round(woj$S3_0_12[[1]]$stat1 * 100) ~ "niższy, niż",
       round(szk$S3_0_12[[1]]$stat1 * 100) > round(woj$S3_0_12[[1]]$stat1 * 100) ~ "wyższy, niż",
@@ -196,7 +227,7 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
     round(kraj$S3_0_12[[1]]$stat1 * 100),
     "%).\n\nZ kolei ",
     round(szk$S3_0_12[[1]]$stat2 * 100),
-    "% absolwentów Państwa szkoły w grudniu 2020 roku kontynuowało naukę w kolejnej szkole ponadpodstawowej nie będąc etatowymi pracownikami ani nie prowadząc własnej działalności gospodarczej^[W przypadku uczniów i studentów do 26. roku życia nie są dostępne dane dotyczące ewentualnego wykonywania pracy na podstawie umów cywilnoprawnych.]. Wśród absolwentów pozostałych branżowych szkół I stopnia z województwa ",
+    "% absolwentów Państwa szkoły w grudniu 2020 roku kontynuowało naukę w kolejnej szkole ponadpodstawowej nie będąc etatowymi pracownikami ani nie prowadząc własnej działalności gospodarczej^[W przypadku osób powyżej 26. roku życia uwzględniane jest ponadto niewykonywanie pracy na podstawie umowy-zlecenia.]. Wśród absolwentów pozostałych branżowych szkół I stopnia z województwa ",
     szk$formy[[1]]$woj_dop,
     " analogiczny odsetek wynosił ",
     round(woj$S3_0_12[[1]]$stat2 * 100),
@@ -204,15 +235,15 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
     round(kraj$S3_0_12[[1]]$stat2 * 100),
     "%.\n\nW tym samym miesiącu ",
     round(szk$S3_0_12[[1]]$stat3 * 100),
-    "% absolwentów Państwa szkoły pracowało^[Na podstawie umowy o pracę, umowy cywilnoprawnej lub prowadząc własną działalność gospodarczą.], ale nie uczęszczało do kolejnej szkoły. Do grupy absolwentów pracujących ale nie kontynuujących edukacji formalnej należało ",
+    "% absolwentów Państwa szkoły pracowało^[Na podstawie umowy o pracę, umowy zlecenia lub prowadząc własną działalność gospodarczą.], ale nie uczęszczało do kolejnej szkoły. Do grupy absolwentów pracujących ale nie kontynuujących edukacji formalnej należało ",
     round(woj$S3_0_12[[1]]$stat3 * 100),
     "% absolwentów pozostałych branżowych szkół I stopnia z województwa ",
     szk$formy[[1]]$woj_dop,
     " oraz ",
     round(kraj$S3_0_12[[1]]$stat3 * 100),
-    "% absolwentów branżowych szkół I stopnia z całego kraju.\n\nDalszych ",
+    "% absolwentów branżowych szkół I stopnia z całego kraju.\n\nSpośród absolwentów Państwa szkoły w grudniu 2020 roku ",
     round(szk$S3_0_12[[1]]$stat4 * 100),
-    "% absolwentów Państwa szkoły w grudniu 2020 roku nie kontynuowało nauki w szkole ponadpodstawowej ani nie pracowało^[Na podstawie umowy o pracę, na podstawie umowy cywilnoprawnej ani prowadząc własną działalność gospodarczą.]. Do tej grupy należą absolwenci zarejestrowani jako osoby bezrobotne, a także otrzymujący renty lub przebywający na urlopach wychowawczych oraz bierne zawodowo. W takiej samej sytuacji było ",
+    "% nie kontynuowało nauki w szkole ponadpodstawowej ani nie pracowało^[Na podstawie umowy o pracę, umowy zlecenia ani prowadząc własną działalność gospodarczą.]. Do tej grupy należą absolwenci zarejestrowani jako osoby bezrobotne, a także otrzymujący renty lub przebywający na urlopach wychowawczych oraz bierne zawodowo. W takiej sytuacji było ",
     round(woj$S3_0_12[[1]]$stat4 * 100),
     "% absolwentów pozostałych branżowych szkół I stopnia z województwa ",
     szk$formy[[1]]$woj_dop,
@@ -220,15 +251,16 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
     round(kraj$S3_0_12[[1]]$stat4 * 100),
     "% absolwentów tego typu szkół z całego kraju.\n\nW grudniu 2020 roku ",
     round(szk$S3_0_12[[1]]$stat5 * 100) + round(szk$S3_0_12[[1]]$stat6 * 100),
-    "% absolwentów Państwa szkoły nie figurowało w rejestrze ZUS jako osoby zatrudnione na umowę o pracę, prowadzące działalność gospodarczą ani bezrobotne. Nie wiemy natomiast, czy pracowali jako rolnicy lub za granicą. ",
-    ifelse(
-      round(szk$S3_0_12[[1]]$stat5 * 100) > 0,
-      "W przypadku osób będących uczniami kolejnej szkoły ponadpodstawowej nie wiemy również, czy pracowały na podstawie umowy cywilnoprawnej.\n\n",
-      "\n\n"),
+    "% absolwentów Państwa szkoły (",
+    round(szk$S3_0_12[[1]]$stat5 * 100),
+    "% ogółu absolwentów nie figurowało w ZUS ale kontynuowało naukę, ",
+    round(szk$S3_0_12[[1]]$stat6 * 100),
+    "% nie figurowało w ZUS ani nie kontynuowało nauki) ",
+    "nie figurowało w rejestrze ZUS jako osoby zatrudnione na umowę o pracę, prowadzące działalność gospodarczą ani bezrobotne.\n\n",
     sep = ""
   )
 } else {
-  cat("Liczba absolwentów w Państwa szkole nie była wystarczająca (n < 10), żeby możliwe było przedstawienie wyników, zgodnie z zasadą chroniącą anonimowość respondentów.")
+  cat("Liczba absolwentów Państwa szkoły nie była wystarczająca (n < 10), żeby możliwe było przedstawienie wyników, zgodnie z zasadą chroniącą anonimowość respondentów.")
 }
 ```
 
@@ -343,7 +375,7 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
     "grudniu" = round(szk$S3_0_12[[1]]$stat1 * 100) + round(szk$S3_0_12[[1]]$stat3 * 100))
   
   cat(
-    "W 2020 roku zmieniały się proporcje pomiędzy grupami uczniów i absolwentów Państwa szkoły, wyodrębnionymi ze względu na aktywność edukacyjną i zawodową.\n\nW okresie od stycznia do sierpnia 2020 roku^[Tj. do momentu, kiedy obecni absolwenci Państwa szkoły przestali być jej uczniami.] odsetek uczniów ostatnich klas Państwa szkoły pracujących na podstawie umowy o pracę^[W tym na podstawie umowy o pracę w celu przygotowania zawodowego. W tym okresie dla żadnego z obecnych absolwentów Państwa szkoły nie możemy zaobserwować zatrudnienia na podstawie umowy cywilnoprawnej, ponieważ byli jeszcze uczniami - w przypadku uczniów i studentów do 26. roku życia nie są dostępne dane dotyczące ewentualnego wykonywania pracy na podstawie umów cywilnoprawnych.] lub samozatrudnionych, wynosił ",
+    "W 2020 roku zmieniały się proporcje pomiędzy grupami uczniów i absolwentów Państwa szkoły, wyodrębnionymi ze względu na aktywność edukacyjną i zawodową.\n\nW okresie od stycznia do sierpnia 2020 roku^[Tj. do momentu, kiedy obecni absolwenci Państwa szkoły przestali być jej uczniami.] odsetek uczniów ostatnich klas Państwa szkoły pracujących na podstawie umowy o pracę^[W tym na podstawie umowy o pracę w celu przygotowania zawodowego. W tym okresie dla żadnego z obecnych absolwentów Państwa szkoły nie możemy zaobserwować zatrudnienia na podstawie umowy zlecenia, ponieważ byli jeszcze uczniami - w przypadku uczniów i studentów do 26. roku życia nie są dostępne dane dotyczące ewentualnego wykonywania pracy na podstawie umów zleceń] lub samozatrudnionych, wynosił ",
     if (length(unique(sty_sier)) %in% 1) {
       paste0(round(szk$S3_0_01[[1]]$stat1 * 100), "%.\n\n")
     } else {
@@ -360,7 +392,7 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
         sep = ""
       )
     },
-    "Natomiast w okresie od września do grudnia 2020 roku, czyli po ukończeniu Państwa szkoły, odsetek jej absolwentów pracujących na podstawie umowy o pracę, samozatrudnionych, a także - w przypadku osób niekontynuujących nauki - pracujących na podstawie umowy cywilnoprawnej - wynosił łącznie ",
+    "Natomiast w okresie od września do grudnia 2020 odsetek jej absolwentów pracujących na podstawie umowy o pracę, samozatrudnionych, a także - w przypadku osób niekontynuujących nauki - pracujących na podstawie umowy zlecenia - wynosił łącznie ",
     if (length(unique(wrz_gru)) %in% 1) {
       paste0(round(szk$S3_0_09[[1]]$stat1 * 100) + round(szk$S3_0_09[[1]]$stat3 * 100), "%.")
     } else {
@@ -512,9 +544,9 @@ if (szk$E2_nauka_kontyn[[1]]$n >= progLiczebnosci) {
       cat(
         "Wśród absolwentów Państwa szkoły z rocznika 2019/2020 przeważały osoby, które w grudniu 2020 roku ",
         if (round(sposoby * 100) < 50) {
-          paste0("nie kontynuowały nauki w branżowej szkole II stopnia, w liceum dla dorosłych, na Kwalifikacyjnych Kursach Zawodowych ani na Kursach Umiejętności Zawodowych.\n\n")
+          paste0("nie kontynuowały kształcenia (również na KKZ ani KUZ).\n\n")
         } else if (round(sposoby * 100) > 50) {
-          paste0("uczyły się w branżowej szkole II stopnia, liceum dla dorosłych na Kwalifikacyjnych Kursach Zawodowych (KKZ) lub Kursach Umiejętności Zawodowych (KUZ).\n\n")
+          paste0("kontynuowały kształcenie (również na KKZ i KUZ).\n\n")
         },
         sep = ""
       )
@@ -563,7 +595,7 @@ if (szk$E2_nauka_kontyn[[1]]$n >= progLiczebnosci) {
     cat("Żaden z absolwentów Państwa szkoły z rocznika 2019/2020 w grudniu 2020 roku nie kontynuował nauki w szkole branżowej II stopnia, w liceum dla dorosłych, na Kwalifikacyjnych Kursach Zawodowych ani na Kursach Umiejętności Zawodowych.")
   }
 } else {
-  cat("Liczba absolwentów w Państwa szkole nie była wystarczająca (n < 10), żeby możliwe było przedstawienie wyników, zgodnie z zasadą chroniącą anonimowość respondentów.")
+  cat("Liczba absolwentów Państwa szkoły nie była wystarczająca (n < 10), żeby możliwe było przedstawienie wyników, zgodnie z zasadą chroniącą anonimowość respondentów.")
 }
 ```
 
@@ -663,11 +695,11 @@ if (round(szk$E2_nauka_kontyn[[1]]$bs2 * szk$E2_nauka_kontyn[[1]]$n) >= progLicz
     }
   } else {
     cat(
-    "Liczba absolwentów Państwa szkoły kontynuujących naukę w branżowych szkołach II stopnia nie była wystarczająca, żeby możliwe było przedstawienie wyników dla tej grupy zgodnie z zasadą chroniącą anonimowość respondentów. Dlatego tabela z odsetkami absolwentów kontynuujących naukę w poszczególnych branżach nie może zostać zaprezentowana.")
+    "Liczba absolwentów Państwa szkoły kontynuujących naukę w branżowych szkołach II stopnia nie była wystarczająca, żeby - przy zachowaniu zasady chroniącej anonimowość respondentów - możliwe było przedstawienie tabeli z odsetkami absolwentów kontynuujących naukę w poszczególnych branżach.")
   }
 } else {
   cat(
-    "Liczba absolwentów Państwa szkoły kontynuujących naukę w branżowych szkołach II stopnia nie była wystarczająca, żeby możliwe było przedstawienie wyników dla tej grupy zgodnie z zasadą chroniącą anonimowość respondentów. Dlatego tabela z odsetkami absolwentów kontynuujących naukę w poszczególnych branżach nie może zostać zaprezentowana.")
+    "Liczba absolwentów Państwa szkoły kontynuujących naukę w branżowych szkołach II stopnia nie była wystarczająca, żeby - przy zachowaniu zasady chroniącej anonimowość respondentów - możliwe było przedstawienie tabeli z odsetkami absolwentów kontynuujących naukę w poszczególnych branżach.")
 }
 ```
 
@@ -716,15 +748,15 @@ Poszczególni absolwenci w okresie od września do grudnia 2020 roku mogli praco
 
 ```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE}
 if (szk$Z4_ucz[[1]]$n >= progLiczebnosci) {
-  cat("W przypadku absolwentów, którzy w danym miesiącu byli uczniami szkoły ponadpodstawowej, bierzemy pod uwagę jedynie pracę na etat oraz samozatrudnienie, ponieważ w ich przypadku brak informacji na temat zatrudnienia na podstawie umów cywilnoprawnych^[Ze względu na brak w rejestrze ZUS danych dotyczące ewentualnego wykonywania pracy na podstawie umów cywilnoprawnych przez uczniów i studentów do 26. roku życia.].\n\n")
+  cat("W przypadku absolwentów, którzy w danym miesiącu byli uczniami szkoły ponadpodstawowej, bierzemy pod uwagę jedynie pracę na etat oraz samozatrudnienie, ponieważ w ich przypadku brak informacji na temat zatrudnienia na podstawie umów zleceń^[Ze względu na brak w rejestrze ZUS danych dotyczące ewentualnego wykonywania pracy na podstawie umów zleceń przez uczniów i studentów do 26. roku życia.].\n\n")
 }
 
 if (szk$Z4_nie_ucz[[1]]$n >= progLiczebnosci) {
-  cat("W przypadku absolwentów, którzy w danym miesiącu nie kontynuowali nauki w szkole ponadpodstawowej, jako “pracę” uwzględniamy zarówno pracę na etat oraz samozatrudnienie, jak i pracę na podstawie umowy cywilnoprawnej.\n\n")
+  cat("W przypadku absolwentów, którzy w danym miesiącu nie kontynuowali nauki w szkole ponadpodstawowej, jako “pracę” uwzględniamy zarówno pracę na etat oraz samozatrudnienie, jak i pracę na podstawie umowy zlecenia.\n\n")
 }
 
 if ((szk$Z4_ucz[[1]]$n >= progLiczebnosci) & (szk$Z4_nie_ucz[[1]]$n >= progLiczebnosci)) {
-  cat("W związku z tym wskaźnik jest prezentowany oddzielnie dla każdej z tych grup^[Ten sam absolwent, jeżeli był uczniem tylko przez część rozpatrywanego okresu, jest uwzględniany w dwóch grupach. Na przykład absolwent, który uczył się od września do listopada a pracował od października do grudnia zostanie uwzględniony z wartością wskaźnika 67% (2/3) w grupie absolwentów będących uczniami oraz z wartością wskaźnika 100% (1/1) w grupie absolwentów nieuczących się.].\n\n")
+  cat("W związku z tym wskaźnik jest prezentowany oddzielnie dla każdej z tych grup^[Ten sam absolwent, jeżeli był uczniem tylko przez część rozpatrywanego okresu, jest uwzględniany w dwóch grupach. Na przykład absolwent, który uczył się od września do listopada a pracował od października do grudnia zostałby uwzględniony z wartością wskaźnika 67% (2/3) w grupie absolwentów będących uczniami oraz z wartością wskaźnika 100% (1/1) w grupie absolwentów nieuczących się.].\n\n")
 }
 ```
 
@@ -733,9 +765,9 @@ if ((szk$Z4_ucz[[1]]$n >= progLiczebnosci) & (szk$Z4_nie_ucz[[1]]$n >= progLicze
 ```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE}
 if (szk$Z4_ucz[[1]]$n >= progLiczebnosci) {
   cat(
-    "W okresie od września do grudnia 2020 absolwenci Państwa szkoły, którzy kontynuowali naukę w kolejnej szkole ponadpodstawowej, pracowali średnio w ciągu ",
+    "Absolwenci Państwa szkoły, którzy kontynuowali naukę w kolejnej szkole ponadpodstawowej, pracowali średnio w ciągu ",
     round(szk$Z4_ucz[[1]]$srednia * 100),
-    "% tego okresu. Z kolei mediana tego wskaźnika wynosi ",
+    "% okresu od września do grudnia 2020 roku. Z kolei mediana tego wskaźnika wynosi ",
     round(szk$Z4_ucz[[1]]$med * 100),
     "%. Oznacza to, że co najmniej połowa tej grupy absolwentów pracowała przez nie więcej niż ",
     round(szk$Z4_ucz[[1]]$med * 100),
@@ -761,7 +793,7 @@ if (szk$Z4_ucz[[1]]$n >= progLiczebnosci) {
     pivot_longer(everything()) %>% 
     as.list()
   przeprac_ods$name = c(
-    "nie pracowały w okresie (między wrześniem a grudniem 2020 roku) poświęconym na naukę",
+    "od września do grudnia 2020 roku nie pracowały",
     "pracowały przez jedną czwartą okresu (między wrześniem a grudniem 2020 roku) poświęconego na naukę",
     "pracowały przez jedną trzecią okresu (między wrześniem a grudniem 2020 roku) poświęconego na naukę",
     "pracowały przez połowę okresu (między wrześniem a grudniem 2020 roku) poświęconego na naukę",
@@ -809,7 +841,7 @@ if (szk$Z4_ucz[[1]]$n >= progLiczebnosci) {
     mutate(name = ordered(name, levels = c("brak\npracy", "1/4", "1/3", "1/2", "2/3", "3/4", "cały\nokres")))
   
   wyk_facet_6_ad1(tab_wyk,
-                  paste0("Wykres ", wyk_num(), ": Procentowy udział grup wyróżnionych ze względu na część przepracowane-\ngo okresu wśród absolwentów Państwa szkoły oraz pozostałych branżowych szkół w\nwojewództwie i w kraju, w okresie od września do grudnia 2020 - uczący się w szkołach\nponadpodstawowych."),
+                  paste0("Wykres ", wyk_num(), ": Procentowy udział grup wyróżnionych ze względu na część przepracowane-\ngo okresu wśród absolwentów Państwa szkoły oraz pozostałych branżowych szkół I stopnia w\nwojewództwie i w kraju, w okresie od września do grudnia 2020 - uczący się w szkołach\nponadpodstawowych."),
                   "name",
                   "Przepracowany okres")
 } else {
@@ -826,7 +858,7 @@ if (szk$Z4_nie_ucz[[1]]$n >= progLiczebnosci) {
   cat(
     "W okresie od września do grudnia 2020 absolwenci Państwa szkoły, którzy nie byli wtedy uczniami szkoły ponadpodstawowej, pracowali średnio w ciągu ",
     round(szk$Z4_nie_ucz[[1]]$srednia * 100),
-    "% tego okresu. Z kolei mediana (tzw. wartość przeciętna) tego wskaźnika wynosi ",
+    "% tego okresu. Z kolei mediana tego wskaźnika wynosi ",
     round(szk$Z4_nie_ucz[[1]]$med * 100),
     "%. Oznacza to, że co najmniej połowa tej grupy absolwentów pracowała przez nie więcej niż ",
     round(szk$Z4_nie_ucz[[1]]$med * 100),
@@ -900,7 +932,7 @@ if (szk$Z4_nie_ucz[[1]]$n >= progLiczebnosci) {
     mutate(name = ordered(name, levels = c("brak\npracy", "1/4", "1/3", "1/2", "2/3", "3/4", "cały\nokres")))
   
   wyk_facet_6_ad1(tab_wyk,
-                  paste0("Wykres ", wyk_num(), ": Procentowy udział grup wyróżnionych ze względu na część przepracowane-\ngo okresu wśród absolwentów Państwa szkoły oraz pozostałych branżowych szkół w\nwojewództwie i w kraju, w okresie od września do grudnia 2020 - nie uczący się w\nszkołach ponadpodstawowych."),
+                  paste0("Wykres ", wyk_num(), ": Procentowy udział grup wyróżnionych ze względu na część przepracowane-\ngo okresu wśród absolwentów Państwa szkoły oraz pozostałych branżowych szkół I sropnia w\nwojewództwie i w kraju, w okresie od września do grudnia 2020 - nie uczący się w\nszkołach ponadpodstawowych."),
                   "name",
                   "Przepracowany okres")
 } else {
@@ -1017,7 +1049,7 @@ if (szk$Z8_formy_nie_ucz[[1]]$n >= progLiczebnosci) {
 }
 ```
 
-## Kontynuowanie pracy we wrześniu 2020 roku u pracodawcy zatrudniającego absolwenta jako młodocianego^[https://poradnikprzedsiebiorcy.pl/-mlodociany-ktory-ukonczyl-nauke-zawodu-a-zatrudnienie]
+## Kontynuowanie pracy we wrześniu 2020 roku u pracodawcy, który gdy absolwent był uczniem zatrudniał go jako młodocianego^[https://poradnikprzedsiebiorcy.pl/-mlodociany-ktory-ukonczyl-nauke-zawodu-a-zatrudnienie]
 
 ```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE}
 if (szk$Z9_mlod_wrz[[1]]$n >= progLiczebnosci) {
@@ -1061,16 +1093,16 @@ if (szk$Z9_mlod_wrz[[1]]$n >= progLiczebnosci) {
 }
 ```
 
-## Wynagrodzenie brutto z pracy w okresie od września do grudnia 2020 roku
+## Przychody brutto z pracy w okresie od września do grudnia 2020 roku
 
 ### Absolwenci będący uczniami
 
 ```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE, fig.height=6}
 if (szk$W1_ucz[[1]]$n >= progLiczebnosci) {
   cat(
-    "W przypadku absolwentów Państwa szkoły, którzy kontynuowali naukę w szkole ponadpodstawowej i przez co najmniej część okresu od września do grudnia 2020 roku pracowali^[Uwzględniono wyłącznie umowy o pracę.], średnie miesięczne wynagrodzenie brutto^[Średnią (arytmetyczną) obliczono wyłącznie dla miesięcy, w których absolwenci pracowali. Nie uwzględniono przychodów osób, które przekroczyły kwotę rocznego ograniczenia podstawy wymiaru składek na ubezpieczenie emerytalne i rentowe (tj. 30 krotność prognozowanego wynagrodzenia brutto, czyli w 2021 roku przeciętne miesięczne zarobki na poziomie 13 147 zł), w miesiącach, w których to przekroczenie wystąpiło.] w przepracowanych miesiącach wyniósł ",
+    "W przypadku absolwentów Państwa szkoły, którzy kontynuowali naukę w szkole ponadpodstawowej i przez co najmniej część okresu od września do grudnia 2020 roku pracowali^[Uwzględniono wyłącznie umowy o pracę oraz wykonywanie własnej działalności gospodarczej.], miesięczne przychody brutto^[Średnią (arytmetyczną) obliczono wyłącznie dla miesięcy, w których absolwenci pracowali. Nie uwzględniono przychodów osób, które przekroczyły kwotę rocznego ograniczenia podstawy wymiaru składek na ubezpieczenie emerytalne i rentowe (tj. 30 krotność prognozowanego wynagrodzenia brutto, czyli w 2021 roku przeciętne miesięczne zarobki na poziomie 13 147 zł), w miesiącach, w których to przekroczenie wystąpiło.] w przepracowanych miesiącach wyniosły średnio ",
     round(szk$W1_ucz[[1]]$sred),
-    " zł a mediana ",
+    " zł a ich mediana ",
     round(szk$W1_ucz[[1]]$med),
     " zł. W przypadku absolwentów pozostałych branżowych szkół I stopnia z województwa ",
     szk$formy[[1]]$woj_dop,
@@ -1098,8 +1130,8 @@ if (szk$W1_ucz[[1]]$n >= progLiczebnosci) {
     select(-sred)
   
   wykres = boxplot_zl_4_ad1(tab_wyk,
-                paste0("Wykres ", wyk_num(), ": Miesięczne wynagrodzenie brutto z pracy absolwentów Państwa szkoły oraz\npozostałych branżowych szkół w województwie i w kraju, w okresie od września\ndo grudnia 2020 roku - pracujący i uczący się w szkole ponadpodstawowej (mediana,\nrozstęp międzyćwiartkowy)")) +
-    ylab("Średni miesięczny przychód z pracy w okresie\nod grudnia 2020 roku (zł)")
+                paste0("Wykres ", wyk_num(), ": Miesięczne przychody brutto z pracy absolwentów Państwa szkoły oraz\npozostałych branżowych szkół I stopnia w województwie i w kraju, w okresie od września\ndo grudnia 2020 roku - pracujący i uczący się w szkole ponadpodstawowej (mediana,\nrozstęp międzyćwiartkowy)")) +
+    ylab("Średni miesięczny przychód z pracy w okresie\nod września do grudnia 2020 roku (zł)")
   
   print(wykres)
   
@@ -1118,7 +1150,7 @@ if (szk$W1_ucz[[1]]$n >= progLiczebnosci) {
 ```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE, fig.height=6}
 if (szk$W1_nie_ucz[[1]]$n >= progLiczebnosci) {
   cat(
-    "Niekontynuujący nauki w szkole ponadpodstawowej absolwenci Państwa szkoły, którzy przez co najmniej część okresu od września do grudnia 2020 roku pracowali^[Uwzględniono zarówno umowy o pracę, jak i umowy cywilnoprawne, dlatego wartość wskaźnika nie jest porównywalna z wartością wskaźnika dla absolwentów będących uczniami.], uzyskiwali z tego tytułu średnie miesięczne wynagrodzenie brutto^[Średnią (arytmetyczną) obliczono wyłącznie dla miesięcy, w których absolwenci pracowali. Nie uwzględniono przychodów osób, które przekroczyły kwotę rocznego ograniczenia podstawy wymiaru składek na ubezpieczenie emerytalne i rentowe (tj. 30 krotność prognozowanego wynagrodzenia brutto, czyli w 2021 roku przeciętne miesięczne zarobki na poziomie 13 147 zł), w miesiącach, w których to przekroczenie wystąpiło.] w wysokości ",
+    "Niekontynuujący nauki w szkole ponadpodstawowej absolwenci Państwa szkoły, którzy przez co najmniej część okresu od września do grudnia 2020 roku pracowali^[Uwzględniono zarówno umowy o pracę oraz wykonywanie własnej działalności gospodarczej, jak i umowy zlecenia, dlatego wartość wskaźnika nie jest porównywalna z wartością wskaźnika dla absolwentów będących uczniami.], uzyskiwali z tego tytułu średnie miesięczne wynagrodzenie brutto^[Średnią (arytmetyczną) obliczono wyłącznie dla miesięcy, w których absolwenci pracowali. Nie uwzględniono przychodów osób, które przekroczyły kwotę rocznego ograniczenia podstawy wymiaru składek na ubezpieczenie emerytalne i rentowe (tj. 30 krotność prognozowanego wynagrodzenia brutto, czyli w 2021 roku przeciętne miesięczne zarobki na poziomie 13 147 zł), w miesiącach, w których to przekroczenie wystąpiło.] w wysokości ",
     round(szk$W1_nie_ucz[[1]]$sred),
     " zł. Mediana średniego miesięcznego przychodu z pracy wynosi z kolei wśród absolwentów Państwa szkoły ",
     round(szk$W1_nie_ucz[[1]]$med),
@@ -1162,7 +1194,7 @@ if (szk$W1_nie_ucz[[1]]$n >= progLiczebnosci) {
 }
 ```
 
-## Przychody absolwenta z pracy etatowej w odniesieniu do średnich zarobków w jego powiecie zamieszkania od września do grudnia 2020 roku
+## Przychody absolwentów z pracy etatowej w okresie od września do grudnia 2020 roku w odniesieniu do średniego wynagrodzenia w powiatach, w których mieszkali
 
 Wskaźnik, którego wartości prezentujemy na poniższym wykresie, pokazuje stosunek przychodów absolwentów Państwa szkoły z pracy etatowej do średniego miesięcznego wynagrodzenia^[Według danych publikowanych w [Banku Danych Lokalnych Głównego Urzędu Statystycznego.](https://stat.gov.pl/metainformacje/slownik-pojec/pojecia-stosowane-w-statystyce-publicznej/693,pojecie.html?pdf=1)] osób mieszkających w tych samych powiatach. Dla poszczególnych absolwentów wartość wskaźnika równa 100% oznaczałaby, że ich średnie zarobki z pracy etatowej były takie same, jak średnie wynagrodzenie mieszkańców danego powiatu.
 
@@ -1258,7 +1290,7 @@ if (szk$W3_nie_ucz[[1]]$n >= progLiczebnosci) {
 
 ## Bezrobocie rejestrowane od września do grudnia 2020 roku
 
-Poszczególni absolwenci Państwa szkoły pomiędzy jej ukończeniem a końcem roku kalendarzowego, w którym to nastąpiło (tj. w okresie od września do grudnia 2020 roku) mogli być zarejestrowani jako bezrobotni w ciągu maksymalnie czterech miesięcy. Wskaźnik przyjąłby maksymalną wartość, gdyby wszyscy absolwenci Państwa szkoły w każdym z tych miesięcy byli zarejestrowani jako osoby bezrobotne. Natomiast wartość minimalną (zero miesięcy) - gdyby żaden z nich nie był bezrobotny nawet przez krótki okres.
+Poszczególni absolwenci Państwa szkoły pomiędzy jej ukończeniem a końcem roku kalendarzowego, w którym to nastąpiło (tj. w okresie od września do grudnia 2020 roku) mogli być zarejestrowani jako bezrobotni w ciągu maksymalnie czterech miesięcy. 
 
 ```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE, fig.height=3}
 if (szk$l_abs[[1]] >= progLiczebnosci) {
@@ -1273,21 +1305,7 @@ if (szk$l_abs[[1]] >= progLiczebnosci) {
     round(woj$B2_bezrob[[1]]$value[woj$B2_bezrob[[1]]$l_mies_bezrob %in% 0] * 100),
     "% i ",
     round(woj$B2_bezrob[[1]]$value[woj$B2_bezrob[[1]]$l_mies_bezrob %in% 4] * 100),
-    "%.\n\nŚrednia liczba miesięcy bezrobocia rejestrowanego, obliczona dla wszystkich absolwentów Państwa szkoły objętych monitoringiem, wyniosła ",
-    round(szk$B2_bezrob[[1]]$srednia, 2),
-    ", natomiast mediana ",
-    szk$B2_bezrob[[1]]$mediana,
-    ". Dla absolwentów pozostałych branżowych szkół I stopnia z województwa ",
-    szk$formy[[1]]$woj_dop,
-    " średnia wynosiła ",
-    round(woj$B2_bezrob[[1]]$srednia, 2),
-    " a mediana ",
-    woj$B2_bezrob[[1]]$mediana,
-    ", a w skali całego kraju, odpowiednio ",
-    round(kraj$B2_bezrob[[1]]$srednia, 2),
-    " oraz ",
-    kraj$B2_bezrob[[1]]$mediana,
-    ".\n\n",
+    "%.\n\n",
     sep = ""
   )
   
@@ -1337,29 +1355,16 @@ if (szk$l_abs[[1]] >= progLiczebnosci) {
                   "mies",
                   "Liczba miesięcy bezrobocia")
 } else {
-  cat("Liczba absolwentów w Państwa szkole nie była wystarczająca (n < 10), żeby możliwe było przedstawienie wyników, zgodnie z zasadą chroniącą anonimowość respondentów.")
+  cat("Liczba absolwentów Państwa szkoły nie była wystarczająca (n < 10), żeby możliwe było przedstawienie wyników, zgodnie z zasadą chroniącą anonimowość respondentów.")
 }
 ```
 
 ## Liczba miesięcy bierności edukacyjnej i zawodowej od września do grudnia 2020 roku
 
-Wskaźnik mierzy długość okresu, w ciągu którego absolwenci Państwa szkoły byli bierni zawodowo. Sposób obliczania wartości wskaźnika jest analogiczny, jak w przypadku wskaźnika dotyczącego bezrobocia rejestrowanego, który został omówiony w poprzednim rozdziale.
+Wskaźnik mierzy długość okresu, w ciągu którego absolwenci Państwa szkoły byli bierni zawodowo.
 
 ```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE, fig.height=3}
 if (szk$l_abs[[1]] >= progLiczebnosci) {
-  cat(
-    "Absolwenci Państwa szkoły nie pracowali, nie byli zarejestrowani jako bezrobotni ani nie uczyli się w szkole ponadpodstawowej średnio przez ",
-    round(szk$N2_biernosc[[1]]$srednia, 2),
-    " miesięcy, absolwenci pozostałych branżowych szkół I stopnia z województwa ",
-    szk$formy[[1]]$woj_dop,
-    " średnio przez ",
-    round(woj$N2_biernosc[[1]]$srednia, 2),
-    " miesięcy, podczas gdy w kraju ten wskaźnik wyniósł ",
-    round(kraj$N2_biernosc[[1]]$srednia, 2),
-    ".\n\n",
-    sep = ""
-  )
-  
   liczba_mies = szk$N2_biernosc[[1]] %>% 
     as_tibble() %>% 
     select(-c(n, srednia, mediana)) %>% 
@@ -1406,6 +1411,12 @@ if (szk$l_abs[[1]] >= progLiczebnosci) {
                   "mies",
                   "Liczba miesięcy bierności")
 } else {
-  cat("Liczba absolwentów w Państwa szkole nie była wystarczająca (n < 10), żeby możliwe było przedstawienie wyników, zgodnie z zasadą chroniącą anonimowość respondentów.")
+  cat("Liczba absolwentów Państwa szkoły nie była wystarczająca (n < 10), żeby możliwe było przedstawienie wyników, zgodnie z zasadą chroniącą anonimowość respondentów.")
 }
 ```
+
+`r ifelse(typDokumentu %in% "pdf", "---", "")`
+
+Więcej informacji o monitorowaniu losów absolwentów znajdą Państwo na stronie:
+
+<https://losyabsolwentow.ibe.edu.pl/>

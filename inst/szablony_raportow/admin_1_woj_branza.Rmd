@@ -443,7 +443,7 @@ if (woj$S3_0_12[[1]]$n >= progLiczebnosci) {
   tab = tab_wykres_ad1(woj$S3_0_12[[1]],
                        kraj$S3_0_12[[1]],
                        NULL,
-                       szk$formy[[1]]$woj_dop,
+                       woj$formy[[1]]$woj_dop,
                        nazwy_wierszy_1) %>% 
     mutate(name = ordered(name, levels = c(
       "Brak nauki i brak pracy",

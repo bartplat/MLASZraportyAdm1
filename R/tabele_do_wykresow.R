@@ -53,7 +53,7 @@ tab_wykres_ad1 = function(dane_szk, dane_woj, dane_kraj, wojewodztwo_dop, etykie
       mutate(lab = ifelse(round(value, 2) >= 0.06,
                           paste0(round(value * 100), "%"),
                           ""),
-             typ = paste0("Pozostałe szkoły branżowe z\nwojewództwa ", wojewodztwo_dop))
+             typ = paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", wojewodztwo_dop))
     tab_woj$name = etykiety
   } else {
     tab_woj = NULL
@@ -67,7 +67,7 @@ tab_wykres_ad1 = function(dane_szk, dane_woj, dane_kraj, wojewodztwo_dop, etykie
       mutate(lab = ifelse(round(value, 2) >= 0.06,
                           paste0(round(value * 100), "%"),
                           ""),
-             typ = "Szkoły branżowe\nw całej Polsce")
+             typ = "Branżowe szkoły I stopnia\nw całej Polsce")
     tab_kraj$name = etykiety
   } else {
     tab_kraj = NULL
@@ -111,7 +111,7 @@ tab_facet_ad1 = function(dane_szk, dane_woj, dane_kraj) {
     tab_woj = dane_woj %>%
       as_tibble() %>%
       select(mies =  starts_with("l_mies_"), value, -c(srednia, mediana)) %>%
-      mutate(typ = "Pozostałe szkoły branżowe w\nwojewództwie") %>%
+      mutate(typ = "Pozostałe branżowe szkoły I stopnia\nw województwie") %>%
       arrange(mies)
     tab_woj$typ = as.factor(tab_woj$typ)
   } else {
@@ -122,7 +122,7 @@ tab_facet_ad1 = function(dane_szk, dane_woj, dane_kraj) {
     tab_kraj = dane_kraj %>%
       as_tibble() %>%
       select(mies =  starts_with("l_mies_"), value, -c(srednia, mediana)) %>%
-      mutate(typ = "Szkoły branżowe\nw całej Polsce") %>%
+      mutate(typ = "Branżowe szkoły I stopnia\nw całej Polsce") %>%
       arrange(mies)
     tab_kraj$typ = as.factor(tab_kraj$typ)
   } else {
@@ -167,7 +167,7 @@ tab_facet_z4_ad1 = function(dane_szk, dane_woj, dane_kraj) {
     tab_woj = dane_woj %>%
       as_tibble() %>%
       select(mies =  starts_with("l_mies_"), value, -c(srednia, mediana)) %>%
-      mutate(typ = "Pozostałe szkoły branżowe w\nwojewództwie") %>%
+      mutate(typ = "Pozostałe branżowe szkoły I stopnia\nw województwie") %>%
       arrange(mies)
     tab_woj$typ = as.factor(tab_woj$typ)
   } else {
@@ -178,7 +178,7 @@ tab_facet_z4_ad1 = function(dane_szk, dane_woj, dane_kraj) {
     tab_kraj = dane_kraj %>%
       as_tibble() %>%
       select(mies =  starts_with("l_mies_"), value, -c(srednia, mediana)) %>%
-      mutate(typ = "Szkoły branżowe\nw całej Polsce") %>%
+      mutate(typ = "Branżowe szkoły I stopnia\nw całej Polsce") %>%
       arrange(mies)
     tab_kraj$typ = as.factor(tab_kraj$typ)
   } else {
