@@ -404,7 +404,7 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
       paste0(
         "od ",
         min(wrz_gru),
-        if (names(wrz_gru[wrz_gru == min(wrz_gru)]) %in% "wrześniu") {
+        if (unique(names(wrz_gru[wrz_gru == min(wrz_gru)])) %in% "wrześniu") {
           paste0("% we ")
         } else {
           paste0("% w ")
@@ -412,7 +412,7 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
         paste(names(wrz_gru[wrz_gru == min(wrz_gru)]), collapse = ", "),
         " do ",
         max(wrz_gru),
-        if (names(wrz_gru[wrz_gru == max(wrz_gru)]) %in% "wrześniu") {
+        if (unique(names(wrz_gru[wrz_gru == max(wrz_gru)])) %in% "wrześniu") {
           paste0("% we ")
         } else {
           paste0("% w ")
