@@ -1398,7 +1398,7 @@ if (szk$l_abs[[1]] >= progLiczebnosci) {
   
   tab_wyk$typ = ordered(tab_wyk$typ, levels = c(
     "Państwa szkoła",
-    "Pozostałe branżowe szkoły I stopnia\nw województwie",
+    paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
     "Branżowe szkoły I stopnia\nw całej Polsce"))
   
   wyk_facet_6_ad1(tab_wyk,
@@ -1460,7 +1460,7 @@ if (szk$l_abs[[1]] >= progLiczebnosci) {
   
   tab_wyk$typ = ordered(tab_wyk$typ, levels = c(
     "Państwa szkoła",
-    "Pozostałe branżowe szkoły I stopnia\nw województwie",
+    paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
     "Branżowe szkoły I stopnia\nw całej Polsce"))
   
   wyk_facet_6_ad1(tab_wyk,
