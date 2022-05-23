@@ -87,14 +87,21 @@ tab_wykres_ad1 = function(dane_szk, dane_woj, dane_kraj, wojewodztwo_dop, etykie
 #' województwo (lub wartość NULL jeśli ten poziom agregacji nie jest wymagany)
 #' @param dane_kraj lista zawierająca wskaźniki na poziomie agregacji: cały kraj
 #' (lub wartość NULL jeśli ten poziom agregacji nie jest wymagany)
+#' @param wojewodztwo_dop nazwa województwa, w którym znajduje się dana szkoła w
+#' formie dopełniacza (lub wartość NULL jeśli brak takiej potrzeby)
 #' @export
 #' @return ramka danych w formacie tibble
 #' @importFrom tibble as_tibble
 #' @importFrom dplyr select starts_with mutate arrange
-tab_facet_ad1 = function(dane_szk, dane_woj, dane_kraj) {
+tab_facet_ad1 = function(dane_szk, dane_woj, dane_kraj, wojewodztwo_dop) {
   stopifnot(is.list(dane_szk) | is.null(dane_szk),
             is.list(dane_woj) | is.null(dane_woj),
             is.list(dane_kraj) | is.null(dane_kraj))
+  if (!is.null(wojewodztwo_dop)) {
+    stopifnot(is.character(wojewodztwo_dop),
+              length(wojewodztwo_dop) %in% 1,
+              nchar(wojewodztwo_dop) > 1)
+  }
 
   if (!is.null(dane_szk)) {
     tab_szk = dane_szk %>%
@@ -111,7 +118,7 @@ tab_facet_ad1 = function(dane_szk, dane_woj, dane_kraj) {
     tab_woj = dane_woj %>%
       as_tibble() %>%
       select(mies =  starts_with("l_mies_"), value, -c(srednia, mediana)) %>%
-      mutate(typ = "Pozostałe branżowe szkoły I stopnia\nw województwie") %>%
+      mutate(typ = paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", wojewodztwo_dop)) %>%
       arrange(mies)
     tab_woj$typ = as.factor(tab_woj$typ)
   } else {
@@ -143,6 +150,8 @@ tab_facet_ad1 = function(dane_szk, dane_woj, dane_kraj) {
 #' województwo (lub wartość NULL jeśli ten poziom agregacji nie jest wymagany)
 #' @param dane_kraj lista zawierająca wskaźniki na poziomie agregacji: cały kraj
 #' (lub wartość NULL jeśli ten poziom agregacji nie jest wymagany)
+#' @param wojewodztwo_dop nazwa województwa, w którym znajduje się dana szkoła w
+#' formie dopełniacza (lub wartość NULL jeśli brak takiej potrzeby)
 #' @export
 #' @return ramka danych w formacie tibble
 #' @importFrom tibble as_tibble
@@ -151,6 +160,11 @@ tab_facet_z4_ad1 = function(dane_szk, dane_woj, dane_kraj) {
   stopifnot(is.list(dane_szk) | is.null(dane_szk),
             is.list(dane_woj) | is.null(dane_woj),
             is.list(dane_kraj) | is.null(dane_kraj))
+  if (!is.null(wojewodztwo_dop)) {
+    stopifnot(is.character(wojewodztwo_dop),
+              length(wojewodztwo_dop) %in% 1,
+              nchar(wojewodztwo_dop) > 1)
+  }
 
   if (!is.null(dane_szk)) {
     tab_szk = dane_szk %>%
@@ -167,7 +181,7 @@ tab_facet_z4_ad1 = function(dane_szk, dane_woj, dane_kraj) {
     tab_woj = dane_woj %>%
       as_tibble() %>%
       select(mies =  starts_with("l_mies_"), value, -c(srednia, mediana)) %>%
-      mutate(typ = "Pozostałe branżowe szkoły I stopnia\nw województwie") %>%
+      mutate(typ = paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", wojewodztwo_dop)) %>%
       arrange(mies)
     tab_woj$typ = as.factor(tab_woj$typ)
   } else {

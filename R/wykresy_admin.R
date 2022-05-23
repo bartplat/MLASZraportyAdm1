@@ -20,7 +20,7 @@ wykres_poziomy_1_ad1 = function(x, tytul) {
                 y = .data$value,
                 fill = .data$name)) +
     geom_bar(width = 0.75, stat = "identity", colour = "white") +
-    scale_fill_brewer(palette = "RdPu", guide = guide_legend(reverse = TRUE)) +
+    scale_fill_brewer(palette = "RdYlGn", guide = guide_legend(reverse = TRUE)) +
     scale_y_continuous(labels = scales::percent) +
     labs(fill = NULL,
          title = tytul) +
@@ -67,7 +67,7 @@ wave_chart_2_ad1 = function(x, tytul) {
           axis.ticks.x = element_blank(),
           # plot.title.position = "plot",
           plot.title = element_text(size = 11)) +
-    scale_fill_brewer(palette = "RdPu", guide = guide_legend(reverse = TRUE)) +
+    scale_fill_brewer(palette = "RdYlGn", guide = guide_legend(reverse = TRUE)) +
     guides(fill = guide_legend(nrow = 6, byrow = TRUE, reverse = TRUE), title = NULL) +
     scale_y_continuous(labels = scales::percent) +
     ylab("Odsetek absolwentów szkoły") +
@@ -88,17 +88,17 @@ wave_chart_2_ad1 = function(x, tytul) {
 #' @importFrom ggplot2 ggplot geom_bar scale_fill_brewer scale_y_continuous
 #' labs geom_text coord_flip theme guides ylab xlab
 #' @importFrom dplyr .data
-wykres_poziomy_3_ad1 = function(x, tytul) {
+wykres_poziomy_3_ad1 = function(x, tytul = "Odsetek absolwentów Państwa szkoły, którzy w grudniu 2020 roku...") {
   stopifnot(is_tibble(x),
             ifelse(is.null(tytul), FALSE, nchar(tytul) > 1))
 
   ggplot(x, aes(x = .data$name, y = .data$value)) +
-    geom_bar(width = 0.9, stat = "identity", colour = "white", fill = "#f768a1", position = position_dodge(width = 0.9)) +
+    geom_bar(width = 0.9, stat = "identity", colour = "white", fill = "#90CF60", position = position_dodge(width = 0.9)) +
     scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
     scale_x_discrete(limits = rev) +
     labs(fill = NULL,
-         title = "Odsetek absolwentów Państwa szkoły, którzy w grudniu 2020 roku...") +
-    geom_text(aes(label = x$lab), position = position_stack(vjust = 0.5), size = 3, hjust = ifelse(round(x$value * 100) < 6, -1, 0.5)) +
+         title = tytul) +
+    geom_text(aes(label = x$lab), position = position_stack(vjust = 0.5), size = 3, hjust = ifelse(round(x$value * 100) < 6, -1, 0.5), colour = "#000000") +
     ylab(NULL) +
     xlab(NULL) +
     coord_flip() +
@@ -135,13 +135,15 @@ boxplot_proc_4_ad1 = function(x, tytul) {
                      ymax = .data$q95),
                  stat = "identity",
                  width = 0.8) +
-    scale_fill_brewer(palette = "RdPu", direction = -1) +
+    scale_fill_brewer(palette = "RdYlGn", direction = -1) +
+    scale_y_continuous(limits = c(0.0, 1.0), expand = c(0,0)) +
     theme(legend.position = "none",
           panel.background = element_rect(fill = "white"),
           axis.ticks.y = element_blank(),
           axis.ticks.x = element_blank(),
           plot.title.position = "plot",
-          plot.title = element_text(size = 11)) +
+          plot.title = element_text(size = 11),
+          panel.border = element_rect(colour = "lightgrey", fill = NA, size = 1)) +
     scale_y_continuous(labels = scales::percent) +
     xlab(NULL) +
     labs(title = tytul) %>%
@@ -171,13 +173,15 @@ boxplot_zl_4_ad1 = function(x, tytul) {
                      ymax = .data$q95),
                  stat = "identity",
                  width = 0.8) +
-    scale_fill_brewer(palette = "RdPu", direction = -1) +
+    scale_fill_brewer(palette = "RdYlGn", direction = -1) +
+    scale_y_continuous(limits = c(0.0, max(x$q95) + 500), expand = c(0,0)) + 
     theme(legend.position = "none",
           panel.background = element_rect(fill = "white"),
           axis.ticks.y = element_blank(),
           axis.ticks.x = element_blank(),
           plot.title.position = "plot",
-          plot.title = element_text(size = 11)) +
+          plot.title = element_text(size = 11),
+          panel.border = element_rect(colour = "lightgrey", fill = NA, size = 1)) +
     xlab(NULL) +
     labs(title = tytul) %>%
     return()
@@ -201,11 +205,10 @@ wyk_pion_skum_5_ad1 = function(x, tytul) {
   ggplot(x, aes(x = .data$typ, y = .data$value, fill = .data$name)) +
     geom_bar(width = 0.75, stat = "identity", colour = "white") +
     scale_y_continuous(labels = scales::percent) +
-    scale_fill_brewer(palette = "RdPu") +
+    scale_fill_brewer(palette = "RdYlGn") +
     labs(fill = NULL,
          title = tytul) +
-    geom_text(aes(label = lab), position = position_stack(vjust = 0.5), size = 3,
-              colour = "#ffffff") +
+    geom_text(aes(label = lab), position = position_stack(vjust = 0.5), size = 3, colour = "#000000") +
     ylab(NULL) +
     xlab(NULL) +
     theme(legend.position = "bottom",
@@ -242,7 +245,7 @@ wyk_facet_6_ad1 = function(x, tytul, os_x, tytul_x) {
     facet_grid(cols = vars(.data$typ)) +
     ylab(NULL) +
     ylim(c(0, 1)) +
-    scale_fill_brewer(palette = "RdPu", direction = -1) +
+    scale_fill_brewer(palette = "RdYlGn", direction = -1) +
     theme(legend.position = "none",
           panel.background = element_rect(fill = "white", colour = "lightgrey"),
           axis.ticks.y = element_blank(),

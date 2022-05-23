@@ -177,11 +177,11 @@ Wskaźnik prezentowany w tym rozdziale opisuje 6 statusów absolwentów opisują
 data.frame(
   `Kategoria` = "Znaczenie kategorii",
   `1. Nauka i poza rejestrem ZUS` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju) ani nie figurują w rejestrze ZUS z żadnego tytułu. Natomiast nie wiadomo, czy pracują korzystając z ubezpieczenia w innym systemie (np. KRUS), ani czy pracują na podstawie umowy o dzieło lub bez umowy (“na czarno”).",
-  `2. Nauka, brak pracy na podstawie umowy o pracę i brak samozatrudnienia` = "W takiej sytuacji są osoby, o których wiadomo, że odbywają edukację formalną w Polsce a zarazem figurują w rejestrze ZUS z tytułu innego, niż aktualne wykonywanie pracy (analogicznie jak w przypadku kategorii 6).",
+  `2. Nauka, brak pracy na podstawie umowy o pracę i brak samozatrudnienia` = "W takiej sytuacji są osoby, o których wiadomo, że odbywają edukację formalną w Polsce a zarazem figurują w rejestrze ZUS z tytułu innego, niż aktualne wykonywanie pracy (\"innym tytułem\" może być w szczególności status osoby bezrobotnej, przebywanie na urlopie macierzyńskim lub wychowawczym lub zgłoszenie do ubezpieczenia jako członek rodziny osoby ubezpieczonej).",
   `3. Nauka i praca na podstawie umowy o pracę lub samozatrudnienie` = "W takiej sytuacji są osoby, o których wiadomo, że odbywają edukację formalną w Polsce a zarazem figurują w rejestrze ZUS z tytułu aktualnego wykonywania pracy etatowej, prowadzenia indywidualnej działalności gospodarczej albo - ale tylko, jeżeli mają więcej niż 26 lat - umowy zlecenia. Nie jest natomiast uwzględniana praca bez umowy (“na czarno”), praca związana z korzystaniem z ubezpieczenia w innym systemie (np. KRUS), praca na podstawie umowy o dzieło ani - w przypadku osób, które mają nie więcej niż 26 lat - praca na podstawie umowy zlecenia.",
   `4. Brak nauki i praca` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju)  a zarazem figurują w rejestrze ZUS z tytułu aktualnego wykonywania pracy etatowej, umowy zlecenia lub prowadzenia indywidualnej działalności gospodarczej. Nie jest natomiast uwzględniana praca bez umowy (“na czarno”), praca związana z korzystaniem z ubezpieczenia w innym systemie (np. KRUS), ani praca na podstawie umowy o dzieło.",
   `5. Brak nauki i poza rejestrem ZUS` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju) ani nie figurują w rejestrze ZUS z żadnego tytułu. Natomiast nie wiadomo, czy pracują korzystając z ubezpieczenia w innym systemie (np. KRUS), ani czy pracują na podstawie umowy o dzieło lub bez umowy (“na czarno”).",
-  `6. Brak nauki i brak pracy` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju) a zarazem figurują w rejestrze ZUS z tytułu innego, niż aktualne wykonywanie pracy etatowej, umowy zlecenia lub prowadzenie indywidualnej działalności gospodarczej (“innym tytułem” może być w szczególności status osoby bezrobotnej, przebywanie na urlopie macierzyńskim lub wychowawczym lub zgłoszenie do ubezpieczenia jako członek rodziny osoby ubezpieczonej). Natomiast nie jest wykluczone, że pracują bez umowy (“na czarno”) albo (jeżeli nie są zarejestrowane jako bezrobotne) na podstawie umowy o dzieło.",
+  `6. Brak nauki i brak pracy` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju) a zarazem figurują w rejestrze ZUS z tytułu innego, niż aktualne wykonywanie pracy etatowej, umowy zlecenia lub prowadzenie indywidualnej działalności gospodarczej (jak w przypadku kategorii 2). Natomiast nie jest wykluczone, że pracują bez umowy (“na czarno”) albo (jeżeli nie są zarejestrowane jako bezrobotne) na podstawie umowy o dzieło.",
   check.names = FALSE) %>% 
   pivot_longer(everything()) %>% 
   rename(`Kategoria` = name,
@@ -199,6 +199,7 @@ data.frame(
   column_spec(2, width = "12cm")
 ```
 
+\hfill\break
 \hfill\break
 \hfill\break
 
@@ -289,7 +290,7 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
     mutate(typ = factor(typ, rev(unique(typ))))
   
   wykres_poziomy_1_ad1(tab,
-                       paste0("Wykres ", wyk_num(), ": Status edukacyjno-zawodowy absolwentów Państwa szkoły oraz pozostałych\nbranżowych szkół województwie i w kraju, w grudniu 2020 roku - ogółem"))
+                       paste0("Wykres ", wyk_num(), ": Status edukacyjno-zawodowy absolwentów Państwa szkoły oraz pozostałych\nbranżowych szkół w województwie i w kraju, w grudniu 2020 roku - ogółem"))
 }
 ```
 
@@ -840,6 +841,11 @@ if (szk$Z4_ucz[[1]]$n >= progLiczebnosci) {
     filter(!(name %in% c("srednia", "mediana"))) %>% 
     mutate(name = ordered(name, levels = c("brak\npracy", "1/4", "1/3", "1/2", "2/3", "3/4", "cały\nokres")))
   
+  tab_wyk$typ = ordered(tab_wyk$typ, levels = c(
+    "Państwa szkoła",
+    paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
+    "Branżowe szkoły I stopnia\nw całej Polsce"))
+  
   wyk_facet_6_ad1(tab_wyk,
                   paste0("Wykres ", wyk_num(), ": Procentowy udział grup wyróżnionych ze względu na część przepracowane-\ngo okresu wśród absolwentów Państwa szkoły oraz pozostałych branżowych szkół I stopnia w\nwojewództwie i w kraju, w okresie od września do grudnia 2020 - uczący się w szkołach\nponadpodstawowych."),
                   "name",
@@ -931,6 +937,11 @@ if (szk$Z4_nie_ucz[[1]]$n >= progLiczebnosci) {
     filter(!(name %in% c("srednia", "mediana"))) %>% 
     mutate(name = ordered(name, levels = c("brak\npracy", "1/4", "1/3", "1/2", "2/3", "3/4", "cały\nokres")))
   
+  tab_wyk$typ = ordered(tab_wyk$typ, levels = c(
+    "Państwa szkoła",
+    paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
+    "Branżowe szkoły I stopnia\nw całej Polsce"))
+  
   wyk_facet_6_ad1(tab_wyk,
                   paste0("Wykres ", wyk_num(), ": Procentowy udział grup wyróżnionych ze względu na część przepracowane-\ngo okresu wśród absolwentów Państwa szkoły oraz pozostałych branżowych szkół I sropnia w\nwojewództwie i w kraju, w okresie od września do grudnia 2020 - nie uczący się w\nszkołach ponadpodstawowych."),
                   "name",
@@ -982,6 +993,11 @@ if (szk$Z8_formy_ucz[[1]]$n >= progLiczebnosci) {
                            kraj$Z8_formy_ucz[[1]],
                            szk$formy[[1]]$woj_dop,
                            etykiety)
+  
+  tab_wyk$typ = ordered(tab_wyk$typ, levels = c(
+    "Państwa szkoła",
+    paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
+    "Branżowe szkoły I stopnia\nw całej Polsce"))
   
   wyk_pion_skum_5_ad1(tab_wyk,
                       paste0("Wykres ", wyk_num(), ": Formy wykonywania pracy przez absolwentów Państwa szkoły oraz\npozostałych branżowych szkół województwie i w kraju, w grudniu 2020 roku - pracujący\ni uczący się (%)"))
@@ -1042,6 +1058,11 @@ if (szk$Z8_formy_nie_ucz[[1]]$n >= progLiczebnosci) {
                            szk$formy[[1]]$woj_dop,
                            etykiety)
   
+  tab_wyk$typ = ordered(tab_wyk$typ, levels = c(
+    "Państwa szkoła",
+    paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
+    "Branżowe szkoły I stopnia\nw całej Polsce"))
+  
   wyk_pion_skum_5_ad1(tab_wyk,
                       paste0("Wykres ", wyk_num(), ": Formy wykonywania pracy przez absolwentów Państwa szkoły oraz pozostałych\nbranżowych szkół w województwie i w kraju, w grudniu 2020 roku - pracujący\nnie uczący się (%)"))
 } else {
@@ -1074,10 +1095,10 @@ if (szk$Z9_mlod_wrz[[1]]$n >= progLiczebnosci) {
   
   etykiety = c(
     "Nieuczący się, nie kontynuujący pracy u danego pracodawcy",
-    "Nieuczący się, kontynuujący pracę u danego pracodawcy na podstawie umowy o pracę",
-    "Nieuczący się, kontynuujący pracę u danego pracodawcy w formie innej niż umowa\no pracę",
-    "Uczący się, nie kontynuujący pracy u danego pracodawcy na podstawie umowy\no pracę",
-    "Uczący się, kontynuujący pracę u danego pracodawcy na podstawie umowy o pracę"
+    "Nieuczący się, kontynuujący pracę u danego pracodawcy na podstawie\numowy o pracę",
+    "Nieuczący się, kontynuujący pracę u danego pracodawcy w formie innej\nniż umowa o pracę",
+    "Uczący się, nie kontynuujący pracy u danego pracodawcy na podstawie\numowy o pracę",
+    "Uczący się, kontynuujący pracę u danego pracodawcy na podstawie\numowy o pracę"
   )
   
   tab_wyk = tab_wykres_ad1(szk$Z9_mlod_wrz[[1]],
@@ -1085,6 +1106,10 @@ if (szk$Z9_mlod_wrz[[1]]$n >= progLiczebnosci) {
                            NULL,
                            szk$formy[[1]]$woj_dop,
                            etykiety)
+  
+  tab_wyk$typ = ordered(tab_wyk$typ, levels = c(
+    paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
+    "Państwa szkoła"))
   
   wykres_poziomy_1_ad1(tab_wyk,
                        paste0("Wykres ", wyk_num(), " Kontynuowanie pracy u pracodawców, u których absolwenci Państwa szkoły\noraz pozostałych branżowych szkół w województwie odbywali praktyczną naukę zawodu\njako młodociani pracownicy, we wrześniu 2020 roku - młodociani (%)"))
@@ -1128,6 +1153,11 @@ if (szk$W1_ucz[[1]]$n >= progLiczebnosci) {
     select(-lab) %>% 
     pivot_wider(names_from = name) %>% 
     select(-sred)
+  
+  tab_wyk$typ = ordered(tab_wyk$typ, levels = c(
+    "Państwa szkoła",
+    paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
+    "Branżowe szkoły I stopnia\nw całej Polsce"))
   
   wykres = boxplot_zl_4_ad1(tab_wyk,
                 paste0("Wykres ", wyk_num(), ": Miesięczne przychody brutto z pracy absolwentów Państwa szkoły oraz\npozostałych branżowych szkół I stopnia w województwie i w kraju, w okresie od września\ndo grudnia 2020 roku - pracujący i uczący się w szkole ponadpodstawowej (mediana,\nrozstęp międzyćwiartkowy)")) +
@@ -1179,6 +1209,11 @@ if (szk$W1_nie_ucz[[1]]$n >= progLiczebnosci) {
     pivot_wider(names_from = name) %>% 
     select(-sred)
   
+  tab_wyk$typ = ordered(tab_wyk$typ, levels = c(
+    "Państwa szkoła",
+    paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
+    "Branżowe szkoły I stopnia\nw całej Polsce"))
+  
   wykres = boxplot_zl_4_ad1(tab_wyk,
                 paste0("Wykres ", wyk_num(), ": Miesięczne wynagrodzenie brutto absolwentów Państwa szkoły oraz\npozostałych branżowych szkół w województwie i w kraju, w okresie od września\ndo grudnia 2020 roku - pracujący i nie uczący się - zł (mediana,\nrozstęp międzyćwiartkowy)")) +
     ylab("Średni miesięczny przychód z pracy w okresie\nod grudnia 2020 roku (zł)")
@@ -1226,6 +1261,11 @@ if (szk$W3_ucz[[1]]$n >= progLiczebnosci) {
     pivot_wider(names_from = name) %>% 
     select(-sred)
   
+  tab_wyk$typ = ordered(tab_wyk$typ, levels = c(
+    "Państwa szkoła",
+    paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
+    "Branżowe szkoły I stopnia\nw całej Polsce"))
+  
   wykres = boxplot_proc_4_ad1(tab_wyk,
                 paste0("Wykres ", wyk_num(), ": Średni miesięczny przychód z pracy absolwentów Państwa szkoły oraz\npozostałych branżowych szkół w województwie i w kraju z pracy etatowej w odniesieniu\ndo średnich zarobków w poszczególnych zamieszkiwanych przez nich powiatach,\nod września do grudnia 2020 roku - pracujący i uczący się w szkole\nponadpodstawowej (mediana, rozstęp międzyćwiartkowy)\n\n")) +
     ylab("Przychody absolwenta z pracy etatowej w\nodniesieniu do średnich zarobków w jego\npowiecie dla okresu od września do\ngrudnia 2020 roku (%)")
@@ -1268,6 +1308,11 @@ if (szk$W3_nie_ucz[[1]]$n >= progLiczebnosci) {
     select(-lab) %>% 
     pivot_wider(names_from = name) %>% 
     select(-sred)
+  
+  tab_wyk$typ = ordered(tab_wyk$typ, levels = c(
+    "Państwa szkoła",
+    paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
+    "Branżowe szkoły I stopnia\nw całej Polsce"))
   
   wykres = boxplot_proc_4_ad1(tab_wyk,
                 paste0("Wykres ", wyk_num(), ": Średni miesięczny przychód z pracy absolwentów Państwa szkoły oraz\npozostałych branżowych szkół w województwie i w kraju z pracy etatowej w odniesieniu\ndo średnich zarobków w poszczególnych zamieszkiwanych przez nich powiatach,\nod września do grudnia 2020 roku - pracujący i nie uczący się w szkole\nponadpodstawowej (mediana, rozstęp międzyćwiartkowy)\n\n")) +
@@ -1348,10 +1393,16 @@ if (szk$l_abs[[1]] >= progLiczebnosci) {
   
   tab_wyk = tab_facet_ad1(szk$B2_bezrob[[1]],
                           woj$B2_bezrob[[1]],
-                          kraj$B2_bezrob[[1]])
+                          kraj$B2_bezrob[[1]],
+                          szk$formy[[1]]$woj_dop)
+  
+  tab_wyk$typ = ordered(tab_wyk$typ, levels = c(
+    "Państwa szkoła",
+    "Pozostałe branżowe szkoły I stopnia\nw województwie",
+    "Branżowe szkoły I stopnia\nw całej Polsce"))
   
   wyk_facet_6_ad1(tab_wyk,
-                  paste0("Wykres ", wyk_num(), ": Odsetek absolwentów, którzy byli bezrobotni w poszczególnych miesiącach,\nw okresie od września do grudnia 2020 roku"),
+                  paste0("Wykres ", wyk_num(), ": Odsetek absolwentów, którzy byli bezrobotni przez daną liczbę miesięcy,\nw okresie od września do grudnia 2020 roku"),
                   "mies",
                   "Liczba miesięcy bezrobocia")
 } else {
@@ -1361,7 +1412,7 @@ if (szk$l_abs[[1]] >= progLiczebnosci) {
 
 ## Liczba miesięcy bierności edukacyjnej i zawodowej od września do grudnia 2020 roku
 
-Wskaźnik mierzy długość okresu, w ciągu którego absolwenci Państwa szkoły byli bierni zawodowo.
+Wskaźnik mierzy długość okresu, w ciągu którego absolwenci Państwa szkoły nie pracowali, nie uczyli się w kolejnej szkole ponadpodstawowej, nie studiowali ani nie byli zarejestrowani jako osoby bezrobotne.
 
 ```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE, fig.height=3}
 if (szk$l_abs[[1]] >= progLiczebnosci) {
@@ -1404,10 +1455,16 @@ if (szk$l_abs[[1]] >= progLiczebnosci) {
   
   tab_wyk = tab_facet_ad1(szk$N2_biernosc[[1]],
                           woj$N2_biernosc[[1]],
-                          kraj$N2_biernosc[[1]])
+                          kraj$N2_biernosc[[1]],
+                          szk$formy[[1]]$woj_dop)
+  
+  tab_wyk$typ = ordered(tab_wyk$typ, levels = c(
+    "Państwa szkoła",
+    "Pozostałe branżowe szkoły I stopnia\nw województwie",
+    "Branżowe szkoły I stopnia\nw całej Polsce"))
   
   wyk_facet_6_ad1(tab_wyk,
-                  paste0("Wykres ", wyk_num(), ": Odsetek absolwentów, którzy byli bierni edukacyjnie i zawodowo w poszczególnych\nmiesiącach, w okresie od września do grudnia 2020 roku"),
+                  paste0("Wykres ", wyk_num(), ": Odsetek absolwentów, którzy byli bierni edukacyjnie i zawodowo przez daną liczbę\nmiesięcy, w okresie od września do grudnia 2020 roku"),
                   "mies",
                   "Liczba miesięcy bierności")
 } else {
