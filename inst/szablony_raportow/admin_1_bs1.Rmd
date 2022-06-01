@@ -43,7 +43,7 @@ library(kableExtra)
 library(tidyr)
 library(forcats)
 
-library(MLASZraporty)
+library(MLASZraportyAdm1)
 # if (!exists("params")) {
 #   params = list(plikZObiektami = "~/01_IBE/06_Bieżące_2021/15_DANE_ADMINISTRACYJNE/data/wskazniki_sample/wsk_bs1_ad1_sample.RData",
 #                 obiektWskazniki = "szk",
@@ -176,12 +176,12 @@ Wskaźnik prezentowany w tym rozdziale opisuje 6 statusów absolwentów opisują
 ```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE}
 data.frame(
   `Kategoria` = "Znaczenie kategorii",
-  `1. Nauka i poza rejestrem ZUS` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju) ani nie figurują w rejestrze ZUS z żadnego tytułu. Natomiast nie wiadomo, czy pracują korzystając z ubezpieczenia w innym systemie (np. KRUS), ani czy pracują na podstawie umowy o dzieło lub bez umowy (“na czarno”).",
-  `2. Nauka, brak pracy na podstawie umowy o pracę i brak samozatrudnienia` = "W takiej sytuacji są osoby, o których wiadomo, że odbywają edukację formalną w Polsce a zarazem figurują w rejestrze ZUS z tytułu innego, niż aktualne wykonywanie pracy (\"innym tytułem\" może być w szczególności status osoby bezrobotnej, przebywanie na urlopie macierzyńskim lub wychowawczym lub zgłoszenie do ubezpieczenia jako członek rodziny osoby ubezpieczonej).",
-  `3. Nauka i praca na podstawie umowy o pracę lub samozatrudnienie` = "W takiej sytuacji są osoby, o których wiadomo, że odbywają edukację formalną w Polsce a zarazem figurują w rejestrze ZUS z tytułu aktualnego wykonywania pracy etatowej, prowadzenia indywidualnej działalności gospodarczej albo - ale tylko, jeżeli mają więcej niż 26 lat - umowy zlecenia. Nie jest natomiast uwzględniana praca bez umowy (“na czarno”), praca związana z korzystaniem z ubezpieczenia w innym systemie (np. KRUS), praca na podstawie umowy o dzieło ani - w przypadku osób, które mają nie więcej niż 26 lat - praca na podstawie umowy zlecenia.",
-  `4. Brak nauki i praca` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju)  a zarazem figurują w rejestrze ZUS z tytułu aktualnego wykonywania pracy etatowej, umowy zlecenia lub prowadzenia indywidualnej działalności gospodarczej. Nie jest natomiast uwzględniana praca bez umowy (“na czarno”), praca związana z korzystaniem z ubezpieczenia w innym systemie (np. KRUS), ani praca na podstawie umowy o dzieło.",
-  `5. Brak nauki i poza rejestrem ZUS` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju) ani nie figurują w rejestrze ZUS z żadnego tytułu. Natomiast nie wiadomo, czy pracują korzystając z ubezpieczenia w innym systemie (np. KRUS), ani czy pracują na podstawie umowy o dzieło lub bez umowy (“na czarno”).",
-  `6. Brak nauki i brak pracy` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju) a zarazem figurują w rejestrze ZUS z tytułu innego, niż aktualne wykonywanie pracy etatowej, umowy zlecenia lub prowadzenie indywidualnej działalności gospodarczej (jak w przypadku kategorii 2). Natomiast nie jest wykluczone, że pracują bez umowy (“na czarno”) albo (jeżeli nie są zarejestrowane jako bezrobotne) na podstawie umowy o dzieło.",
+  `1. Uczy się i brak informacji o sytuacji zawodowej` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju) ani nie figurują w rejestrze ZUS z żadnego tytułu. Natomiast nie wiadomo, czy pracują korzystając z ubezpieczenia w innym systemie (np. KRUS), ani czy pracują na podstawie umowy o dzieło lub bez umowy (“na czarno”).",
+  `2. Uczy się i nie pracuje na podstawie umowy o pracę ani samozatrudnienia` = "W takiej sytuacji są osoby, o których wiadomo, że odbywają edukację formalną w Polsce a zarazem figurują w rejestrze ZUS z tytułu innego, niż aktualne wykonywanie pracy (\"innym tytułem\" może być w szczególności status osoby bezrobotnej, przebywanie na urlopie macierzyńskim lub wychowawczym lub zgłoszenie do ubezpieczenia jako członek rodziny osoby ubezpieczonej).",
+  `3. Uczy się i pracuje na podstawie umowy o pracę lub samozatrudnienia` = "W takiej sytuacji są osoby, o których wiadomo, że odbywają edukację formalną w Polsce a zarazem figurują w rejestrze ZUS z tytułu aktualnego wykonywania pracy etatowej, prowadzenia indywidualnej działalności gospodarczej albo - ale tylko, jeżeli mają więcej niż 26 lat - umowy zlecenia. Nie jest natomiast uwzględniana praca bez umowy (“na czarno”), praca związana z korzystaniem z ubezpieczenia w innym systemie (np. KRUS), praca na podstawie umowy o dzieło ani - w przypadku osób, które mają nie więcej niż 26 lat - praca na podstawie umowy zlecenia.",
+  `4. Nie uczy się i pracuje` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju)  a zarazem figurują w rejestrze ZUS z tytułu aktualnego wykonywania pracy etatowej, umowy zlecenia lub prowadzenia indywidualnej działalności gospodarczej. Nie jest natomiast uwzględniana praca bez umowy (“na czarno”), praca związana z korzystaniem z ubezpieczenia w innym systemie (np. KRUS), ani praca na podstawie umowy o dzieło.",
+  `5. Nie uczy się i brak informacji o sytuacji zawodowej` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju) ani nie figurują w rejestrze ZUS z żadnego tytułu. Natomiast nie wiadomo, czy pracują korzystając z ubezpieczenia w innym systemie (np. KRUS), ani czy pracują na podstawie umowy o dzieło lub bez umowy (“na czarno”).",
+  `6. Nie uczy się i nie pracuje` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju) a zarazem figurują w rejestrze ZUS z tytułu innego, niż aktualne wykonywanie pracy etatowej, umowy zlecenia lub prowadzenie indywidualnej działalności gospodarczej (jak w przypadku kategorii 2). Natomiast nie jest wykluczone, że pracują bez umowy (“na czarno”) albo (jeżeli nie są zarejestrowane jako bezrobotne) na podstawie umowy o dzieło.",
   check.names = FALSE) %>% 
   pivot_longer(everything()) %>% 
   rename(`Kategoria` = name,
@@ -268,12 +268,12 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
 ```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE}
 if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
   nazwy_wierszy_1 = c(
-    "Nauka i praca na podstawie umowy o pracę lub\nsamozatrudnienie",
-    "Nauka, brak pracy na podstawie umowy o pracę i brak\nsamozatrudnienia",
-    "Brak nauki i praca",
-    "Brak nauki i brak pracy",
-    "Nauka i poza rejestrem ZUS",
-    "Brak nauki i poza rejestrem ZUS")
+    "Uczy się i pracuje na podstawie umowy o pracę\nlub samozatrudnienia",
+    "Uczy się i nie pracuje na podstawie umowy o pracę\nani samozatrudnienia",
+    "Nie uczy się i pracuje",
+    "Nie uczy się i nie pracuje",
+    "Uczy się i brak informacji o sytuacji zawodowej",
+    "Nie uczy się i brak informacji o sytuacji zawodowej")
   
   tab = tab_wykres_ad1(szk$S3_0_12[[1]],
                        woj$S3_0_12[[1]],
@@ -281,12 +281,12 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
                        szk$formy[[1]]$woj_dop,
                        nazwy_wierszy_1) %>% 
     mutate(name = ordered(name, levels = c(
-      "Brak nauki i brak pracy",
-      "Brak nauki i poza rejestrem ZUS",
-      "Brak nauki i praca",
-      "Nauka i praca na podstawie umowy o pracę lub\nsamozatrudnienie",
-      "Nauka, brak pracy na podstawie umowy o pracę i brak\nsamozatrudnienia",
-      "Nauka i poza rejestrem ZUS"))) %>% 
+      "Nie uczy się i nie pracuje",
+      "Nie uczy się i brak informacji o sytuacji zawodowej",
+      "Nie uczy się i pracuje",
+      "Uczy się i pracuje na podstawie umowy o pracę\nlub samozatrudnienia",
+      "Uczy się i nie pracuje na podstawie umowy o pracę\nani samozatrudnienia",
+      "Uczy się i brak informacji o sytuacji zawodowej"))) %>% 
     mutate(typ = factor(typ, rev(unique(typ))))
   
   wykres_poziomy_1_ad1(tab,
@@ -304,12 +304,34 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
 
 ```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE}
 if (szk$S3_0_12[[1]]$n >= progLiczebnosci & !length(szk$tab_s3_zaw[[1]]) %in% 0) {
-  cat(
-    "Poniższa tabela przedstawia sytuację absolwentów poszczególnych zawodów z Państwa szkoły, o ile kształciło się w nich co najmniej 10 osób.\n\n**Tabela ",
-    tab_num(),
-    ": Status edukacyjno-zawodowy absolwentów Państwa szkoły w grudniu 2020 roku - w poszczególnych zawodach (%)**\n\n",
-    sep = ""
-  )
+  tab_szk = szk$tab_s3_zaw[[1]] %>% 
+    as_tibble() %>%  
+    filter(!row_number() %in% nrow(.)) %>% 
+    arrange(n) %>% 
+    mutate(typ = factor(NAZWA_ZAW, levels = unique(NAZWA_ZAW))) %>% 
+    select(-c(n, NAZWA_ZAW)) %>%
+    pivot_longer(cols = stat1:stat6, names_to = "name") %>% 
+    mutate(across(name,
+                  ~case_when(
+                    . %in% "stat1" ~ "Uczy się i pracuje na podstawie umowy o pracę\nlub samozatrudnienia",
+                    . %in% "stat2" ~ "Uczy się i nie pracuje na podstawie umowy o pracę\nani samozatrudnienia",
+                    . %in% "stat3" ~ "Nie uczy się i pracuje",
+                    . %in% "stat4" ~ "Nie uczy się i nie pracuje",
+                    . %in% "stat5" ~ "Uczy się i brak informacji o sytuacji zawodowej",
+                    . %in% "stat6" ~ "Nie uczy się i brak informacji o sytuacji zawodowej"))) %>% 
+    mutate(lab = ifelse(round(value, 2) >= 0.06,
+                        paste0(round(value * 100), "%"),
+                        ""),
+           name = ordered(name, levels = c(
+             "Nie uczy się i nie pracuje",
+             "Nie uczy się i brak informacji o sytuacji zawodowej",
+             "Nie uczy się i pracuje",
+             "Uczy się i pracuje na podstawie umowy o pracę\nlub samozatrudnienia",
+             "Uczy się i nie pracuje na podstawie umowy o pracę\nani samozatrudnienia",
+             "Uczy się i brak informacji o sytuacji zawodowej")))
+  
+  wykres = wykres_poziomy_1_ad1(tab_szk,
+                       paste0("Wykres ", wyk_num(), ": Status edukacyjno-zawodowy absolwentów Państwa szkoły w grudniu\n2020 roku - w poszczególnych zawodach (%)"))
   
   tabela = szk$tab_s3_zaw[[1]] %>% 
     as_tibble()
@@ -324,9 +346,7 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci & !length(szk$tab_s3_zaw[[1]]) %in% 0)
   
   tabela = rbind(tabela %>% filter(!NAZWA_ZAW %in% "Ogółem*"),
                  tabela %>% filter(NAZWA_ZAW %in% "Ogółem*")) %>% 
-    select(NAZWA_ZAW, stat5, stat2, stat1, stat3, stat6, stat4)
- 
-  tabela %>% 
+    select(NAZWA_ZAW, stat5, stat2, stat1, stat3, stat6, stat4) %>% 
     kable(format = "latex", booktabs = TRUE, escape = FALSE, longtable = TRUE,
           linesep = "",
           align = "lcccccc",
@@ -338,10 +358,10 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci & !length(szk$tab_s3_zaw[[1]]) %in% 0)
                   full_width = TRUE,
                   repeat_header_text = "(ciąg dalszy tabeli)") %>% 
     add_header_above(c("Zawody, w których obecni absolwenci\nuczyli się w Państwa szkole:", "1" = 1, "2" = 1, "3" = 1, "4" = 1, "5" = 1, "6" = 1),
-                     align = c("l", "l", "l", "l", "l", "l", "l")) %>%
+                     align = c("l", "c", "c", "c", "c", "c", "c")) %>%
     add_header_above(c(" ",
-                       "1. Nauka i poza rejestrem ZUS\n2. Nauka, brak pracy na podstawie umowy o pracę\ni brak samozatrudnienia\n3. Nauka i praca na podstawie umowy o pracę\nlub samozatrudnienie\n4. Brak nauki i praca\n5. Brak nauki i poza rejestrem ZUS\n6. Brak nauki i brak pracy" = 6),
-                     align = "l") %>% 
+                       "1. Uczy się i brak informacji o sytuacji zawodowej\n2. Uczy się i nie pracuje na podstawie umowy o pracę ani\nsamozatrudnienia\n3. Uczy się i pracuje na podstawie umowy o pracę\nlub samozatrudnienia\n4. Nie uczy się i pracuje\n5. Nie uczy się i brak informacji o sytuacji zawodowej\n6. Nie uczy się i nie pracuje" = 6),
+                     align = c("c", "l")) %>% 
     column_spec(1, width = "8cm") %>%
     column_spec(2, width = "1cm") %>%
     column_spec(3, width = "1cm") %>%
@@ -350,6 +370,16 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci & !length(szk$tab_s3_zaw[[1]]) %in% 0)
     column_spec(6, width = "1cm") %>%
     column_spec(7, width = "1cm") %>% 
     footnote(general = "*W kategorii ‘Ogółem’ uwzględniono wyłącznie absolwentów zawodów, w których kształciło się po minimum 10 osób.", general_title = "")
+  
+  cat(
+    "Poniższy wykres przedstawia sytuację absolwentów poszczególnych zawodów z Państwa szkoły, o ile kształciło się w nich co najmniej 10 osób.",
+    sep = "")
+  print(wykres)
+  cat(
+    "Dane z wykresu przedstwiono w poniższej tabeli:\n\n",
+    tabela,
+    sep = ""
+  )
 } else {
   cat(
     "W przypadku żadnego zawodu liczba absolwentów Państwa szkoły nie była wystarczająca, żeby możliwe było przedstawienie wyników w tym ujęciu zgodnie z zasadą chroniącą anonimowość respondentów. Dlatego tabela z wynikami nie została zaprezentowana."
@@ -440,7 +470,6 @@ szkoly_month = rbind(
   as_tibble(szk$S3_0_12[[1]])
 )
 
-# dobry warunek?
 if (min(szkoly_month$n) >= progLiczebnosci) {
   tab_szk = szkoly_month %>%
     mutate(month = 1:12) %>% 
@@ -448,23 +477,23 @@ if (min(szkoly_month$n) >= progLiczebnosci) {
     pivot_longer(stat1:stat6) %>% 
     mutate(across(name,
                   ~case_when(
-                    . %in% "stat1" ~ "Nauka i praca na podstawie umowy o pracę lub samozatrudnienie",
-                    . %in% "stat2" ~ "Nauka, brak pracy na podstawie umowy o pracę i brak samozatrudnienia",
-                    . %in% "stat3" ~ "Brak nauki i praca",
-                    . %in% "stat4" ~ "Brak nauki i brak pracy",
-                    . %in% "stat5" ~ "Nauka i poza rejestrem ZUS",
-                    . %in% "stat6" ~ "Brak nauki i poza rejestrem ZUS"
+                    . %in% "stat1" ~ "Uczy się i pracuje na podstawie umowy o pracę lub samozatrudnienia",
+                    . %in% "stat2" ~ "Uczy się i nie pracuje na podstawie umowy o pracę ani samozatrudnienia",
+                    . %in% "stat3" ~ "Nie uczy się i pracuje",
+                    . %in% "stat4" ~ "Nie uczy się i nie pracuje",
+                    . %in% "stat5" ~ "Uczy się i brak informacji o sytuacji zawodowej",
+                    . %in% "stat6" ~ "Nie uczy się i brak informacji o sytuacji zawodowej"
                   ))) %>% 
     mutate(lab = ifelse(round(value, 2) >= 0.06,
                         paste0(round(value * 100), "%"),
                         "")) %>% 
     mutate(name = ordered(name, levels = c(
-      "Brak nauki i brak pracy",
-      "Brak nauki i poza rejestrem ZUS",
-      "Brak nauki i praca",
-      "Nauka i praca na podstawie umowy o pracę lub samozatrudnienie",
-      "Nauka, brak pracy na podstawie umowy o pracę i brak samozatrudnienia",
-      "Nauka i poza rejestrem ZUS")))
+      "Nie uczy się i nie pracuje",
+      "Nie uczy się i brak informacji o sytuacji zawodowej",
+      "Nie uczy się i pracuje",
+      "Uczy się i pracuje na podstawie umowy o pracę lub samozatrudnienia",
+      "Uczy się i nie pracuje na podstawie umowy o pracę ani samozatrudnienia",
+      "Uczy się i brak informacji o sytuacji zawodowej")))
   
   wave_chart_2_ad1(tab_szk,
                    paste0("Wykres ", wyk_num(), ": Status edukacyjno-zawodowy absolwentów Państwa szkoły w\nposzczególnych miesiącach 2020 roku - ogółem (%)")) +
@@ -487,13 +516,12 @@ if (min(szkoly_month$n) >= progLiczebnosci) {
     pivot_wider(names_from = month, values_from = value) %>% 
     mutate(mies = ordered(mies, levels = c("stat5", "stat2", "stat1", "stat3", "stat6", "stat4"),
                           labels = c(
-                            "Nauka i poza rejestrem ZUS",
-                            "Nauka, brak pracy na podstawie umowy o pracę i brak samozatrudnienia",
-                            "Nauka i praca na podstawie umowy o pracę lub samozatrudnienie",
-                            "Brak nauki i praca",
-                            "Brak nauki i poza rejestrem ZUS",
-                            "Brak nauki i brak pracy"
-                          ))) %>% 
+                            "Uczy się i brak informacji o sytuacji zawodowej",
+                            "Uczy się i nie pracuje na podstawie umowy o pracę ani\nsamozatrudnienia",
+                            "Uczy się i pracuje na podstawie umowy o pracę\nlub samozatrudnienia",
+                            "Nie uczy się i pracuje",
+                            "Nie uczy się i brak informacji o sytuacji zawodowej",
+                            "Nie uczy się i nie pracuje"))) %>% 
     arrange(mies) %>% 
     kable("latex", booktabs = TRUE, escape = FALSE, longtable = TRUE,
           linesep = "",
@@ -714,7 +742,7 @@ if (round(szk$E2_nauka_kontyn[[1]]$bs2 * szk$E2_nauka_kontyn[[1]]$n) >= progLicz
                   ~ round(. * 100))) %>%
     mutate(across(odsetek,
                   ~ paste0(., "\\%"))) %>%
-    kable("latex", booktabs = TRUE, escape = FALSE, longtable = TRUE,
+    kable("latex", booktabs = TRUE, escape = FALSE, longtable = FALSE,
           linesep = "",
           align = "lc",
           col.names = NULL,
@@ -725,7 +753,7 @@ if (round(szk$E2_nauka_kontyn[[1]]$bs2 * szk$E2_nauka_kontyn[[1]]$n) >= progLicz
                   full_width = TRUE,
                   repeat_header_text = "(ciąg dalszy tabeli)") %>% 
     add_header_above(c("Branże, w których absolwenci Państwa szkoły\nkontynuowali naukę w grudniu 2020 roku", "% wśród absolwentów kontynuujących naukę w\nbranżowej szkole II stopnia" = 1),
-                     align = c("l", "l")) %>% 
+                     align = c("l", "c")) %>% 
   column_spec(1, width = "8cm") %>% 
   column_spec(2, width = "8cm")
   
@@ -807,7 +835,7 @@ if (szk$Z4_ucz[[1]]$n >= progLiczebnosci) {
     cat(
       "Wśród absolwentów Państwa szkoły kontynuujących naukę najliczniejsza była grupa osób, które ",
       przeprac_ods$name[przeprac_ods$value %in% max(przeprac_ods$value)],
-      ".  Grupa ta stanowiła ",
+      ". Grupa ta stanowiła ",
       round(max(przeprac_ods$value) * 100),
       "% absolwentów Państwa szkoły.\n\n",
       sep = ""
@@ -830,7 +858,7 @@ if (szk$Z4_ucz[[1]]$n >= progLiczebnosci) {
     )
   }
   
-  etykiety = c("srednia", "mediana", "brak\npracy", "1/4", "1/3", "1/2", "2/3", "3/4", "cały\nokres")
+  etykiety = c("srednia", "mediana", "p0", "p25", "p33", "p50", "p67", "p75", "p100")
   
   tab_wyk = tab_wykres_ad1(szk$Z4_ucz[[1]],
                            woj$Z4_ucz[[1]],
@@ -839,17 +867,44 @@ if (szk$Z4_ucz[[1]]$n >= progLiczebnosci) {
                            etykiety) %>% 
     select(-lab) %>% 
     filter(!(name %in% c("srednia", "mediana"))) %>% 
-    mutate(name = ordered(name, levels = c("brak\npracy", "1/4", "1/3", "1/2", "2/3", "3/4", "cały\nokres")))
+    pivot_wider() %>% 
+    rowwise() %>% 
+    mutate(`brak\npracy` = p0,
+           `część\nokresu` = sum(p25, p33, p50, p67, p75),
+           `cały\nokres` = p100) %>% 
+    select(typ, 9:11) %>% 
+    pivot_longer(cols = `brak\npracy`:`cały\nokres`)
   
   tab_wyk$typ = ordered(tab_wyk$typ, levels = c(
     "Państwa szkoła",
     paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
     "Branżowe szkoły I stopnia\nw całej Polsce"))
   
+  tab_wyk$name = ordered(tab_wyk$name, levels = c("brak\npracy", "część\nokresu", "cały\nokres"))
+  
   wyk_facet_6_ad1(tab_wyk,
                   paste0("Wykres ", wyk_num(), ": Procentowy udział grup wyróżnionych ze względu na część przepracowane-\ngo okresu wśród absolwentów Państwa szkoły oraz pozostałych branżowych szkół I stopnia w\nwojewództwie i w kraju, w okresie od września do grudnia 2020 - uczący się w szkołach\nponadpodstawowych."),
                   "name",
                   "Przepracowany okres")
+  
+  # tab_wyk %>% 
+  #   pivot_wider(names_from = name) %>% 
+  #   mutate(across(2:4,
+  #                 ~ round(. * 100))) %>%
+  #   mutate(across(2:4,
+  #                 ~ paste0(., "\\%"))) %>%
+  #   kable("latex", booktabs = TRUE, escape = FALSE, longtable = TRUE,
+  #         linesep = "",
+  #         align = "lccc",
+  #         col.names = NULL,
+  #         digits = 0) %>% 
+  #   kable_styling(position = wyrownanieTabWykr,
+  #                 latex_options = c("hold_position", "repeat_header"),
+  #                 font_size = 10,
+  #                 full_width = TRUE,
+  #                 repeat_header_text = "(ciąg dalszy tabeli)") %>% 
+  #   add_header_above(c(" ", "Brak pracy" = 1, "Część okresu" = 1, "Cały okres" = 1),
+  #                    align = c("l", "c", "c", "c"))
 } else {
   cat(
     "Liczba absolwentów Państwa szkoły pracujących oraz kontynuujących naukę w szkole ponadpodstawowej nie była wystarczająca, żeby możliwe było przedstawienie wyników dla tej grupy, zgodnie z zasadą chroniącą anonimowość respondentów.\n\n"
@@ -890,7 +945,7 @@ if (szk$Z4_nie_ucz[[1]]$n >= progLiczebnosci) {
     pivot_longer(everything()) %>% 
     as.list()
   przeprac_ods$name = c(
-    "nie pracowały w okresie (między wrześniem a grudniem 2020 roku) kiedy się nie uczyły",
+    "od września do grudnia 2020 roku nie pracowały",
     "pracowały przez jedną czwartą okresu (między wrześniem a grudniem 2020 roku) kiedy się nie uczyły",
     "pracowały przez jedną trzecią okresu (między wrześniem a grudniem 2020 roku) kiedy się nie uczyły",
     "pracowały przez połowę okresu (między wrześniem a grudniem 2020 roku) kiedy się nie uczyły",
@@ -926,7 +981,7 @@ if (szk$Z4_nie_ucz[[1]]$n >= progLiczebnosci) {
     )
   }
   
-  etykiety = c("srednia", "mediana", "brak\npracy", "1/4", "1/3", "1/2", "2/3", "3/4", "cały\nokres")
+  etykiety = c("srednia", "mediana", "p0", "p25", "p33", "p50", "p67", "p75", "p100")
   
   tab_wyk = tab_wykres_ad1(szk$Z4_nie_ucz[[1]],
                            woj$Z4_nie_ucz[[1]],
@@ -935,17 +990,44 @@ if (szk$Z4_nie_ucz[[1]]$n >= progLiczebnosci) {
                            etykiety) %>% 
     select(-lab) %>% 
     filter(!(name %in% c("srednia", "mediana"))) %>% 
-    mutate(name = ordered(name, levels = c("brak\npracy", "1/4", "1/3", "1/2", "2/3", "3/4", "cały\nokres")))
+    pivot_wider() %>% 
+    rowwise() %>% 
+    mutate(`brak\npracy` = p0,
+           `część\nokresu` = sum(p25, p33, p50, p67, p75),
+           `cały\nokres` = p100) %>% 
+    select(typ, 9:11) %>% 
+    pivot_longer(cols = `brak\npracy`:`cały\nokres`)
   
   tab_wyk$typ = ordered(tab_wyk$typ, levels = c(
     "Państwa szkoła",
     paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
     "Branżowe szkoły I stopnia\nw całej Polsce"))
   
+  tab_wyk$name = ordered(tab_wyk$name, levels = c("brak\npracy", "część\nokresu", "cały\nokres"))
+  
   wyk_facet_6_ad1(tab_wyk,
                   paste0("Wykres ", wyk_num(), ": Procentowy udział grup wyróżnionych ze względu na część przepracowane-\ngo okresu wśród absolwentów Państwa szkoły oraz pozostałych branżowych szkół I sropnia w\nwojewództwie i w kraju, w okresie od września do grudnia 2020 - nie uczący się w\nszkołach ponadpodstawowych."),
                   "name",
                   "Przepracowany okres")
+  
+  # tab_wyk %>% 
+  #   pivot_wider(names_from = name) %>% 
+  #   mutate(across(2:4,
+  #                 ~ round(. * 100))) %>%
+  #   mutate(across(2:4,
+  #                 ~ paste0(., "\\%"))) %>%
+  #   kable("latex", booktabs = TRUE, escape = FALSE, longtable = TRUE,
+  #         linesep = "",
+  #         align = "lccc",
+  #         col.names = NULL,
+  #         digits = 0) %>% 
+  #   kable_styling(position = wyrownanieTabWykr,
+  #                 latex_options = c("hold_position", "repeat_header"),
+  #                 font_size = 10,
+  #                 full_width = TRUE,
+  #                 repeat_header_text = "(ciąg dalszy tabeli)") %>% 
+  #   add_header_above(c(" ", "Brak pracy" = 1, "Część okresu" = 1, "Cały okres" = 1),
+  #                    align = c("l", "c", "c", "c"))
 } else {
   cat(
     "Liczba absolwentów Państwa szkoły pracujących ale nie kontynuujących nauki w szkole ponadpodstawowej nie była wystarczająca, żeby możliwe było przedstawienie wyników dla tej grupy, zgodnie z zasadą chroniącą anonimowość respondentów.\n\n"
@@ -1000,7 +1082,28 @@ if (szk$Z8_formy_ucz[[1]]$n >= progLiczebnosci) {
     "Branżowe szkoły I stopnia\nw całej Polsce"))
   
   wyk_pion_skum_5_ad1(tab_wyk,
-                      paste0("Wykres ", wyk_num(), ": Formy wykonywania pracy przez absolwentów Państwa szkoły oraz\npozostałych branżowych szkół województwie i w kraju, w grudniu 2020 roku - pracujący\ni uczący się (%)"))
+                      paste0("Wykres ", wyk_num(), ": Formy wykonywania pracy przez absolwentów Państwa szkoły oraz\npozostałych branżowych szkół województwie i w kraju, w grudniu 2020 roku - pracujący\ni uczący się (%)")) +
+    scale_fill_manual(values = c("#8de04e", "#f8dd00", "#fb6a59"))
+  
+  # tab_wyk %>% 
+  #   select(-lab) %>% 
+  #   pivot_wider(names_from = name) %>% 
+  #   mutate(across(2:4,
+  #                 ~ round(. * 100))) %>%
+  #   mutate(across(2:4,
+  #                 ~ paste0(., "\\%"))) %>%
+  #   kable("latex", booktabs = TRUE, escape = FALSE, longtable = TRUE,
+  #         linesep = "",
+  #         align = "lccc",
+  #         col.names = NULL,
+  #         digits = 0) %>% 
+  #   kable_styling(position = wyrownanieTabWykr,
+  #                 latex_options = c("hold_position", "repeat_header"),
+  #                 font_size = 10,
+  #                 full_width = TRUE,
+  #                 repeat_header_text = "(ciąg dalszy tabeli)") %>% 
+  #   add_header_above(c(" ", "Zatrudnieni tylko na UOP" = 1, "Samozatrudnieni bez UOP" = 1, "Samozatrudnieni oraz praca na UOP" = 1),
+  #                    align = c("l", "c", "c", "c"))
 } else {
   cat("Liczba absolwentów Państwa szkoły pracujących oraz kontynuujących naukę nie była wystarczająca, żeby możliwe było przedstawienie wyników dla tej grupy, zgodnie z zasadą chroniącą anonimowość respondentów.\n\n")
 }
@@ -1056,15 +1159,42 @@ if (szk$Z8_formy_nie_ucz[[1]]$n >= progLiczebnosci) {
                            woj$Z8_formy_nie_ucz[[1]],
                            kraj$Z8_formy_nie_ucz[[1]],
                            szk$formy[[1]]$woj_dop,
-                           etykiety)
-  
-  tab_wyk$typ = ordered(tab_wyk$typ, levels = c(
-    "Państwa szkoła",
-    paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
-    "Branżowe szkoły I stopnia\nw całej Polsce"))
+                           etykiety) %>% 
+    select(-lab) %>% 
+    pivot_wider() %>% 
+    mutate(`Tylko umowa o pracę` = `Zatrudnienie na podstawie UOP oraz brak innej formy`,
+           `Tylko prowadzenie działalności gospodarczej (samozatrudnienie)` = `Prowadzący działalność gosp. (samozatrudnienie) oraz brak innej formy`,
+           `Tylko inna forma` = `Zatrudnieni w innej formie (umowa zlecenie)`,
+           `Więcej niż jedna forma` = sum(`Zatrudnienie na podstawie UOP oraz prowadzący działalność gosp.`:`Zatrudnienie na podstawie UOP oraz działalność gosp. oraz zatrudnienie w innej formie`)) %>% 
+    select(typ, `Tylko umowa o pracę`:`Więcej niż jedna forma`) %>% 
+    pivot_longer(cols = `Tylko umowa o pracę`:`Więcej niż jedna forma`) %>% 
+    mutate(lab = ifelse(round(value, 2) >= 0.06,
+                        paste0(round(value * 100), "%"),
+                        ""))
   
   wyk_pion_skum_5_ad1(tab_wyk,
-                      paste0("Wykres ", wyk_num(), ": Formy wykonywania pracy przez absolwentów Państwa szkoły oraz pozostałych\nbranżowych szkół w województwie i w kraju, w grudniu 2020 roku - pracujący\nnie uczący się (%)"))
+                      paste0("Wykres ", wyk_num(), ": Formy wykonywania pracy przez absolwentów Państwa szkoły oraz pozostałych\nbranżowych szkół w województwie i w kraju, w grudniu 2020 roku - pracujący\nnie uczący się (%)")) +
+    scale_fill_manual(values = c("#90cf60", "#d8ef8a", "#f8dd00", "#fb8c59"))
+  
+  # tab_wyk %>% 
+  #   select(-lab) %>% 
+  #   pivot_wider(names_from = name) %>% 
+  #   mutate(across(2:5,
+  #                 ~ round(. * 100))) %>%
+  #   mutate(across(2:5,
+  #                 ~ paste0(., "\\%"))) %>%
+  #   kable("latex", booktabs = TRUE, escape = FALSE, longtable = TRUE,
+  #         linesep = "",
+  #         align = "lcccc",
+  #         col.names = NULL,
+  #         digits = 0) %>% 
+  #   kable_styling(position = wyrownanieTabWykr,
+  #                 latex_options = c("hold_position", "repeat_header"),
+  #                 font_size = 10,
+  #                 full_width = TRUE,
+  #                 repeat_header_text = "(ciąg dalszy tabeli)") %>% 
+  #   add_header_above(c(" ", "Tylko UOP" = 1, "Tylko\nsamozatrudnienie" = 1, "Tylko inna\nforma" = 1, "Więcej niż\njedna forma" = 1),
+  #                    align = c("l", "c", "c", "c", "c"))
 } else {
   cat("Liczba absolwentów Państwa szkoły pracujących ale nie kontynuujących nauki nie była wystarczająca, żeby możliwe było przedstawienie wyników dla tej grupy, zgodnie z zasadą chroniącą anonimowość respondentów.\n\n")
 }
@@ -1113,6 +1243,26 @@ if (szk$Z9_mlod_wrz[[1]]$n >= progLiczebnosci) {
   
   wykres_poziomy_1_ad1(tab_wyk,
                        paste0("Wykres ", wyk_num(), " Kontynuowanie pracy u pracodawców, u których absolwenci Państwa szkoły\noraz pozostałych branżowych szkół w województwie odbywali praktyczną naukę zawodu\njako młodociani pracownicy, we wrześniu 2020 roku - młodociani (%)"))
+  
+  # tab_wyk %>% 
+  #   select(-lab) %>% 
+  #   pivot_wider(names_from = name) %>% 
+  #   mutate(across(2:6,
+  #                 ~ round(. * 100))) %>%
+  #   mutate(across(2:6,
+  #                 ~ paste0(., "\\%"))) %>%
+  #   kable("latex", booktabs = TRUE, escape = FALSE, longtable = TRUE,
+  #         linesep = "",
+  #         align = "lccccc",
+  #         col.names = NULL,
+  #         digits = 0) %>% 
+  #   kable_styling(position = wyrownanieTabWykr,
+  #                 latex_options = c("hold_position", "repeat_header"),
+  #                 font_size = 10,
+  #                 full_width = TRUE,
+  #                 repeat_header_text = "(ciąg dalszy tabeli)") %>% 
+  #   add_header_above(c(" ", "Brak nauki i\nnie kontynuujący" = 1, "Brak nauki i\nkontynuujący UOP" = 1, "Brak nauki i\nkontynuujący\nnie UOP" = 1, "Nauka i nie\nkontynuujący" = 1, "Nauka i\nkontynuujący UOP"),
+  #                    align = c("l", "c", "c", "c", "c", "c"))
 } else {
   cat("Liczba absolwentów Państwa szkoły, którzy uczyli się w niej jako młodociani pracownicy, nie była wystarczająca, żeby możliwe było przedstawienie wyników dla tej grupy, zgodnie z zasadą chroniącą anonimowość respondentów.")
 }
@@ -1159,17 +1309,42 @@ if (szk$W1_ucz[[1]]$n >= progLiczebnosci) {
     paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
     "Branżowe szkoły I stopnia\nw całej Polsce"))
   
+  wyk_lab = tab_wyk %>% 
+    group_by(typ) %>% 
+    summarise(value = list(q5, q25, med, q75, q95)) %>% 
+    unnest() %>% 
+    mutate(lab = paste0(round(value), "zł"))
+  
   wykres = boxplot_zl_4_ad1(tab_wyk,
-                paste0("Wykres ", wyk_num(), ": Miesięczne przychody brutto z pracy absolwentów Państwa szkoły oraz\npozostałych branżowych szkół I stopnia w województwie i w kraju, w okresie od września\ndo grudnia 2020 roku - pracujący i uczący się w szkole ponadpodstawowej (mediana,\nrozstęp międzyćwiartkowy)")) +
-    ylab("Średni miesięczny przychód z pracy w okresie\nod września do grudnia 2020 roku (zł)")
+                paste0("Wykres ", wyk_num(), ": Miesięczne przychody brutto z pracy absolwentów Państwa szkoły oraz\npozostałych branżowych szkół I stopnia w województwie i w kraju, w okresie od września\ndo grudnia 2020 roku - pracujący i uczący się w szkole ponadpodstawowej")) +
+    ylab("Średni miesięczny przychód z pracy w okresie\nod września do grudnia 2020 roku (zł)") +
+    geom_text(data = wyk_lab,
+              aes(x = typ, y = value, label = lab),
+              nudge_x = -0.4,
+              size = 2.5)
   
   print(wykres)
   
   cat(
-    "\\textcolor{black}{\\relscale{0.75}Na powyższym wykresie pogrubiona linia oznacza medianę średnich miesięcznych przychodów w danej grupie w okresie od września do grudnia 2020 roku. Elementem wykresu jest również prostokąt reprezentujący tzw. rozstęp międzyćwiartkowy. Prostokąt ten “obejmuje” 50\\% absolwentów, którzy stanowią grupę środkową pod względem średnich miesięcznych przychodów w badanym okresie. Z kolei nad i pod prostokątem znajdują się poziome linie (tzw. wąsy). Pomiędzy tymi liniami zawierają się wartości wskaźnika dla “środkowych” 90\\% absolwentów. Im bardziej zróżnicowane są wartości wskaźnika w danej grupie, tym prostokąt jest wyższy, a odległość pomiędzy wspomnianymi liniami większa.}\n\n",
+    "\\textcolor{black}{\\relscale{0.75}Na powyższym wykresie pogrubiona linia oznacza medianę średnich miesięcznych przychodów w danej grupie w okresie od września do grudnia 2020 roku. Elementem wykresu jest również prostokąt, który “obejmuje” 50\\% absolwentów, którzy stanowią grupę środkową pod względem średnich miesięcznych przychodów w badanym okresie. Z kolei nad i pod prostokątem znajdują się poziome linie (tzw. wąsy). Pomiędzy tymi liniami zawierają się wartości wskaźnika dla “środkowych” 90\\% absolwentów. Im bardziej zróżnicowane są przychody w danej grupie, tym prostokąt jest wyższy, a odległość pomiędzy wspomnianymi liniami większa.}\n\n",
     sep = ""
   )
   
+  # tab_wyk %>% 
+  #   mutate(across(q5:q95,
+  #                 ~paste0(round(.), "zł"))) %>% 
+  #   kable("latex", booktabs = TRUE, escape = FALSE, longtable = TRUE,
+  #         linesep = "",
+  #         align = "lccccc",
+  #         col.names = NULL,
+  #         digits = 0) %>% 
+  #   kable_styling(position = wyrownanieTabWykr,
+  #                 latex_options = c("hold_position", "repeat_header"),
+  #                 font_size = 10,
+  #                 full_width = TRUE,
+  #                 repeat_header_text = "(ciąg dalszy tabeli)") %>% 
+  #   add_header_above(c(" ", "5%" = 1, "25%" = 1, "Mediana" = 1, "75%" = 1, "95%"),
+  #                    align = c("l", "c", "c", "c", "c", "c"))
 } else {
   cat("Liczba absolwentów Państwa szkoły pracujących oraz kontynuujących naukę w szkole ponadpodstawowej nie była wystarczająca, żeby możliwe było przedstawienie wyników dla tej grupy, zgodnie z zasadą chroniącą anonimowość respondentów.")
 }
@@ -1214,16 +1389,42 @@ if (szk$W1_nie_ucz[[1]]$n >= progLiczebnosci) {
     paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
     "Branżowe szkoły I stopnia\nw całej Polsce"))
   
+  wyk_lab = tab_wyk %>% 
+    group_by(typ) %>% 
+    summarise(value = list(q5, q25, med, q75, q95)) %>% 
+    unnest() %>% 
+    mutate(lab = paste0(round(value), "zł"))
+  
   wykres = boxplot_zl_4_ad1(tab_wyk,
-                paste0("Wykres ", wyk_num(), ": Miesięczne wynagrodzenie brutto absolwentów Państwa szkoły oraz\npozostałych branżowych szkół w województwie i w kraju, w okresie od września\ndo grudnia 2020 roku - pracujący i nie uczący się - zł (mediana,\nrozstęp międzyćwiartkowy)")) +
-    ylab("Średni miesięczny przychód z pracy w okresie\nod grudnia 2020 roku (zł)")
+                paste0("Wykres ", wyk_num(), ": Miesięczne wynagrodzenie brutto absolwentów Państwa szkoły oraz\npozostałych branżowych szkół w województwie i w kraju, w okresie od września\ndo grudnia 2020 roku - pracujący i nie uczący się")) +
+    ylab("Średni miesięczny przychód z pracy w okresie\nod grudnia 2020 roku (zł)") +
+    geom_text(data = wyk_lab,
+              aes(x = typ, y = value, label = lab),
+              nudge_x = -0.4,
+              size = 2.5)
   
   print(wykres)
   
   cat(
-    "\\textcolor{black}{\\relscale{0.75}Na powyższym wykresie pogrubiona linia oznacza medianę średnich miesięcznych przychodów w danej grupie w okresie od września do grudnia 2020 roku. Elementem wykresu jest również prostokąt reprezentujący tzw. rozstęp międzyćwiartkowy. Prostokąt ten “obejmuje” 50\\% absolwentów, którzy stanowią grupę środkową pod względem średnich miesięcznych przychodów w badanym okresie. Z kolei nad i pod prostokątem znajdują się poziome linie (tzw. wąsy). Pomiędzy tymi liniami zawierają się wartości wskaźnika dla “środkowych” 90\\% absolwentów. Im bardziej zróżnicowane są wartości wskaźnika w danej grupie, tym prostokąt jest wyższy, a odległość pomiędzy wspomnianymi liniami większa.}\n\n",
+    "\\textcolor{black}{\\relscale{0.75}Na powyższym wykresie pogrubiona linia oznacza medianę średnich miesięcznych przychodów w danej grupie w okresie od września do grudnia 2020 roku. Elementem wykresu jest również prostokąt, który “obejmuje” 50\\% absolwentów, którzy stanowią grupę środkową pod względem średnich miesięcznych przychodów w badanym okresie. Z kolei nad i pod prostokątem znajdują się poziome linie (tzw. wąsy). Pomiędzy tymi liniami zawierają się wartości wskaźnika dla “środkowych” 90\\% absolwentów. Im bardziej zróżnicowane są przychody w danej grupie, tym prostokąt jest wyższy, a odległość pomiędzy wspomnianymi liniami większa.}\n\n",
     sep = ""
   )
+  
+  # tab_wyk %>% 
+  #   mutate(across(q5:q95,
+  #                 ~paste0(round(.), "zł"))) %>% 
+  #   kable("latex", booktabs = TRUE, escape = FALSE, longtable = TRUE,
+  #         linesep = "",
+  #         align = "lccccc",
+  #         col.names = NULL,
+  #         digits = 0) %>% 
+  #   kable_styling(position = wyrownanieTabWykr,
+  #                 latex_options = c("hold_position", "repeat_header"),
+  #                 font_size = 10,
+  #                 full_width = TRUE,
+  #                 repeat_header_text = "(ciąg dalszy tabeli)") %>% 
+  #   add_header_above(c(" ", "5%" = 1, "25%" = 1, "Mediana" = 1, "75%" = 1, "95%"),
+  #                    align = c("l", "c", "c", "c", "c", "c"))
 } else {
   cat("Liczba absolwentów Państwa szkoły pracujących, ale nie kontynuujących nauki w szkole ponadpodstawowej nie była wystarczająca, żeby możliwe było przedstawienie wyników dla tej grupy, zgodnie z zasadą chroniącą anonimowość respondentów.")
 }
@@ -1266,16 +1467,42 @@ if (szk$W3_ucz[[1]]$n >= progLiczebnosci) {
     paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
     "Branżowe szkoły I stopnia\nw całej Polsce"))
   
+   wyk_lab = tab_wyk %>% 
+    group_by(typ) %>% 
+    summarise(value = list(q5, q25, med, q75, q95)) %>% 
+    unnest() %>% 
+    mutate(lab = paste0(round(value * 100), "%"))
+  
   wykres = boxplot_proc_4_ad1(tab_wyk,
-                paste0("Wykres ", wyk_num(), ": Średni miesięczny przychód z pracy absolwentów Państwa szkoły oraz\npozostałych branżowych szkół w województwie i w kraju z pracy etatowej w odniesieniu\ndo średnich zarobków w poszczególnych zamieszkiwanych przez nich powiatach,\nod września do grudnia 2020 roku - pracujący i uczący się w szkole\nponadpodstawowej (mediana, rozstęp międzyćwiartkowy)\n\n")) +
-    ylab("Przychody absolwenta z pracy etatowej w\nodniesieniu do średnich zarobków w jego\npowiecie dla okresu od września do\ngrudnia 2020 roku (%)")
+                paste0("Wykres ", wyk_num(), ": Średni miesięczny przychód z pracy absolwentów Państwa szkoły oraz\npozostałych branżowych szkół w województwie i w kraju z pracy etatowej w odniesieniu\ndo średnich zarobków w poszczególnych zamieszkiwanych przez nich powiatach,\nod września do grudnia 2020 roku - pracujący i uczący się w szkole\nponadpodstawowej\n\n")) +
+    ylab("Przychody absolwenta z pracy etatowej w\nodniesieniu do średnich zarobków w jego\npowiecie dla okresu od września do\ngrudnia 2020 roku (%)") +
+    geom_text(data = wyk_lab,
+              aes(x = typ, y = value, label = lab),
+              nudge_x = -0.4,
+              size = 2.5)
   
   print(wykres)
   
   cat(
-    "\\textcolor{black}{\\relscale{0.75}Na powyższym wykresie pogrubiona linia oznacza medianę wartości prezentowanego wskaźnika Elementem wykresu jest również prostokąt reprezentujący tzw. rozstęp międzyćwiartkowy. Prostokąt ten “obejmuje” 50\\% absolwentów, którzy stanowią grupę środkową pod względem wartości analizowanego wskaźnika. Z kolei nad i pod prostokątem znajdują się poziome linie (tzw. wąsy). Pomiędzy tymi liniami zawierają się wartości wskaźnika dla “środkowych” 90\\% absolwentów. Im bardziej zróżnicowane są wartości wskaźnika w danej grupie, tym prostokąt jest wyższy, a odległość pomiędzy wspomnianymi liniami większa.}\n\n",
+    "\\textcolor{black}{\\relscale{0.75}Na powyższym wykresie pogrubiona linia oznacza medianę wartości prezentowanego wskaźnika Elementem wykresu jest również prostokąt, który “obejmuje” 50\\% absolwentów, którzy stanowią grupę środkową pod względem wartości analizowanego wskaźnika. Z kolei nad i pod prostokątem znajdują się poziome linie (tzw. wąsy). Pomiędzy tymi liniami zawierają się wartości wskaźnika dla “środkowych” 90\\% absolwentów. Im bardziej zróżnicowane są przychody w danej grupie, tym prostokąt jest wyższy, a odległość pomiędzy wspomnianymi liniami większa.}\n\n",
     sep = ""
   )
+  
+  # tab_wyk %>% 
+  #   mutate(across(q5:q95,
+  #                 ~paste0(round(.), "zł"))) %>% 
+  #   kable("latex", booktabs = TRUE, escape = FALSE, longtable = TRUE,
+  #         linesep = "",
+  #         align = "lccccc",
+  #         col.names = NULL,
+  #         digits = 0) %>% 
+  #   kable_styling(position = wyrownanieTabWykr,
+  #                 latex_options = c("hold_position", "repeat_header"),
+  #                 font_size = 10,
+  #                 full_width = TRUE,
+  #                 repeat_header_text = "(ciąg dalszy tabeli)") %>% 
+  #   add_header_above(c(" ", "5%" = 1, "25%" = 1, "Mediana" = 1, "75%" = 1, "95%"),
+  #                    align = c("l", "c", "c", "c", "c", "c"))
 } else {
   cat("Liczba absolwentów Państwa szkoły pracujących na etat i uczących się nie była wystarczająca, żeby możliwe było przedstawienie wyników dla tej grupy zgodnie z zasadą chroniącą anonimowość respondentów.")
 }
@@ -1314,16 +1541,42 @@ if (szk$W3_nie_ucz[[1]]$n >= progLiczebnosci) {
     paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
     "Branżowe szkoły I stopnia\nw całej Polsce"))
   
+  wyk_lab = tab_wyk %>% 
+    group_by(typ) %>% 
+    summarise(value = list(q5, q25, med, q75, q95)) %>% 
+    unnest() %>% 
+    mutate(lab = paste0(round(value * 100), "%"))
+  
   wykres = boxplot_proc_4_ad1(tab_wyk,
-                paste0("Wykres ", wyk_num(), ": Średni miesięczny przychód z pracy absolwentów Państwa szkoły oraz\npozostałych branżowych szkół w województwie i w kraju z pracy etatowej w odniesieniu\ndo średnich zarobków w poszczególnych zamieszkiwanych przez nich powiatach,\nod września do grudnia 2020 roku - pracujący i nie uczący się w szkole\nponadpodstawowej (mediana, rozstęp międzyćwiartkowy)\n\n")) +
-    ylab("Przychody absolwenta z pracy etatowej\nw odniesieniu do średnich zarobków w jego\npowiecie dla okresu od września do\ngrudnia 2020 roku (%)")
+                paste0("Wykres ", wyk_num(), ": Średni miesięczny przychód z pracy absolwentów Państwa szkoły oraz\npozostałych branżowych szkół w województwie i w kraju z pracy etatowej w odniesieniu\ndo średnich zarobków w poszczególnych zamieszkiwanych przez nich powiatach,\nod września do grudnia 2020 roku - pracujący i nie uczący się w szkole\nponadpodstawowej\n\n")) +
+    ylab("Przychody absolwenta z pracy etatowej\nw odniesieniu do średnich zarobków w jego\npowiecie dla okresu od września do\ngrudnia 2020 roku (%)") +
+    geom_text(data = wyk_lab,
+              aes(x = typ, y = value, label = lab),
+              nudge_x = -0.4,
+              size = 2.5)
   
   print(wykres)
   
   cat(
-    "\\textcolor{black}{\\relscale{0.75}Na powyższym wykresie pogrubiona linia oznacza medianę wartości prezentowanego wskaźnika Elementem wykresu jest również prostokąt reprezentujący tzw. rozstęp międzyćwiartkowy. Prostokąt ten “obejmuje” 50\\% absolwentów, którzy stanowią grupę środkową pod względem wartości analizowanego wskaźnika. Z kolei nad i pod prostokątem znajdują się poziome linie (tzw. wąsy). Pomiędzy tymi liniami zawierają się wartości wskaźnika dla “środkowych” 90\\% absolwentów. Im bardziej zróżnicowane są wartości wskaźnika w danej grupie, tym prostokąt jest wyższy, a odległość pomiędzy wspomnianymi liniami większa.}\n\n",
+    "\\textcolor{black}{\\relscale{0.75}Na powyższym wykresie pogrubiona linia oznacza medianę wartości prezentowanego wskaźnika Elementem wykresu jest również prostokąt, który “obejmuje” 50\\% absolwentów, którzy stanowią grupę środkową pod względem wartości analizowanego wskaźnika. Z kolei nad i pod prostokątem znajdują się poziome linie (tzw. wąsy). Pomiędzy tymi liniami zawierają się wartości wskaźnika dla “środkowych” 90\\% absolwentów. Im bardziej zróżnicowane są przychody w danej grupie, tym prostokąt jest wyższy, a odległość pomiędzy wspomnianymi liniami większa.}\n\n",
     sep = ""
   )
+  
+  # tab_wyk %>% 
+  #   mutate(across(q5:q95,
+  #                 ~paste0(round(.), "zł"))) %>% 
+  #   kable("latex", booktabs = TRUE, escape = FALSE, longtable = TRUE,
+  #         linesep = "",
+  #         align = "lccccc",
+  #         col.names = NULL,
+  #         digits = 0) %>% 
+  #   kable_styling(position = wyrownanieTabWykr,
+  #                 latex_options = c("hold_position", "repeat_header"),
+  #                 font_size = 10,
+  #                 full_width = TRUE,
+  #                 repeat_header_text = "(ciąg dalszy tabeli)") %>% 
+  #   add_header_above(c(" ", "5%" = 1, "25%" = 1, "Mediana" = 1, "75%" = 1, "95%"),
+  #                    align = c("l", "c", "c", "c", "c", "c"))
 } else {
   cat("Liczba absolwentów Państwa szkoły pracujących na etat i nieuczących się nie była wystarczająca, żeby możliwe było przedstawienie wyników dla tej grupy zgodnie z zasadą chroniącą anonimowość respondentów.")
 }
@@ -1401,10 +1654,32 @@ if (szk$l_abs[[1]] >= progLiczebnosci) {
     paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
     "Branżowe szkoły I stopnia\nw całej Polsce"))
   
+  tab_wyk$mies = ordered(tab_wyk$mies, labels = c(
+    "brak\nbezrobocia", "1 msc.", "2 msc.", "3 msc.", "4 msc."))
+  
   wyk_facet_6_ad1(tab_wyk,
                   paste0("Wykres ", wyk_num(), ": Odsetek absolwentów, którzy byli bezrobotni przez daną liczbę miesięcy,\nw okresie od września do grudnia 2020 roku"),
                   "mies",
                   "Liczba miesięcy bezrobocia")
+  
+  # tab_wyk %>% 
+  #   pivot_wider(names_from = mies) %>% 
+  #   mutate(across(2:6,
+  #                 ~ round(. * 100))) %>%
+  #   mutate(across(2:6,
+  #                 ~ paste0(., "\\%"))) %>%
+  #   kable("latex", booktabs = TRUE, escape = FALSE, longtable = TRUE,
+  #         linesep = "",
+  #         align = "lccccc",
+  #         col.names = NULL,
+  #         digits = 0) %>% 
+  #   kable_styling(position = wyrownanieTabWykr,
+  #                 latex_options = c("hold_position", "repeat_header"),
+  #                 font_size = 10,
+  #                 full_width = TRUE,
+  #                 repeat_header_text = "(ciąg dalszy tabeli)") %>% 
+  #   add_header_above(c(" ", "Brak\nbezrobocia" = 1, "1 miesiąc" = 1, "2 miesiące" = 1, "3 miesiące" = 1, "4 miesiące" = 1),
+  #                    align = c("l", "c", "c", "c", "c", "c"))
 } else {
   cat("Liczba absolwentów Państwa szkoły nie była wystarczająca (n < 10), żeby możliwe było przedstawienie wyników, zgodnie z zasadą chroniącą anonimowość respondentów.")
 }
@@ -1463,10 +1738,32 @@ if (szk$l_abs[[1]] >= progLiczebnosci) {
     paste0("Pozostałe branżowe szkoły I stopnia\nz województwa\n", szk$formy[[1]]$woj_dop),
     "Branżowe szkoły I stopnia\nw całej Polsce"))
   
-  wyk_facet_6_ad1(tab_wyk,
+  tab_wyk$mies = ordered(tab_wyk$mies, labels = c(
+    "brak\nbierności", "1 msc.", "2 msc.", "3 msc.", "4 msc."))
+  
+ wyk_facet_6_ad1(tab_wyk,
                   paste0("Wykres ", wyk_num(), ": Odsetek absolwentów, którzy byli bierni edukacyjnie i zawodowo przez daną liczbę\nmiesięcy, w okresie od września do grudnia 2020 roku"),
                   "mies",
                   "Liczba miesięcy bierności")
+  
+  # tab_wyk %>% 
+  #   pivot_wider(names_from = mies) %>% 
+  #   mutate(across(2:6,
+  #                 ~ round(. * 100))) %>%
+  #   mutate(across(2:6,
+  #                 ~ paste0(., "\\%"))) %>%
+  #   kable("latex", booktabs = TRUE, escape = FALSE, longtable = TRUE,
+  #         linesep = "",
+  #         align = "lccccc",
+  #         col.names = NULL,
+  #         digits = 0) %>% 
+  #   kable_styling(position = wyrownanieTabWykr,
+  #                 latex_options = c("hold_position", "repeat_header"),
+  #                 font_size = 10,
+  #                 full_width = TRUE,
+  #                 repeat_header_text = "(ciąg dalszy tabeli)") %>% 
+  #   add_header_above(c(" ", "Brak\nbierności" = 1, "1 miesiąc" = 1, "2 miesiące" = 1, "3 miesiące" = 1, "4 miesiące" = 1),
+  #                    align = c("l", "c", "c", "c", "c", "c"))
 } else {
   cat("Liczba absolwentów Państwa szkoły nie była wystarczająca (n < 10), żeby możliwe było przedstawienie wyników, zgodnie z zasadą chroniącą anonimowość respondentów.")
 }

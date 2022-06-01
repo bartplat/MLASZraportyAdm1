@@ -20,7 +20,8 @@ wykres_poziomy_1_ad1 = function(x, tytul) {
                 y = .data$value,
                 fill = .data$name)) +
     geom_bar(width = 0.75, stat = "identity", colour = "white") +
-    scale_fill_brewer(palette = "RdYlGn", guide = guide_legend(reverse = TRUE)) +
+    scale_fill_manual(values = c("#d62f26", "#fb8c59", "#f8dd00", "#d8ef8a", "#90cf60",	"#1a974f"),
+                      guide = guide_legend(reverse = TRUE)) +
     scale_y_continuous(labels = scales::percent) +
     labs(fill = NULL,
          title = tytul) +
@@ -67,7 +68,8 @@ wave_chart_2_ad1 = function(x, tytul) {
           axis.ticks.x = element_blank(),
           # plot.title.position = "plot",
           plot.title = element_text(size = 11)) +
-    scale_fill_brewer(palette = "RdYlGn", guide = guide_legend(reverse = TRUE)) +
+    scale_fill_manual(values = c("#d62f26", "#fb8c59", "#f8dd00", "#d8ef8a", "#90cf60",	"#1a974f"),
+                      guide = guide_legend(reverse = TRUE)) +
     guides(fill = guide_legend(nrow = 6, byrow = TRUE, reverse = TRUE), title = NULL) +
     scale_y_continuous(labels = scales::percent) +
     ylab("Odsetek absolwentów szkoły") +
@@ -134,16 +136,18 @@ boxplot_proc_4_ad1 = function(x, tytul) {
                      upper = .data$q75,
                      ymax = .data$q95),
                  stat = "identity",
-                 width = 0.8) +
-    scale_fill_brewer(palette = "RdYlGn", direction = -1) +
-    scale_y_continuous(limits = c(0.0, 1.0), expand = c(0,0)) +
+                 width = 0.5) +
+    scale_fill_manual(values = c("#8de04e",	"#f8dd00", "#fb6a59"),
+                      guide = guide_legend(reverse = TRUE)) +
+    # scale_y_continuous(limits = c(0.0, 1.0), expand = c(0,0)) +
     theme(legend.position = "none",
           panel.background = element_rect(fill = "white"),
           axis.ticks.y = element_blank(),
           axis.ticks.x = element_blank(),
           plot.title.position = "plot",
           plot.title = element_text(size = 11),
-          panel.border = element_rect(colour = "lightgrey", fill = NA, size = 1)) +
+          panel.border = element_rect(colour = "lightgrey", fill = NA, size = 1),
+          axis.line.y = element_line(colour = "lightgrey", size = 1)) +
     scale_y_continuous(labels = scales::percent) +
     xlab(NULL) +
     labs(title = tytul) %>%
@@ -162,7 +166,7 @@ boxplot_proc_4_ad1 = function(x, tytul) {
 #' @importFrom dplyr .data
 boxplot_zl_4_ad1 = function(x, tytul) {
   stopifnot(is_tibble(x),
-            ifelse(is.null(tytul), FALSE, nchar(tytul) > 1))
+            ifelse(is.null(tytul), TRUE, nchar(tytul) > 1))
 
   ggplot(x, aes(x = .data$typ, fill = .data$typ)) +
     geom_errorbar(aes(ymin = .data$q5, ymax = .data$q95), width = 0.5) +
@@ -172,18 +176,20 @@ boxplot_zl_4_ad1 = function(x, tytul) {
                      upper = .data$q75,
                      ymax = .data$q95),
                  stat = "identity",
-                 width = 0.8) +
-    scale_fill_brewer(palette = "RdYlGn", direction = -1) +
-    scale_y_continuous(limits = c(0.0, max(x$q95) + 500), expand = c(0,0)) + 
+                 width = 0.5) +
+    scale_fill_manual(values = c("#8de04e",	"#f8dd00", "#fb6a59"),
+                      guide = guide_legend(reverse = TRUE)) +
+    scale_y_continuous(limits = c(0.0, max(x$q95) + 500), expand = c(0,0)) +
     theme(legend.position = "none",
           panel.background = element_rect(fill = "white"),
           axis.ticks.y = element_blank(),
           axis.ticks.x = element_blank(),
           plot.title.position = "plot",
           plot.title = element_text(size = 11),
-          panel.border = element_rect(colour = "lightgrey", fill = NA, size = 1)) +
+          panel.border = element_rect(colour = "lightgrey", fill = NA, size = 1),
+          axis.line.y = element_line(colour = "lightgrey", size = 1)) +
     xlab(NULL) +
-    labs(title = tytul) %>%
+    labs(title = tytul) %>% 
     return()
 }
 #' @title Wykresy w raportach z 1. rundy monitoringu na danych administracyjnych
@@ -245,7 +251,8 @@ wyk_facet_6_ad1 = function(x, tytul, os_x, tytul_x) {
     facet_grid(cols = vars(.data$typ)) +
     ylab(NULL) +
     ylim(c(0, 1)) +
-    scale_fill_brewer(palette = "RdYlGn", direction = -1) +
+    scale_fill_manual(values = c("#8de04e",	"#f8dd00", "#fb6a59"),
+                      guide = guide_legend(reverse = TRUE)) +
     theme(legend.position = "none",
           panel.background = element_rect(fill = "white", colour = "lightgrey"),
           axis.ticks.y = element_blank(),
@@ -254,7 +261,7 @@ wyk_facet_6_ad1 = function(x, tytul, os_x, tytul_x) {
           plot.title = element_text(size = 11),
           panel.grid.major.y = element_line(colour = "lightgrey"),
           panel.grid.minor.y = element_line(colour = "lightgrey")) +
-    scale_y_continuous(labels = scales::percent) +
+    scale_y_continuous(labels = scales::percent, limits = c(0.0, 1.0)) +
     labs(title = tytul) %>%
     return()
 }
