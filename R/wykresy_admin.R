@@ -261,7 +261,8 @@ wyk_facet_6_ad1 = function(x, tytul, os_x, tytul_x) {
           plot.title = element_text(size = 11),
           panel.grid.major.y = element_line(colour = "lightgrey"),
           panel.grid.minor.y = element_line(colour = "lightgrey")) +
-    scale_y_continuous(labels = scales::percent, limits = c(0.0, 1.0)) +
+    scale_y_continuous(labels = scales::percent,
+                       limits = c(0.0, 1.05)) +
     labs(title = tytul) %>%
     return()
 }

@@ -71,8 +71,6 @@ if (params$plikZObiektami != "") {# to działa przy ręcznym prototypowaniu
 
 woj = woj %>%
   filter(ID_SZK %in% szk$ID_SZK)
-# kraj = kraj %>% 
-#   filter(TYP_SZK %in% szk$TYP_SZK)
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -85,6 +83,10 @@ tab_num = function() {
   nr = get0("___nrTabeli___", parent.frame(), ifnotfound = 1)
   assign("___nrTabeli___", nr + 1, envir = parent.frame())
   return(nr)
+}
+# https://stackoverflow.com/questions/2631780/r-ggplot2-can-i-set-the-plot-title-to-wrap-around-and-shrink-the-text-to-fit-t
+wrapper = function(x, ...) {
+  paste(strwrap(x, ...), collapse = "\n")
 }
 ```
 
@@ -104,7 +106,7 @@ Należy pamiętać, że oprócz kształcenia w szkole ponadpodstawowej i umieję
 
 ## Źródła i przetwarzanie danych
 
-Raporty są przygotowywane na podstawie danych pozyskiwanych corocznie przez Centrum Informatyczne Edukacji z publicznych rejestrów. Monitoring opiera się na danych dotyczących nauki w szkołach ponadpodstawowych (dane Informatycznego Centrum Edukacji i Nauki) oraz na studiach (dane Ośrodka Przetwarzania Informacji nadzorowanego przez ministra właściwego ds. szkolnictwa wyższego i nauki), uzyskiwania dyplomów i świadectw (dane Okręgowych Komisji Egzaminacyjnych) oraz aktywności na rynku pracy (dane Zakładu Ubezpieczeń Społecznych).
+Raporty są przygotowywane na podstawie danych z publicznych rejestrów. Monitoring opiera się na danych dotyczących nauki w szkołach ponadpodstawowych (dane Informatycznego Centrum Edukacji i Nauki) oraz na studiach (dane Ośrodka Przetwarzania Informacji nadzorowanego przez ministra właściwego ds. szkolnictwa wyższego i nauki), uzyskiwania dyplomów i świadectw (dane Okręgowych Komisji Egzaminacyjnych) oraz aktywności na rynku pracy (dane Zakładu Ubezpieczeń Społecznych).
 
 Dzięki wykorzystaniu danych rejestrowych monitoring obejmuje niemal całą populację absolwentów.
 
@@ -142,7 +144,7 @@ cat(
   " Państwa szkoły, którzy rozpoczęli naukę na uczelniach wyższych do końca grudnia 2020 roku (według stanu na 31 grudnia 2020 roku).\n\n* W zasobach Okręgowych Komisji Egzaminacyjnych znalazły się dane dotyczące ",
   szk$l_abs_zrodla[[1]]$n_oke,
   odmiany$abs_oke,
-  " (według stanu na 31 marca 2021 roku). Informacje dotyczące rezultatów egzaminów przeprowadzonych w sesjach poprawkowych zostaną zaktualizowane w kolejnych raportach dotyczących tej grupy.\n\n* Dane pozyskane z Zakładu Ubezpieczeń Społecznych obejmują okres od 1 stycznia 2020 roku do 10 maja 2021 roku. Informują o, rejestrowanej przez ZUS, aktywności zawodowej ",
+  " (według stanu na 31 marca 2021 roku). Informacje dotyczące rezultatów egzaminów przeprowadzonych w sesjach poprawkowych zostaną zaktualizowane w kolejnych raportach dotyczących tej grupy.\n\n* Dane pozyskane z Zakładu Ubezpieczeń Społecznych obejmują okres od 1 stycznia 2020 roku do 10 maja 2021 roku. Informują o rejestrowanej przez ZUS aktywności zawodowej ",
   szk$l_abs_zrodla[[1]]$n_zus,
   odmiany$abs_zus,
   " Państwa szkoły.\n\n",
@@ -158,9 +160,9 @@ Wyniki monitoringu prezentujemy w różnych ujęciach:
 
 * Wartości danego wskaźnika w kolejnych miesiącach rozpatrywanego okresu pozwalają śledzić jak zmieniała się sytuacja edukacyjna i zawodowa absolwentów. W przypadku wskaźników odnoszących się do sytuacji edukacyjnej i zawodowej jest to okres od stycznia do grudnia 2020 roku.
 
-* W niektórych przypadkach prezentujemy wartość wskaźnika w jednym, wybranym miesiącu. Jest to wrzesień 2020 roku (w przypadku wskaźnika informującego o kontynuowaniu nauki u pracodawcy, u którego absolwent odbywał praktyczną naukę zawodu jako pracownik młodociany) lub grudzień 2020 roku (co pozwala na uwzględnienie m.in. kontynuowania przez część absolwentów szkół ponadpodstawowych nauki na studiach).
+* Szczegółowe zestawienia dotycząc sytuacji edukacyjnej i zawodowej absolwentów odnoszą się do ich sytuacji w grudniu 2020 roku, co pozwala na uwzględnienie m.in. kontynuowania przez część absolwentów szkół ponadpodstawowych nauki na studiach.
 
-* Niektóre wskaźniki są zdefiniowane jako średnia wartość w danym okresie (odsetek przepracowanych miesięcy, średni przychód uzyskiwany z pracy) lub liczba miesięcy, w ciągu których absolwent miał określony status (praca, bezrobocie lub bierność edukacyjna i zawodowa). Takie wskaźniki obliczyliśmy dla okresu od września do grudnia 2020 roku. Wrzesień jest pierwszym miesiącem, w którym absolwenci formalnie nie byli już uczniami Państwa szkoły a grudzień ostatnim, dla którego w momencie sporządzania tego raportu mamy komplet danych.
+* Niektóre wskaźniki są zdefiniowane jako średnia wartość w danym okresie (przychód uzyskiwany z pracy) lub okres, w którym absolwent miał określony status (praca, bezrobocie, bierność edukacyjna i zawodowa). Takie wskaźniki obliczyliśmy dla okresu od września do grudnia 2020 roku. Wrzesień jest pierwszym miesiącem, w którym absolwenci formalnie nie byli już uczniami Państwa szkoły, a grudzień ostatnim, dla którego w momencie sporządzania tego raportu dysponujemy kompletnymi danymi o absolwentach figurujących w rejestrach.
 
 Niektóre wyniki dotyczące absolwentów `r ifelse(szk$l_abs[[1]] >= progLiczebnosci, paste0("Państwa szkoły"), paste0("poszczególnych szkół"))` zostały zestawione z wynikami dotyczącymi absolwentów pozostałych szkół policealnych z województwa^[Absolwenci Państwa szkoły są wykluczani z tej grupy porównawczej, ponieważ w niektórych przypadkach ich sytuacja mogłaby w dużym stopniu rzutować na wyniki dotyczące tej grupy.] `r szk$formy[[1]]$woj_dop` oraz z całego kraju.
 
@@ -177,12 +179,12 @@ Wskaźnik prezentowany w tym rozdziale opisuje 6 statusów absolwentów opisują
 ```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE}
 data.frame(
   `Kategoria` = "Znaczenie kategorii",
-  `1. Uczy się i brak informacji o sytuacji zawodowej` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju) ani nie figurują w rejestrze ZUS z żadnego tytułu. Natomiast nie wiadomo, czy pracują korzystając z ubezpieczenia w innym systemie (np. KRUS), ani czy pracują na podstawie umowy o dzieło lub bez umowy (“na czarno”).",
-  `2. Uczy się i nie pracuje na podstawie umowy o pracę ani samozatrudnienia` = "W takiej sytuacji są osoby, o których wiadomo, że odbywają edukację formalną w Polsce a zarazem figurują w rejestrze ZUS z tytułu innego, niż aktualne wykonywanie pracy (\"innym tytułem\" może być w szczególności status osoby bezrobotnej, przebywanie na urlopie macierzyńskim lub wychowawczym lub zgłoszenie do ubezpieczenia jako członek rodziny osoby ubezpieczonej).",
-  `3. Uczy się i pracuje na podstawie umowy o pracę lub samozatrudnienia` = "W takiej sytuacji są osoby, o których wiadomo, że odbywają edukację formalną w Polsce a zarazem figurują w rejestrze ZUS z tytułu aktualnego wykonywania pracy etatowej, prowadzenia indywidualnej działalności gospodarczej albo - ale tylko, jeżeli mają więcej niż 26 lat - umowy zlecenia. Nie jest natomiast uwzględniana praca bez umowy (“na czarno”), praca związana z korzystaniem z ubezpieczenia w innym systemie (np. KRUS), praca na podstawie umowy o dzieło ani - w przypadku osób, które mają nie więcej niż 26 lat - praca na podstawie umowy zlecenia.",
-  `4. Nie uczy się i pracuje` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju)  a zarazem figurują w rejestrze ZUS z tytułu aktualnego wykonywania pracy etatowej, umowy zlecenia lub prowadzenia indywidualnej działalności gospodarczej. Nie jest natomiast uwzględniana praca bez umowy (“na czarno”), praca związana z korzystaniem z ubezpieczenia w innym systemie (np. KRUS), ani praca na podstawie umowy o dzieło.",
-  `5. Nie uczy się i brak informacji o sytuacji zawodowej` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju) ani nie figurują w rejestrze ZUS z żadnego tytułu. Natomiast nie wiadomo, czy pracują korzystając z ubezpieczenia w innym systemie (np. KRUS), ani czy pracują na podstawie umowy o dzieło lub bez umowy (“na czarno”).",
-  `6. Nie uczy się i nie pracuje` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju) a zarazem figurują w rejestrze ZUS z tytułu innego, niż aktualne wykonywanie pracy etatowej, umowy zlecenia lub prowadzenie indywidualnej działalności gospodarczej (jak w przypadku kategorii 2). Natomiast nie jest wykluczone, że pracują bez umowy (“na czarno”) albo (jeżeli nie są zarejestrowane jako bezrobotne) na podstawie umowy o dzieło.",
+  `1. Uczy się i brak informacji o sytuacji zawodowej` = "W takiej sytuacji są osoby, o których wiadomo, że odbywają edukację formalną w Polsce i nie figurują w rejestrze ZUS z żadnego tytułu, w związku z tym ich sytuacja zawodowa nie jest znana. Natomiast nie wiadomo, czy pracują korzystając z ubezpieczenia w innym systemie (np. KRUS), ani czy pracują na podstawie umowy o dzieło lub bez umowy (“na czarno”).\n",
+  `2. Uczy się i nie pracuje na podstawie umowy o pracę ani samozatrudnienia` = "W takiej sytuacji są osoby, o których wiadomo, że odbywają edukację formalną w Polsce i jednocześnie figurują w rejestrze ZUS z tytułu innego, niż aktualne wykonywanie pracy (\"innym tytułem\" może być w szczególności status osoby bezrobotnej, przebywanie na urlopie macierzyńskim lub wychowawczym).\n",
+  `3. Uczy się i pracuje na podstawie umowy o pracę lub samozatrudnienia` = "W takiej sytuacji są osoby, o których wiadomo, że odbywają edukację formalną w Polsce, a zarazem figurują w rejestrze ZUS z tytułu aktualnego wykonywania pracy etatowej, prowadzenia indywidualnej działalności gospodarczej albo - ale tylko, jeżeli mają więcej niż 26 lat - umowy zlecenia. Nie jest natomiast uwzględniana praca bez umowy (“na czarno”), praca związana z korzystaniem z ubezpieczenia w innym systemie (np. KRUS), praca na podstawie umowy o dzieło ani - w przypadku osób, które mają nie więcej niż 26 lat - praca na podstawie umowy zlecenia.\n",
+  `4. Nie uczy się i pracuje` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju), a zarazem figurują w rejestrze ZUS z tytułu aktualnego wykonywania pracy etatowej, umowy zlecenia lub prowadzenia indywidualnej działalności gospodarczej. Nie jest natomiast uwzględniana praca bez umowy (“na czarno”), praca związana z korzystaniem z ubezpieczenia w innym systemie (np. KRUS), ani praca na podstawie umowy o dzieło.\n",
+  `5. Nie uczy się i brak informacji o sytuacji zawodowej` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju) ani nie figurują w rejestrze ZUS z żadnego tytułu. Natomiast nie wiadomo, czy pracują korzystając z ubezpieczenia w innym systemie (np. KRUS), ani czy pracują na podstawie umowy o dzieło lub bez umowy (“na czarno”).\n",
+  `6. Nie uczy się i nie pracuje` = "W takiej sytuacji są osoby, o których wiadomo, że nie odbywają edukacji formalnej w Polsce (ale być może uczą się w innym kraju) a zarazem figurują w rejestrze ZUS z tytułu innego, niż aktualne wykonywanie pracy etatowej, umowy zlecenia lub prowadzenie indywidualnej działalności gospodarczej (jak w przypadku kategorii 2). Natomiast nie jest wykluczone, że pracują bez umowy (“na czarno”) albo (jeżeli nie są zarejestrowane jako bezrobotne) na podstawie umowy o dzieło.\n",
   check.names = FALSE) %>% 
   pivot_longer(everything()) %>% 
   rename(`Kategoria` = name,
@@ -207,9 +209,11 @@ data.frame(
 ```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE}
 if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
   cat(
-    "Spośród absolwentów Państwa szkoły z rocznika 2019/2020 w grudniu 2020 roku ",
+    "Spośród absolwentów Państwa szkoły z rocznika 2019/2020 w grudniu 2020 roku kształciło się ",
+    round((szk$S3_0_12[[1]]$stat1 + szk$S3_0_12[[1]]$stat2 + szk$S3_0_12[[1]]$stat5) * 100),
+    "%. Studia lub edukację w szkole policealnej z zatrudnieniem na podstawie umowy o pracę lub z wykonywaniem własnej działalności gospodarczej (samozatrudnieniem)^[W przypadku osób powyżej 26. roku życia uwzględniane jest ponadto wykonywanie pracy na podstawie umowy zlecenia.] łączyło ",
     round(szk$S3_0_12[[1]]$stat1 * 100),
-    "% łączyło studia lub edukację w szkole policealnej z zatrudnieniem na podstawie umowy o pracę lub z wykonywaniem własnej działalności gospodarczej (samozatrudnieniem)^[W przypadku osób powyżej 26. roku życia uwzględniane jest ponadto wykonywanie pracy na podstawie umowy zlecenia.].\nOdsetek takich osób wśród absolwentów Państwa szkoły był ",
+    "%. Odsetek takich osób wśród absolwentów Państwa szkoły był ",
     case_when(
       round(szk$S3_0_12[[1]]$stat1 * 100) < round(woj$S3_0_12[[1]]$stat1 * 100) ~ "niższy, niż",
       round(szk$S3_0_12[[1]]$stat1 * 100) > round(woj$S3_0_12[[1]]$stat1 * 100) ~ "wyższy, niż",
@@ -237,7 +241,7 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
     round(kraj$S3_0_12[[1]]$stat2 * 100),
     "%.\n\nW tym samym miesiącu ",
     round(szk$S3_0_12[[1]]$stat3 * 100),
-    "% absolwentów Państwa szkoły pracowało^[Na podstawie umowy o pracę, umowy zlecenia lub prowadząc własną działalność gospodarczą.], ale nie studiowało ani nie uczęszczało do kolejnej szkoły. Do grupy absolwentów pracujących ale nie kontynuujących edukacji formalnej należało ",
+    "% absolwentów Państwa szkoły pracowało^[Na podstawie umowy o pracę, umowy zlecenia lub prowadząc własną działalność gospodarczą.], ale nie studiowało ani nie uczęszczało do kolejnej szkoły. Do grupy absolwentów pracujących, ale nie kontynuujących edukacji formalnej należało ",
     round(woj$S3_0_12[[1]]$stat3 * 100),
     "% absolwentów pozostałych szkół policealnych z województwa ",
     szk$formy[[1]]$woj_dop,
@@ -245,7 +249,7 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
     round(kraj$S3_0_12[[1]]$stat3 * 100),
     "% absolwentów szkół policealnych z całego kraju.\n\nSpośród absolwentów Państwa szkoły w grudniu 2020 roku ",
     round(szk$S3_0_12[[1]]$stat4 * 100),
-    "% nie kontynuowało nauki na uczelni ani w szkole policealnej ani nie pracowało^[Na podstawie umowy o pracę, umowy zlecenia ani prowadząc własną działalność gospodarczą.]. Do tej grupy należą absolwenci zarejestrowani jako osoby bezrobotne, a także otrzymujący renty lub przebywający na urlopach wychowawczych oraz bierne zawodowo. W takiej sytuacji było ",
+    "% nie kontynuowało nauki na uczelni ani w szkole policealnej, ani nie pracowało^[Na podstawie umowy o pracę, umowy zlecenia ani prowadząc własną działalność gospodarczą.]. Do tej grupy należą absolwenci zarejestrowani jako osoby bezrobotne, a także otrzymujący renty lub przebywający na urlopach wychowawczych oraz bierni zawodowo. W takiej sytuacji było ",
     round(woj$S3_0_12[[1]]$stat4 * 100),
     "% absolwentów pozostałych szkół policealnych z województwa ",
     szk$formy[[1]]$woj_dop,
@@ -255,7 +259,7 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
     round(szk$S3_0_12[[1]]$stat5 * 100) + round(szk$S3_0_12[[1]]$stat6 * 100),
     "% absolwentów Państwa szkoły (",
     round(szk$S3_0_12[[1]]$stat5 * 100),
-    "% ogółu absolwentów nie figurowało w ZUS ale kontynuowało naukę, ",
+    "% ogółu absolwentów nie figurowało w ZUS, ale kontynuowało naukę, ",
     round(szk$S3_0_12[[1]]$stat6 * 100),
     "% nie figurowało w ZUS ani nie kontynuowało nauki) ",
     "nie figurowało w rejestrze ZUS jako osoby zatrudnione na umowę o pracę, prowadzące działalność gospodarczą ani bezrobotne.\n\n",
@@ -301,7 +305,7 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
 ```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE}
 if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
   cat(
-    "Status edukacyjno-zawodowy Państwa absolwentów różnił się w grudniu 2020 w zależności od zawodu, w którym ukończyli kształcenie.\n"
+    "\n\nStatus edukacyjno-zawodowy Państwa absolwentów różnił się w grudniu 2020 w zależności od zawodu, w którym ukończyli kształcenie.\n"
   )
 }
 ```
@@ -311,8 +315,8 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci & !length(szk$tab_s3_zaw[[1]]) %in% 0)
   tab_szk = szk$tab_s3_zaw[[1]] %>% 
     as_tibble() %>%  
     filter(!row_number() %in% nrow(.)) %>% 
-    arrange(n) %>% 
-    mutate(typ = factor(NAZWA_ZAW, levels = unique(NAZWA_ZAW))) %>% 
+    arrange(n, NAZWA_ZAW) %>% 
+    mutate(typ = ordered(NAZWA_ZAW, levels = unique(NAZWA_ZAW))) %>% 
     select(-c(n, NAZWA_ZAW)) %>%
     pivot_longer(cols = stat1:stat6, names_to = "name") %>% 
     mutate(across(name,
@@ -346,7 +350,8 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci & !length(szk$tab_s3_zaw[[1]]) %in% 0)
                   ~ round(. * 100))) %>%
     mutate(across(stat1:stat6,
                   ~ paste0(., "\\%"))) %>%
-    slice_max(n = 10, order_by = n)
+    slice_max(n = 10, order_by = n) %>%
+    arrange(desc(n), desc(NAZWA_ZAW))
   
   tabela = rbind(tabela %>% filter(!NAZWA_ZAW %in% "Ogółem*"),
                  tabela %>% filter(NAZWA_ZAW %in% "Ogółem*")) %>% 
@@ -376,7 +381,7 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci & !length(szk$tab_s3_zaw[[1]]) %in% 0)
     footnote(general = "*W kategorii ‘Ogółem’ uwzględniono wyłącznie absolwentów zawodów, w których kształciło się po minimum 10 osób.", general_title = "")
   
   cat(
-    "Poniższy wykres przedstawia sytuację absolwentów poszczególnych zawodów z Państwa szkoły, o ile kształciło się w nich co najmniej 10 osób.",
+    "Poniższy wykres przedstawia sytuację absolwentów Państwa szkoły wykształconych w poszczególnych zawodach, o ile kształciło się w nich co najmniej 10 osób.",
     sep = "")
   print(wykres)
   cat(
@@ -427,7 +432,7 @@ if (szk$S3_0_12[[1]]$n >= progLiczebnosci) {
         sep = ""
       )
     },
-    "Natomiast w okresie od września do grudnia 2020 odsetek jej absolwentów pracujących na podstawie umowy o pracę, samozatrudnionych, a także - w przypadku osób niekontynuujących nauki - pracujących na podstawie umowy zlecenia - wynosił łącznie ",
+    "Natomiast w okresie od września do grudnia 2020 odsetek absolwentów Państwa szkoły pracujących na podstawie umowy o pracę, samozatrudnionych, a także - w przypadku osób niekontynuujących nauki - pracujących na podstawie umowy zlecenia - wynosił łącznie ",
     if (length(unique(wrz_gru)) %in% 1) {
       paste0(round(szk$S3_0_09[[1]]$stat1 * 100) + round(szk$S3_0_09[[1]]$stat3 * 100), "%.")
     } else {
@@ -671,6 +676,12 @@ if (szk$E2_nauka_kontyn[[1]]$n >= progLiczebnosci) {
 }
 ```
 
+```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE, fig.height=3}
+if (szk$E2_nauka_kontyn[[1]]$n >= progLiczebnosci) {
+  cat("Odsetki mogą sumować się do więcej niż 100% ze względu na możliwość kontynuowania edukacji w więcej niż jednej formie.")
+}
+```
+
 `r ifelse(typDokumentu %in% "pdf", "\\newpage", "")`
 
 # 4. Praca po ukończeniu szkoły policealnej
@@ -689,7 +700,7 @@ if (szk$Z4_nie_ucz[[1]]$n >= progLiczebnosci) {
 }
 
 if ((szk$Z4_ucz[[1]]$n >= progLiczebnosci) & (szk$Z4_nie_ucz[[1]]$n >= progLiczebnosci)) {
-  cat("W związku z tym wskaźnik jest prezentowany oddzielnie dla każdej z tych grup^[Ten sam absolwent, jeżeli był uczniem tylko przez część rozpatrywanego okresu, jest uwzględniany w dwóch grupach. Na przykład absolwent, który uczył się od września do listopada a pracował od października do grudnia zostałby uwzględniony z wartością wskaźnika 67% (2/3) w grupie absolwentów będących uczniami oraz z wartością wskaźnika 100% (1/1) w grupie absolwentów nieuczących się.].\n\n")
+  cat("W związku z tym wskaźnik jest prezentowany oddzielnie dla każdej z tych grup^[Ten sam absolwent, jeżeli był uczniem tylko przez część rozpatrywanego okresu, jest uwzględniany w dwóch grupach. Na przykład absolwent, który uczył się od września do listopada a pracował od października do grudnia zostałby uwzględniony z wartością wskaźnika 67% w grupie absolwentów będących uczniami oraz z wartością wskaźnika 100% w grupie absolwentów nieuczących się.].\n\n")
 }
 ```
 
@@ -700,39 +711,26 @@ if (szk$Z4_ucz[[1]]$n >= progLiczebnosci) {
   cat(
     "Absolwenci Państwa szkoły, którzy kontynuowali naukę na uczelni lub w szkole policealnej, pracowali średnio w ciągu ",
     round(szk$Z4_ucz[[1]]$srednia * 100),
-    "% okresu od września do grudnia 2020 roku. Z kolei mediana tego wskaźnika wynosi ",
-    round(szk$Z4_ucz[[1]]$med * 100),
-    "%. Oznacza to, że co najmniej połowa tej grupy absolwentów pracowała przez nie więcej niż ",
-    round(szk$Z4_ucz[[1]]$med * 100),
-    "% rozpatrywanego okresu, a co najmniej połowa przez nie mniej niż ",
-    round(szk$Z4_ucz[[1]]$med * 100),
-    "% rozpatrywanego okresu.\n\nDla absolwentów pozostałych szkół policealnych z województwa ",
+    "% okresu od września do grudnia 2020 roku\n\nDla absolwentów pozostałych szkół policealnych z województwa ",
     szk$formy[[1]]$woj_dop,
     " kontynuujących naukę na uczelni lub w szkole policealnej, średnia arytmetyczna odsetka przepracowanych miesięcy wyniosła ",
     round(woj$Z4_ucz[[1]]$srednia * 100),
-    "%, a mediana ",
-    round(woj$Z4_ucz[[1]]$med * 100),
     "%. W skali całego kraju średnia wynosiła ",
     round(kraj$Z4_ucz[[1]]$srednia * 100),
-    "%, a mediana ",
-    round(kraj$Z4_ucz[[1]]$med * 100),
     "%.\n\n",
     sep = ""
   )
   
   przeprac_ods = szk$Z4_ucz[[1]] %>% 
     as_tibble() %>% 
-    select(-c(n, srednia, med)) %>% 
+    mutate(czesc = sum(p25, p33, p50, p67, p75)) %>% 
+    select(-c(n, srednia, med, p25, p33, p50, p67, p75)) %>% 
     pivot_longer(everything()) %>% 
     as.list()
   przeprac_ods$name = c(
     "od września do grudnia 2020 roku nie pracowały",
-    "pracowały przez jedną czwartą okresu (między wrześniem a grudniem 2020 roku) poświęconego na naukę",
-    "pracowały przez jedną trzecią okresu (między wrześniem a grudniem 2020 roku) poświęconego na naukę",
-    "pracowały przez połowę okresu (między wrześniem a grudniem 2020 roku) poświęconego na naukę",
-    "pracowały przez dwie trzecie okresu (między wrześniem a grudniem 2020 roku) poświęconego na naukę",
-    "pracowały przez trzy czwarte okresu (między wrześniem a grudniem 2020 roku) poświęconego na naukę",
-    "pracowały przez cały okres (między wrześniem a grudniem 2020 roku) poświęcony na naukę"
+    "pracowały przez cały okres od września do grudnia 2020",
+    "pracowały przez część okresu od września do grudnia 2020"
   )
   
   if (length(przeprac_ods$name[przeprac_ods$value %in% max(przeprac_ods$value)]) %in% 1) {
@@ -778,17 +776,25 @@ if (szk$Z4_ucz[[1]]$n >= progLiczebnosci) {
            `cały\nokres` = p100) %>% 
     select(typ, 9:11) %>% 
     pivot_longer(cols = `brak\npracy`:`cały\nokres`) %>% 
-    mutate(typ = factor(typ, unique(typ)))
+    mutate(typ = factor(typ, unique(typ))) %>% 
+    mutate(lab = paste0(round(value * 100), "%"))
   
   levels(tab_wyk$typ)[grepl("^Pozostałe", levels(tab_wyk$typ))] = paste0("Pozostałe szkoły policealne\nz województwa\n", szk$formy[[1]]$woj_dop)
   levels(tab_wyk$typ)[grepl("^Branżowe szkoły", levels(tab_wyk$typ))] = "Szkoły policealne w całej Polsce"
   
   tab_wyk$name = ordered(tab_wyk$name, levels = c("brak\npracy", "część\nokresu", "cały\nokres"))
   
+  wyk_tyt = wrapper(paste0("Wykres ", wyk_num(), ": Procentowy udział grup wyróżnionych ze względu na część przepracowanego okresu wśród absolwentów Państwa szkoły oraz pozostałych szkół policealnych w województwie i w kraju, od września do grudnia 2020 roku - studiujący lub uczący się w szkołach policealnych."),
+           width = 85)
+  
   wyk_facet_6_ad1(tab_wyk,
-                  paste0("Wykres ", wyk_num(), ": Procentowy udział grup wyróżnionych ze względu na część przepracowanego okresu\nwśród absolwentów Państwa szkoły oraz pozostałych szkół policealnych w województwie\ni w kraju, w okresie od września do grudnia 2020 roku - studiujący lub uczący się\nw szkołach policealnych."),
+                  wyk_tyt,
                   "name",
-                  "Przepracowany okres")
+                  "Przepracowany okres") +
+    geom_text(data = tab_wyk,
+              aes(x = name, y = value, label = lab, group = typ),
+              nudge_y = 0.03,
+              size = 2.5)
   
   # tab_wyk %>% 
   #   pivot_wider(names_from = name) %>% 
@@ -844,17 +850,14 @@ if (szk$Z4_nie_ucz[[1]]$n >= progLiczebnosci) {
   
   przeprac_ods = szk$Z4_nie_ucz[[1]] %>% 
     as_tibble() %>% 
-    select(-c(n, srednia, med)) %>% 
+    mutate(czesc = sum(p25, p33, p50, p67, p75)) %>% 
+    select(-c(n, srednia, med, p25, p33, p50, p67, p75)) %>% 
     pivot_longer(everything()) %>% 
     as.list()
   przeprac_ods$name = c(
     "od września do grudnia 2020 roku nie pracowały",
-    "pracowały przez jedną czwartą okresu (między wrześniem a grudniem 2020 roku) kiedy się nie uczyły",
-    "pracowały przez jedną trzecią okresu (między wrześniem a grudniem 2020 roku) kiedy się nie uczyły",
-    "pracowały przez połowę okresu (między wrześniem a grudniem 2020 roku) kiedy się nie uczyły",
-    "pracowały przez dwie trzecie okresu (między wrześniem a grudniem 2020 roku) kiedy się nie uczyły",
-    "pracowały przez trzy czwarte okresu (między wrześniem a grudniem 2020 roku) kiedy się nie uczyły",
-    "pracowały przez cały okres (między wrześniem a grudniem 2020 roku) kiedy się nie uczyły"
+    "pracowały przez cały okres od września do grudnia 2020",
+    "pracowały przez część okresu od września do grudnia 2020"
   )
   
   if (length(przeprac_ods$name[przeprac_ods$value %in% max(przeprac_ods$value)]) %in% 1) {
@@ -900,17 +903,25 @@ if (szk$Z4_nie_ucz[[1]]$n >= progLiczebnosci) {
            `cały\nokres` = p100) %>% 
     select(typ, 9:11) %>% 
     pivot_longer(cols = `brak\npracy`:`cały\nokres`) %>% 
-    mutate(typ = factor(typ, unique(typ)))
+    mutate(typ = factor(typ, unique(typ))) %>% 
+    mutate(lab = paste0(round(value * 100), "%"))
   
   levels(tab_wyk$typ)[grepl("^Pozostałe", levels(tab_wyk$typ))] = paste0("Pozostałe szkoły policealne\nz województwa\n", szk$formy[[1]]$woj_dop)
   levels(tab_wyk$typ)[grepl("^Branżowe szkoły", levels(tab_wyk$typ))] = "Szkoły policealne w całej Polsce"
   
   tab_wyk$name = ordered(tab_wyk$name, levels = c("brak\npracy", "część\nokresu", "cały\nokres"))
   
+  wyk_tyt = wrapper(paste0("Wykres ", wyk_num(), ": Procentowy udział grup wyróżnionych ze względu na część przepracowanego okresu wśród absolwentów Państwa szkoły oraz pozostałych szkół policealnych w województwie i w kraju, od września do grudnia 2020 - nie studiujący ani nie uczący się w szkołach policealnych"),
+           width = 85)
+  
   wyk_facet_6_ad1(tab_wyk,
-                  paste0("Wykres ", wyk_num(), ": Procentowy udział grup wyróżnionych ze względu na część przepracowanego\nokresu wśród absolwentów Państwa szkoły oraz pozostałych szkół policealnych w\nwojewództwie i w kraju, w okresie od września do grudnia 2020 - nie studiujący ani nie\nuczący się w szkołach policealnych"),
+                  wyk_tyt,
                   "name",
-                  "Przepracowany okres")
+                  "Przepracowany okres") +
+    geom_text(data = tab_wyk,
+              aes(x = name, y = value, label = lab, group = typ),
+              nudge_y = 0.03,
+              size = 2.5)
   
   # tab_wyk %>% 
   #   pivot_wider(names_from = name) %>% 
@@ -968,6 +979,12 @@ if (szk$Z8_formy_ucz[[1]]$n >= progLiczebnosci) {
     sep = ""
   )
   
+  supl = tibble(
+    name = c("Tylko forma inna niż samozatrudnienie i niż umowa o pracę (np. umowa-zlecenie)", "Tylko forma inna niż samozatrudnienie i niż umowa o pracę (np. umowa-zlecenie)", "Tylko forma inna niż samozatrudnienie i niż umowa o pracę (np. umowa-zlecenie)"),
+    value = c(0, 0, 0),
+    lab = c("", "", ""),
+    typ = c("Państwa szkoła", "Pozostałe branżowe szkoły I stopnia\nz województwa\nmazowieckiego", "Branżowe szkoły I stopnia\nw całej Polsce"))
+  
   etykiety = c("Zatrudnieni na podstawie umowy o pracę, brak samozatrudnienia",
                "Prowadzący działalność gospodarczą (samozatrudnienie), brak umowy o pracę",
                "Zatrudnieni na podstawie umowy o pracę i prowadzący działalność gospodarczą")
@@ -977,13 +994,16 @@ if (szk$Z8_formy_ucz[[1]]$n >= progLiczebnosci) {
                            kraj$Z8_formy_ucz[[1]],
                            szk$formy[[1]]$woj_dop,
                            etykiety) %>% 
-    mutate(typ = factor(typ, unique(typ)))
+    mutate(typ = factor(typ, unique(typ))) %>% 
+    rbind(supl)
   
   levels(tab_wyk$typ)[grepl("^Pozostałe", levels(tab_wyk$typ))] = paste0("Pozostałe szkoły policealne\nz województwa\n", szk$formy[[1]]$woj_dop)
   levels(tab_wyk$typ)[grepl("^Branżowe szkoły", levels(tab_wyk$typ))] = "Szkoły policealne w całej Polsce"
   
-  wyk_pion_skum_5_ad1(tab_wyk,
-                      paste0("Wykres ", wyk_num(), ": Formy wykonywania pracy przez absolwentów Państwa szkoły oraz\npozostałych szkół policealnych w województwie i w kraju, w grudniu 2020 roku - pracujący\ni uczący się (%)")) +
+  wyk_tyt = wrapper(paste0("Wykres ", wyk_num(), ": Formy wykonywania pracy przez absolwentów Państwa szkoły oraz pozostałych szkół policealnych w województwie i w kraju, w grudniu 2020 roku - pracujący i uczący się (%)"),
+           width = 85)
+  
+  wyk_pion_skum_5_ad1(tab_wyk, wyk_tyt) +
     scale_fill_manual(values = c("#8de04e", "#f8dd00", "#fb6a59"))
   
   # tab_wyk %>% 
@@ -1025,9 +1045,9 @@ if (szk$Z8_formy_nie_ucz[[1]]$n >= progLiczebnosci) {
     round(szk$Z8_formy_nie_ucz[[1]]$nieucz_uop_nieinne * 100),
     "% jedyną formą zatrudnienia była umowa o pracę, ",
     round(szk$Z8_formy_nie_ucz[[1]]$nieucz_sam_nieinne * 100),
-    "% pracowało wyłącznie prowadząc własną działalność gospodarczą a ",
+    "% pracowało wyłącznie prowadząc własną działalność gospodarczą, a ",
     round(szk$Z8_formy_nie_ucz[[1]]$nieucz_inne * 100),
-    "% było zatrudnionych tylko “w innej formie”, czyli przeważnie na podstawie umowy cywilnoprawnej. Pozostali łączyli co najmniej dwie formy zatrudnienia.\n\nNiekontynuujący nauki absolwenci Państwa szkoły pracowali wyłącznie na podstawie umowy o pracę ",
+    "% było zatrudnionych tylko “w innej formie”, czyli przeważnie na podstawie umowy zlecenia. Pozostali łączyli co najmniej dwie formy zatrudnienia.\n\nNiekontynuujący nauki absolwenci Państwa szkoły pracowali wyłącznie na podstawie umowy o pracę ",
     case_when(
       szk_minus_woj$nieucz_uop_nieinne > 3 ~ "częściej niż",
       szk_minus_woj$nieucz_uop_nieinne >= -3 & szk_minus_woj$nieucz_uop_nieinne <= 3 ~ "podobnie często, co",
@@ -1063,10 +1083,11 @@ if (szk$Z8_formy_nie_ucz[[1]]$n >= progLiczebnosci) {
                            etykiety) %>% 
     select(-lab) %>% 
     pivot_wider() %>% 
+    rowwise() %>% 
     mutate(`Tylko umowa o pracę` = `Zatrudnienie na podstawie UOP oraz brak innej formy`,
-           `Tylko prowadzenie działalności gospodarczej (samozatrudnienie)` = `Prowadzący działalność gosp. (samozatrudnienie) oraz brak innej formy`,
-           `Tylko inna forma` = `Zatrudnieni w innej formie (umowa zlecenie)`,
-           `Więcej niż jedna forma` = sum(`Zatrudnienie na podstawie UOP oraz prowadzący działalność gosp.`:`Zatrudnienie na podstawie UOP oraz działalność gosp. oraz zatrudnienie w innej formie`)) %>% 
+           `Tylko samozatrudnienie` = `Prowadzący działalność gosp. (samozatrudnienie) oraz brak innej formy`,
+           `Tylko forma inna niż samozatrudnienie i niż umowa o pracę (np. umowa-zlecenie)` = `Zatrudnieni w innej formie (umowa zlecenie)`,
+           `Więcej niż jedna forma` = sum(`Zatrudnienie na podstawie UOP oraz prowadzący działalność gosp.`, `Zatrudnienie na podstawie UOP oraz zatrudnienie w innej formie`, `Prowadzący działalność gosp. (samozatrudnienie) oraz zatrudnienie w innej formie`, `Zatrudnienie na podstawie UOP oraz działalność gosp. oraz zatrudnienie w innej formie`)) %>% 
     select(typ, `Tylko umowa o pracę`:`Więcej niż jedna forma`) %>% 
     pivot_longer(cols = `Tylko umowa o pracę`:`Więcej niż jedna forma`) %>% 
     mutate(typ = factor(typ, unique(typ)),
@@ -1077,8 +1098,10 @@ if (szk$Z8_formy_nie_ucz[[1]]$n >= progLiczebnosci) {
   levels(tab_wyk$typ)[grepl("^Pozostałe", levels(tab_wyk$typ))] = paste0("Pozostałe szkoły policealne\nz województwa\n", szk$formy[[1]]$woj_dop)
   levels(tab_wyk$typ)[grepl("^Branżowe szkoły", levels(tab_wyk$typ))] = "Szkoły policealne w całej Polsce"
   
-  wyk_pion_skum_5_ad1(tab_wyk,
-                      paste0("Wykres ", wyk_num(), ": Formy wykonywania pracy przez absolwentów Państwa szkoły oraz pozostałych\nszkół policealnych w województwie i w kraju, w grudniu 2020 roku - pracujący\nnie uczący się (%)")) +
+  wyk_tyt = wrapper(paste0("Wykres ", wyk_num(), ": Formy wykonywania pracy przez absolwentów Państwa szkoły oraz pozostałych szkół policealnych w województwie i w kraju, w grudniu 2020 roku - pracujący i nie uczący się (%)"),
+           width = 85)
+  
+  wyk_pion_skum_5_ad1(tab_wyk, wyk_tyt) +
     scale_fill_manual(values = c("#90cf60", "#d8ef8a", "#f8dd00", "#fb8c59"))
   
   # tab_wyk %>% 
@@ -1107,6 +1130,14 @@ if (szk$Z8_formy_nie_ucz[[1]]$n >= progLiczebnosci) {
 
 ## Przychody brutto z pracy w okresie od września do grudnia 2020 roku
 
+Informacje dotyczące miesięcznych przychodów absolwentów nie uwzględniają czasu, jaki poświęcili na pracę (przychody te nie są przeliczone np. do wymiaru pełnego etatu). Ponadto należy pamiętać, że raporty oparte na danych rejestrowych nie uwzględniają zarobków uzyskiwanych w "szarej strefie".
+
+Na poniższej ilustracji opisano sposób prezentowania danych na wykresie typu boxplot wraz z ich interpretacją.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, out.width = '100%'}
+knitr::include_graphics("../boxplot.png")
+```
+
 ### Absolwenci będący uczniami
 
 ```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE, fig.height=6}
@@ -1114,15 +1145,15 @@ if (szk$W1_ucz[[1]]$n >= progLiczebnosci) {
   cat(
     "W przypadku absolwentów Państwa szkoły, którzy studiowali lub uczyli się w szkole policealnej i przez co najmniej część okresu od września do grudnia 2020 roku pracowali^[Uwzględniono wyłącznie umowy o pracę oraz wykonywanie własnej działalności gospodarczej.], miesięczne przychody brutto^[Średnią (arytmetyczną) obliczono wyłącznie dla miesięcy, w których absolwenci pracowali. Nie uwzględniono przychodów osób, które przekroczyły kwotę rocznego ograniczenia podstawy wymiaru składek na ubezpieczenie emerytalne i rentowe (tj. 30 krotność prognozowanego wynagrodzenia brutto, czyli w 2021 roku przeciętne miesięczne zarobki na poziomie 13 147 zł), w miesiącach, w których to przekroczenie wystąpiło.] w przepracowanych miesiącach wyniosły średnio ",
     round(szk$W1_ucz[[1]]$sred),
-    " zł a ich mediana ",
+    " zł, a ich mediana ",
     round(szk$W1_ucz[[1]]$med),
-    " zł. W przypadku absolwentów pozostałych szkół policealnych z województwa ",
+    " zł. To znaczy, że co najmniej połowa grupy, dla której dostępne były informacje o zarobkach, uzyskiwała średni miesięczny przychód nieprzekraczający tej kwoty, a co najmniej połowa - przychód w wysokosci co najmniej tej kwoty. W przypadku absolwentów pozostałych szkół policealnych z województwa ",
     szk$formy[[1]]$woj_dop,
     " łączących pracę z nauką średni miesięczny przychód z pracy wyniósł ",
     round(woj$W1_ucz[[1]]$sred),
-    " zł a mediana ",
+    " zł, a mediana ",
     round(woj$W1_ucz[[1]]$med),
-    " zł. W skali całego kraju wartości wynosiły ",
+    " zł. W skali całego kraju wartości te wynosiły ",
     round(kraj$W1_ucz[[1]]$sred),
     " zł i ",
     round(kraj$W1_ucz[[1]]$med),
@@ -1151,8 +1182,10 @@ if (szk$W1_ucz[[1]]$n >= progLiczebnosci) {
     unnest() %>% 
     mutate(lab = paste0(round(value), "zł"))
   
-  wykres = boxplot_zl_4_ad1(tab_wyk,
-                paste0("Wykres ", wyk_num(), ": Miesięczne przychody brutto z pracy absolwentów Państwa szkoły oraz\npozostałych szkół policealnych w województwie i w kraju, w okresie od września\ndo grudnia 2020 roku - pracujący i uczący się na studiach lub w szkole policealnej")) +
+  wyk_tyt = wrapper(paste0("Wykres ", wyk_num(), ": Miesięczne przychody brutto z pracy absolwentów Państwa szkoły oraz pozostałych szkół policealnych w województwie i w kraju, od września do grudnia 2020 roku - pracujący i uczący się na studiach lub w szkole policealnej"),
+           width = 85)
+  
+  wykres = boxplot_zl_4_ad1(tab_wyk, wyk_tyt) +
     ylab("Średni miesięczny przychód z pracy w okresie\nod września do grudnia 2020 roku (zł)") +
     geom_text(data = wyk_lab,
               aes(x = typ, y = value, label = lab),
@@ -1161,7 +1194,7 @@ if (szk$W1_ucz[[1]]$n >= progLiczebnosci) {
   print(wykres)
   
   cat(
-    "\\textcolor{black}{\\relscale{0.75}Na powyższym wykresie pogrubiona linia oznacza medianę średnich miesięcznych przychodów w danej grupie w okresie od września do grudnia 2020 roku. Elementem wykresu jest również prostokąt, który “obejmuje” 50\\% absolwentów, którzy stanowią grupę środkową pod względem średnich miesięcznych przychodów w badanym okresie. Z kolei nad i pod prostokątem znajdują się poziome linie (tzw. wąsy). Pomiędzy tymi liniami zawierają się wartości wskaźnika dla “środkowych” 90\\% absolwentów. Im bardziej zróżnicowane są przychody w danej grupie, tym prostokąt jest wyższy, a odległość pomiędzy wspomnianymi liniami większa.}\n\n",
+    "\\textcolor{black}{\\relscale{0.75}Na powyższym wykresie pogrubiona linia oznacza medianę średnich miesięcznych przychodów w danej grupie. Elementem wykresu jest również prostokąt, który “obejmuje” 50\\% absolwentów, którzy stanowią grupę środkową pod względem średnich miesięcznych przychodów w badanym okresie. Z kolei nad i pod prostokątem znajdują się poziome linie (tzw. wąsy). Pomiędzy tymi liniami zawierają się wartości wskaźnika dla “środkowych” 90\\% absolwentów. Im bardziej zróżnicowane są przychody w danej grupie, tym prostokąt jest wyższy, a odległość pomiędzy wspomnianymi liniami większa. \"Wąsy\" pokazują również minimalne i maksymalne miesięczne przychody w danej grupie, po wykluczeniu skrajnych wartości (5\\% najniższych i 5\\% najwyższych).}\n\n",
     sep = ""
   )
   
@@ -1194,7 +1227,7 @@ if (szk$W1_nie_ucz[[1]]$n >= progLiczebnosci) {
     round(szk$W1_nie_ucz[[1]]$sred),
     " zł. Mediana średniego miesięcznego przychodu z pracy wynosi z kolei wśród absolwentów Państwa szkoły ",
     round(szk$W1_nie_ucz[[1]]$med),
-    " zł. To znaczy, że co najmniej połowa grupy, dla której ustalono wartość tego wskaźnika, uzyskiwała średni miesięczny przychód nieprzekraczający tej kwoty, a co najmniej połowa - przychód w wysokości co najmniej tej kwoty. W przypadku absolwentów pozostałych szkół policealnych z województwa ",
+    " zł. To znaczy, że co najmniej połowa grupy, dla której dostępne były informacje o zarobkach, uzyskiwała średni miesięczny przychód nieprzekraczający tej kwoty, a co najmniej połowa - przychód w wysokości co najmniej tej kwoty. W przypadku absolwentów pozostałych szkół policealnych z województwa ",
     szk$formy[[1]]$woj_dop,
     " średni miesięczny przychód z pracy wyniósł ",
     round(woj$W1_nie_ucz[[1]]$sred),
@@ -1229,8 +1262,10 @@ if (szk$W1_nie_ucz[[1]]$n >= progLiczebnosci) {
     unnest() %>% 
     mutate(lab = paste0(round(value), "zł"))
   
-  wykres = boxplot_zl_4_ad1(tab_wyk,
-                paste0("Wykres ", wyk_num(), ": Miesięczne wynagrodzenie brutto absolwentów Państwa szkoły oraz\npozostałych szkół policealnych w województwie i w kraju, w okresie od września\ndo grudnia 2020 roku - pracujący i nie studiujący ani nie uczący\nsię w szkole policealnej")) +
+  wyk_tyt = wrapper(paste0("Wykres ", wyk_num(), ": Miesięczne przychody brutto absolwentów Państwa szkoły oraz pozostałych szkół policealnych w województwie i w kraju, od września do grudnia 2020 roku - pracujący i nie studiujący ani nie uczący się w szkole policealnej"),
+           width = 85)
+  
+  wykres = boxplot_zl_4_ad1(tab_wyk, wyk_tyt) +
     ylab("Średni miesięczny przychód z pracy w okresie\nod grudnia 2020 roku (zł)") +
     geom_text(data = wyk_lab,
               aes(x = typ, y = value, label = lab),
@@ -1239,7 +1274,7 @@ if (szk$W1_nie_ucz[[1]]$n >= progLiczebnosci) {
   print(wykres)
   
   cat(
-    "\\textcolor{black}{\\relscale{0.75}Na powyższym wykresie pogrubiona linia oznacza medianę średnich miesięcznych przychodów w danej grupie w okresie od września do grudnia 2020 roku. Elementem wykresu jest również prostokąt, który “obejmuje” 50\\% absolwentów, którzy stanowią grupę środkową pod względem średnich miesięcznych przychodów w badanym okresie. Z kolei nad i pod prostokątem znajdują się poziome linie (tzw. wąsy). Pomiędzy tymi liniami zawierają się wartości wskaźnika dla “środkowych” 90\\% absolwentów. Im bardziej zróżnicowane są przychody w danej grupie, tym prostokąt jest wyższy, a odległość pomiędzy wspomnianymi liniami większa.}\n\n",
+    "\\textcolor{black}{\\relscale{0.75}Na powyższym wykresie pogrubiona linia oznacza medianę średnich miesięcznych przychodów w danej grupie. Elementem wykresu jest również prostokąt, który “obejmuje” 50\\% absolwentów, którzy stanowią grupę środkową pod względem średnich miesięcznych przychodów w badanym okresie. Z kolei nad i pod prostokątem znajdują się poziome linie (tzw. wąsy). Pomiędzy tymi liniami zawierają się wartości wskaźnika dla “środkowych” 90\\% absolwentów. Im bardziej zróżnicowane są przychody w danej grupie, tym prostokąt jest wyższy, a odległość pomiędzy wspomnianymi liniami większa. \"Wąsy\" pokazują również minimalne i maksymalne miesięczne przychody w danej grupie, po wykluczeniu skrajnych wartości (5\\% najniższych i 5\\% najwyższych).}\n\n",
     sep = ""
   )
   
@@ -1265,20 +1300,22 @@ if (szk$W1_nie_ucz[[1]]$n >= progLiczebnosci) {
 
 ## Przychody absolwentów z pracy etatowej w okresie od września do grudnia 2020 roku w odniesieniu do średniego wynagrodzenia w powiatach, w których mieszkali
 
+Wskaźnik, którego wartości prezentujemy na poniższym wykresie, pokazuje stosunek przychodów absolwentów Państwa szkoły z pracy etatowej do przeciętnego miesięcznego wynagrodzenia^[Według danych publikowanych w [Banku Danych Lokalnych Głównego Urzędu Statystycznego.](https://stat.gov.pl/metainformacje/slownik-pojec/pojecia-stosowane-w-statystyce-publicznej/693,pojecie.html?pdf=1)] osób mieszkających w tych samych powiatach. Dla poszczególnych absolwentów wartość wskaźnika równa 100% oznaczałaby, że ich średnie zarobki z pracy etatowej były takie same, jak przeciętne wynagrodzenie mieszkańców danego powiatu.
+
 ### Absolwenci będący uczniami
 
 ```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE}
 if (szk$W3_ucz[[1]]$n >= progLiczebnosci) {
   cat(
-    "Wskaźnik, którego wartości prezentujemy na poniższym wykresie, pokazuje stosunek przychodów absolwentów Państwa szkoły z pracy etatowej do średniego miesięcznego wynagrodzenia^[Według danych publikowanych w [Banku Danych Lokalnych Głównego Urzędu Statystycznego.](https://stat.gov.pl/metainformacje/slownik-pojec/pojecia-stosowane-w-statystyce-publicznej/693,pojecie.html?pdf=1)] osób mieszkających w tych samych powiatach. Dla poszczególnych absolwentów wartość wskaźnika równa 100% oznaczałaby, że ich średnie zarobki z pracy etatowej były takie same, jak średnie wynagrodzenie mieszkańców danego powiatu.\n\nŚrednie zarobki absolwentów Państwa szkoły, zatrudnionych na podstawie umowy o pracę i kontynuujących naukę, stanowiły ",
+    "Średnie zarobki absolwentów Państwa szkoły, zatrudnionych na podstawie umowy o pracę i kontynuujących naukę, stanowiły ",
     round(szk$W3_ucz[[1]]$sred * 100),
-    "% średnich wynagrodzeń mieszkańców powiatów, w których mieszkali.\n\nDla pracujących na etat i uczących się absolwentów pozostałych szkół policealnych z województwa ",
+    "% przeciętnych wynagrodzeń mieszkańców powiatów, w których mieszkali.\n\nDla pracujących na etat i uczących się absolwentów pozostałych szkół policealnych z województwa ",
     szk$formy[[1]]$woj_dop,
     " wartość wskaźnika wynosiła ",
     round(woj$W3_ucz[[1]]$sred * 100),
     "%, natomiast na poziomie całego kraju ",
     round(kraj$W3_ucz[[1]]$sred * 100),
-    "%.\n\nNa poniższym wykresie przedstawione zostały informacje o medianie oraz wartości tego wskaźnika dla 5, 25, 75 i 95 percentyla.",
+    "%.",
     sep = ""
   )
   
@@ -1303,8 +1340,10 @@ if (szk$W3_ucz[[1]]$n >= progLiczebnosci) {
     unnest() %>% 
     mutate(lab = paste0(round(value * 100), "%"))
   
-  wykres = boxplot_proc_4_ad1(tab_wyk,
-                paste0("Wykres ", wyk_num(), ": Średni miesięczny przychód z pracy absolwentów Państwa szkoły oraz\npozostałych szkół policealnych w województwie i w kraju z pracy etatowej w odniesieniu\ndo średnich zarobków w poszczególnych zamieszkiwanych przez nich powiatach,\nod września do grudnia 2020 roku - pracujący i studiujący lub\nuczący się w szkole policealnej\n\n")) +
+  wyk_tyt = wrapper(paste0("Wykres ", wyk_num(), ": Średni miesięczny przychód z pracy absolwentów Państwa szkoły oraz pozostałych szkół policealnych w województwie i w kraju z pracy etatowej w odniesieniu do średnich zarobków w poszczególnych zamieszkiwanych przez nich powiatach, od września do grudnia 2020 roku - pracujący i studiujący lub uczący się w szkole policealnej"),
+           width = 85)
+  
+  wykres = boxplot_proc_4_ad1(tab_wyk, wyk_tyt) +
     ylab("Przychody absolwenta z pracy etatowej w\nodniesieniu do średnich zarobków w jego\npowiecie dla okresu od września do\ngrudnia 2020 roku (%)") +
     geom_text(data = wyk_lab,
               aes(x = typ, y = value, label = lab),
@@ -1313,7 +1352,7 @@ if (szk$W3_ucz[[1]]$n >= progLiczebnosci) {
   print(wykres)
   
   cat(
-    "\\textcolor{black}{\\relscale{0.75}Na powyższym wykresie pogrubiona linia oznacza medianę wartości prezentowanego wskaźnika Elementem wykresu jest również prostokąt, który “obejmuje” 50\\% absolwentów, którzy stanowią grupę środkową pod względem wartości analizowanego wskaźnika. Z kolei nad i pod prostokątem znajdują się poziome linie (tzw. wąsy). Pomiędzy tymi liniami zawierają się wartości wskaźnika dla “środkowych” 90\\% absolwentów. Im bardziej zróżnicowane są przychody w danej grupie, tym prostokąt jest wyższy, a odległość pomiędzy wspomnianymi liniami większa.}\n\n",
+    "\\textcolor{black}{\\relscale{0.75}Na powyższym wykresie pogrubiona linia oznacza medianę wartości prezentowanego wskaźnika Elementem wykresu jest również prostokąt, który “obejmuje” 50\\% absolwentów, którzy stanowią grupę środkową pod względem wartości analizowanego wskaźnika. Z kolei nad i pod prostokątem znajdują się poziome linie (tzw. wąsy). Pomiędzy tymi liniami zawierają się wartości wskaźnika dla “środkowych” 90\\% absolwentów. Im bardziej zróżnicowane są przychody w danej grupie, tym prostokąt jest wyższy, a odległość pomiędzy wspomnianymi liniami większa. \"Wąsy\" pokazują również minimalne i maksymalne wartości wskażnika w danej grupie, po wykluczeniu wartości skrajnych (5\\% najniższych i 5\\% najwyższych).}\n\n",
     sep = ""
   )
   
@@ -1350,7 +1389,7 @@ if (szk$W3_nie_ucz[[1]]$n >= progLiczebnosci) {
     round(woj$W3_nie_ucz[[1]]$sred * 100),
     "%, natomiast na poziomie całego kraju ",
     round(kraj$W3_nie_ucz[[1]]$sred * 100),
-    "%.\n\nNa poniższym wykresie przedstawione zostały informacje o medianie oraz wartości tego wskaźnika dla 5, 25, 75 i 95 percentyla.",
+    "%.",
     sep = ""
   )
   
@@ -1375,8 +1414,10 @@ if (szk$W3_nie_ucz[[1]]$n >= progLiczebnosci) {
     unnest() %>% 
     mutate(lab = paste0(round(value * 100), "%"))
   
-  wykres = boxplot_proc_4_ad1(tab_wyk,
-                paste0("Wykres ", wyk_num(), ": Średni miesięczny przychód z pracy absolwentów Państwa szkoły oraz\npozostałych szkół policealnych w województwie i w kraju z pracy etatowej w odniesieniu\ndo średnich zarobków w poszczególnych zamieszkiwanych przez nich powiatach,\nod września do grudnia 2020 roku - pracujący i nie studiujący ani\nnie uczący się w szkole policealnej\n\n")) +
+  wyk_tyt = wrapper(paste0("Wykres ", wyk_num(), ": Średni miesięczny przychód z pracy absolwentów Państwa szkoły oraz pozostałych szkół policealnych w województwie i w kraju z pracy etatowej w odniesieniu do średnich zarobków w poszczególnych zamieszkiwanych przez nich powiatach, od września do grudnia 2020 roku - pracujący i nie studiujący ani nie uczący się w szkole policealnej"),
+           width = 85)
+  
+  wykres = boxplot_proc_4_ad1(tab_wyk, wyk_tyt) +
     ylab("Przychody absolwenta z pracy etatowej\nw odniesieniu do średnich zarobków w jego\npowiecie dla okresu od września do\ngrudnia 2020 roku (%)") +
     geom_text(data = wyk_lab,
               aes(x = typ, y = value, label = lab),
@@ -1385,7 +1426,7 @@ if (szk$W3_nie_ucz[[1]]$n >= progLiczebnosci) {
   print(wykres)
   
   cat(
-    "\\textcolor{black}{\\relscale{0.75}Na powyższym wykresie pogrubiona linia oznacza medianę wartości prezentowanego wskaźnika Elementem wykresu jest również prostokąt, który “obejmuje” 50\\% absolwentów, którzy stanowią grupę środkową pod względem wartości analizowanego wskaźnika. Z kolei nad i pod prostokątem znajdują się poziome linie (tzw. wąsy). Pomiędzy tymi liniami zawierają się wartości wskaźnika dla “środkowych” 90\\% absolwentów. Im bardziej zróżnicowane są przychody w danej grupie, tym prostokąt jest wyższy, a odległość pomiędzy wspomnianymi liniami większa.}\n\n",
+    "\\textcolor{black}{\\relscale{0.75}Na powyższym wykresie pogrubiona linia oznacza medianę wartości prezentowanego wskaźnika Elementem wykresu jest również prostokąt, który “obejmuje” 50\\% absolwentów, którzy stanowią grupę środkową pod względem wartości analizowanego wskaźnika. Z kolei nad i pod prostokątem znajdują się poziome linie (tzw. wąsy). Pomiędzy tymi liniami zawierają się wartości wskaźnika dla “środkowych” 90\\% absolwentów. Im bardziej zróżnicowane są przychody w danej grupie, tym prostokąt jest wyższy, a odległość pomiędzy wspomnianymi liniami większa. \"Wąsy\" pokazują również minimalne i maksymalne wartości wskażnika w danej grupie, po wykluczeniu wartości skrajnych (5\\% najniższych i 5\\% najwyższych).}\n\n",
     sep = ""
   )
   
@@ -1415,7 +1456,7 @@ if (szk$W3_nie_ucz[[1]]$n >= progLiczebnosci) {
 
 ## Bezrobocie rejestrowane od września do grudnia 2020 roku
 
-Poszczególni absolwenci Państwa szkoły pomiędzy jej ukończeniem a końcem roku kalendarzowego, w którym to nastąpiło (tj. w okresie od września do grudnia 2020 roku) mogli być zarejestrowani jako bezrobotni w ciągu maksymalnie czterech miesięcy.
+Poszczególni absolwenci Państwa szkoły pomiędzy jej ukończeniem, a końcem roku kalendarzowego, w którym to nastąpiło (tj. w okresie od września do grudnia 2020 roku) mogli być zarejestrowani jako bezrobotni w ciągu maksymalnie czterech miesięcy.
 
 ```{r, echo=FALSE, message=FALSE, results='asis', fig.align=wyrownanieTabWykr, warning=FALSE, fig.height=3}
 if (szk$l_abs[[1]] >= progLiczebnosci) {
@@ -1475,7 +1516,8 @@ if (szk$l_abs[[1]] >= progLiczebnosci) {
                           woj$B2_bezrob[[1]],
                           kraj$B2_bezrob[[1]],
                           szk$formy[[1]]$woj_dop) %>% 
-    mutate(typ = factor(typ, unique(typ)))
+    mutate(typ = factor(typ, unique(typ))) %>% 
+    mutate(lab = paste0(round(value * 100), "%"))
   
   levels(tab_wyk$typ)[grepl("^Pozostałe", levels(tab_wyk$typ))] = paste0("Pozostałe szkoły policealne\nz województwa\n", szk$formy[[1]]$woj_dop)
   levels(tab_wyk$typ)[grepl("^Branżowe szkoły", levels(tab_wyk$typ))] = "Szkoły policealne w całej Polsce"
@@ -1483,10 +1525,17 @@ if (szk$l_abs[[1]] >= progLiczebnosci) {
   tab_wyk$mies = ordered(tab_wyk$mies, labels = c(
     "brak\nbezrobocia", "1 msc.", "2 msc.", "3 msc.", "4 msc."))
   
+  wyk_tyt = wrapper(paste0("Wykres ", wyk_num(), ": Odsetek absolwentów Państwa szkoły oraz pozostałych szkół policealnych w województwie i w kraju, którzy byli bezrobotni przez daną liczbę miesięcy, od września do grudnia 2020 roku"),
+           width = 85)
+  
   wyk_facet_6_ad1(tab_wyk,
-                  paste0("Wykres ", wyk_num(), ": Odsetek absolwentów Państwa szkoły\noraz pozostałych szkół policealnych w województwie i w kraju, którzy byli bezrobotni\nprzez daną liczbę miesięcy, w okresie od września do grudnia 2020 roku"),
+                  wyk_tyt,
                   "mies",
-                  "Liczba miesięcy bezrobocia")
+                  "Liczba miesięcy bezrobocia") +
+    geom_text(data = tab_wyk,
+              aes(x = mies, y = value, label = lab, group = typ),
+              nudge_y = 0.03,
+              size = 2.5)
   
   # tab_wyk %>% 
   #   pivot_wider(names_from = mies) %>% 
@@ -1558,7 +1607,8 @@ if (szk$l_abs[[1]] >= progLiczebnosci) {
                           woj$N2_biernosc[[1]],
                           kraj$N2_biernosc[[1]],
                           szk$formy[[1]]$woj_dop) %>% 
-    mutate(typ = factor(typ, unique(typ)))
+    mutate(typ = factor(typ, unique(typ))) %>% 
+    mutate(lab = paste0(round(value * 100), "%"))
   
   levels(tab_wyk$typ)[grepl("^Pozostałe", levels(tab_wyk$typ))] = paste0("Pozostałe szkoły policealne\nz województwa\n", szk$formy[[1]]$woj_dop)
   levels(tab_wyk$typ)[grepl("^Branżowe szkoły", levels(tab_wyk$typ))] = "Szkoły policealne w całej Polsce"
@@ -1566,10 +1616,17 @@ if (szk$l_abs[[1]] >= progLiczebnosci) {
   tab_wyk$mies = ordered(tab_wyk$mies, labels = c(
     "brak\nbierności", "1 msc.", "2 msc.", "3 msc.", "4 msc."))
   
+  wyk_tyt = wrapper(paste0("Wykres ", wyk_num(), ": Odsetek absolwentów Państwa szkoły oraz pozostałych szkół policealnych w województwie i w kraju, którzy byli bierni edukacyjnie i zawodowo przez daną liczbę miesięcy, od września do grudnia 2020 roku"),
+           width = 85)
+  
   wyk_facet_6_ad1(tab_wyk,
-                  paste0("Wykres ", wyk_num(), ": Odsetek absolwentów Państwa szkoły oraz pozostałych\nszkół policealnych w województwie i w kraju, którzy byli bierni edukacyjnie i zawodowo\nprzez daną liczbę miesięcy, w okresie od września do grudnia 2020 roku"),
+                  wyk_tyt,
                   "mies",
-                  "Liczba miesięcy bierności")
+                  "Liczba miesięcy bierności") +
+    geom_text(data = tab_wyk,
+              aes(x = mies, y = value, label = lab, group = typ),
+              nudge_y = 0.03,
+              size = 2.5)
   
   # tab_wyk %>% 
   #   pivot_wider(names_from = mies) %>% 
